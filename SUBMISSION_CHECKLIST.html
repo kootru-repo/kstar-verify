@@ -98,10 +98,10 @@ check that proves a reviewer starting from a clean clone will see identical arti
   <li>README badges reference real workflow names</li>
   <li>CITATION.cff preferred-citation DOI matches .zenodo.json</li>
   <li>README Binder URL updated from <code>HEAD</code> to the submission
-  tag (e.g., <code>v1.0.0-submission-submission</code>) after tag push; otherwise
+  tag (e.g., <code>v1.0.0-submission</code>) after tag push; otherwise
   a future main-branch commit can break the Binder launch a reviewer
   clicks. Change <code>github/kootru-repo/kstar-verify/HEAD?filepath=...</code>
-  to <code>.../v1.0.0-submission-submission?filepath=...</code> in
+  to <code>.../v1.0.0-submission?filepath=...</code> in
   <code>README.md</code> and <code>notebook/README.md</code>.</li>
 </ul>
 
@@ -117,26 +117,26 @@ check that proves a reviewer starting from a clean clone will see identical arti
 
   <h3>Step 1: tag kstar-verify</h3>
 <pre><code>cd /path/to/kstar-verify
-git tag -a v1.0.0-submission-submission -m "Pin for companion manuscript submission"</code></pre>
+git tag -a v1.0.0-submission -m "Pin for companion manuscript submission"</code></pre>
 
   <h3>Step 2: tag the author's manuscript source repo (if separate)</h3>
 <pre><code>cd /path/to/manuscript-source
-git tag -a v1.0.0-submission-submission -m "Pin for companion manuscript submission"</code></pre>
+git tag -a v1.0.0-submission -m "Pin for companion manuscript submission"</code></pre>
 
   <h3>Step 3: verify both tags agree</h3>
 <pre><code>for repo in kstar-verify manuscript-source; do
   cd /path/to/$repo
   echo "=== $repo ==="
-  git log -1 v1.0.0-submission-submission --pretty='%H %ad %s'
+  git log -1 v1.0.0-submission --pretty='%H %ad %s'
 done</code></pre>
 
   <h3>Step 4: push tags (only after ALL boxes above ticked)</h3>
-<pre><code>git push origin v1.0.0-submission-submission    # run in each repo</code></pre>
+<pre><code>git push origin v1.0.0-submission    # run in each repo</code></pre>
 
   <h3>Rollback</h3>
   <p>If a mistake is caught before external systems react:</p>
-<pre><code>git tag -d v1.0.0-submission-submission
-git push origin :refs/tags/v1.0.0-submission-submission</code></pre>
+<pre><code>git tag -d v1.0.0-submission
+git push origin :refs/tags/v1.0.0-submission</code></pre>
   <p>If Zenodo has already minted a DOI, the DOI is permanent and points to that
   state.  You can retract the record, but the DOI URL will still exist as tombstoned.</p>
 </div>
@@ -155,7 +155,7 @@ git push origin :refs/tags/v1.0.0-submission-submission</code></pre>
 
   <h3>Post-tag flow</h3>
   <ol>
-    <li>Push <code>v1.0.0-submission-submission</code> from the step above.</li>
+    <li>Push <code>v1.0.0-submission</code> from the step above.</li>
     <li>Within ~5 minutes, Zenodo will pick up the tag and create a new record,
     using <code>.zenodo.json</code> as metadata.</li>
     <li>Visit <a href="https://zenodo.org/uploads">Zenodo &rarr; uploads</a>, open
@@ -169,7 +169,7 @@ git push origin :refs/tags/v1.0.0-submission-submission</code></pre>
         <li><code>manuscript.tex</code> - any citation to the verification repo</li>
       </ul>
     </li>
-    <li>Commit the DOI update and tag <code>v1.0.1-submission-submission</code> (DOI amendment).
+    <li>Commit the DOI update and tag <code>v1.0.1-submission</code> (DOI amendment).
     Zenodo will mint a second, linked DOI for this patch record.</li>
   </ol>
 </div>
@@ -194,23 +194,23 @@ echo $CR_PAT | docker login ghcr.io -u &lt;github-username&gt; --password-stdin
 # Build (expect ~25 min cold; ~5 min with BuildKit cache).
 cd /path/to/kstar-verify
 docker build -f Dockerfile.lean4 \
-  -t ghcr.io/kootru-repo/kstar-verify:submission-submission \
-  -t ghcr.io/kootru-repo/kstar-verify:v1.0.0-submission-submission \
+  -t ghcr.io/kootru-repo/kstar-verify:submission \
+  -t ghcr.io/kootru-repo/kstar-verify:v1.0.0-submission \
   .
 
 # Verify the image runs and prints the manifest summary.
-docker run --rm ghcr.io/kootru-repo/kstar-verify:submission-submission
+docker run --rm ghcr.io/kootru-repo/kstar-verify:submission
 
 # Push both tags.
-docker push ghcr.io/kootru-repo/kstar-verify:submission-submission
-docker push ghcr.io/kootru-repo/kstar-verify:v1.0.0-submission-submission
+docker push ghcr.io/kootru-repo/kstar-verify:submission
+docker push ghcr.io/kootru-repo/kstar-verify:v1.0.0-submission
 
 # Flip the package to public visibility via GitHub UI:
 # https://github.com/orgs/kootru-repo/packages</code></pre>
 
   <h3>Smoke test from a clean machine</h3>
-<pre><code>docker pull ghcr.io/kootru-repo/kstar-verify:submission-submission
-docker run --rm ghcr.io/kootru-repo/kstar-verify:submission-submission
+<pre><code>docker pull ghcr.io/kootru-repo/kstar-verify:submission
+docker run --rm ghcr.io/kootru-repo/kstar-verify:submission
 # Should print: git SHA, toolchain, build exit 0, sorry=0, 28 claims summary.</code></pre>
 </div>
 
@@ -246,7 +246,7 @@ docker run --rm ghcr.io/kootru-repo/kstar-verify:submission-submission
 
   <h3>Distribution</h3>
   <ul class="checklist">
-    <li>Attach MP4 + SRT to the GitHub Release for <code>v1.0.0-submission-submission</code>.</li>
+    <li>Attach MP4 + SRT to the GitHub Release for <code>v1.0.0-submission</code>.</li>
     <li>Link the video from README "Quick start" section.</li>
     <li>If K* Verification requests a supplementary video, attach the MP4 directly.</li>
     <li>Mirror to Zenodo record when DOI is minted.</li>

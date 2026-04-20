@@ -16,7 +16,7 @@ Then select `Run All`.
 
 ## Run on Binder (no install)
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kootru-repo/kstar-verify/v1.0.0-submission-submission?filepath=notebook%2Fk_star_demo.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kootru-repo/kstar-verify/v1.0.0-submission?filepath=notebook%2Fk_star_demo.ipynb)
 
 ## Run on Colab
 

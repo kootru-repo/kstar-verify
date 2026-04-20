@@ -66,9 +66,9 @@ Regenerate the table on a fresh clone via `python lean4/scripts/generate_all.py`
 ## 10 min: run the Jupyter demo
 
 Open [`notebook/k_star_demo.ipynb`](notebook/k_star_demo.ipynb) locally
-or on [Binder](https://mybinder.org/v2/gh/kootru-repo/kstar-verify/v1.0.0-submission-submission?filepath=notebook%2Fk_star_demo.ipynb)
+or on [Binder](https://mybinder.org/v2/gh/kootru-repo/kstar-verify/v1.0.0-submission?filepath=notebook%2Fk_star_demo.ipynb)
 (Binder reads [`.binder/`](.binder/) for the environment).
-63 cells total (~30 markdown narrative + ~32 executable code), ~3 min
+69 cells total (~33 markdown narrative + ~36 executable code), ~3 min
 end-to-end on Binder.  All data ships in-repo under `data/`; nothing
 to configure.  Every paper claim has an in-notebook witness; every
 assertion fires loudly on drift.
@@ -139,6 +139,50 @@ override the auto-discovered path.
 Every cell exits deterministically with PASS/FAIL assertions.  Any
 drift between the registry and the computed value fires a loud
 `AssertionError` identifying the claim.
+
+---
+
+## +2 min (optional): live-QPU preflight
+
+**If you have a free IBM Quantum account, you can re-run the W-state
+K\* protocol on real hardware yourself.**  The bundled Table I
+replication above answers *"do the claimed numbers come out of the
+raw counts?"*; this step answers the stronger question *"does the
+same protocol still produce a K\* advantage on hardware today?"*
+
+```
+pip install -r hardware/requirements.txt
+export IBM_QUANTUM_TOKEN='your-token-here'
+
+python hardware/run_w_state.py --verify-equivalence   # 0 QPU
+python hardware/run_w_state.py --dry-run              # 0 QPU
+python hardware/run_w_state.py --preflight            # ~2 s QPU
+```
+
+Each step gates the next, so a broken token / stale toolchain / or
+K\* operator drift fails in seconds rather than minutes.  Preflight
+submits exactly 2 measurement circuits (checks `<IIIZ>` and `<IIXI>`
+on the 4-qubit W state) and verifies they fall within the expected
+noise tolerance.  A `[PASS]` confirms the token, backend routing,
+`SamplerV2` round-trip, counts extraction, and basis-rotation are
+all correct.
+
+For the full flagship replication (4 runs × 137 K\* + 137 random
+Paulis at 1000 shots, ~2 min of QPU time, well under the 10-min
+free-tier monthly budget):
+
+```
+python hardware/run_w_state.py --backend ibm_fez --n-runs 4
+python hardware/analyze_results.py hardware/results/w_repeat_results_*.json
+```
+
+The emitted JSON matches the shipped reference schema, including
+`provenance.raw_counts` keyed by job_id and
+`provenance.calibration` capturing backend state at submit time.
+A 5-minute QPU-time safety gate (`--yes-over-5min` to override)
+prevents accidental budget blow-outs.  See
+[`hardware/README.md`](hardware/README.md) for full details and
+troubleshooting.
 
 ---
 

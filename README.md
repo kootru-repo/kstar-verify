@@ -3,6 +3,7 @@
 [![CI](https://github.com/kootru-repo/kstar-verify/actions/workflows/verify.yml/badge.svg)](https://github.com/kootru-repo/kstar-verify/actions/workflows/verify.yml)
 [![Heartbeat](https://github.com/kootru-repo/kstar-verify/actions/workflows/heartbeat.yml/badge.svg)](https://github.com/kootru-repo/kstar-verify/actions/workflows/heartbeat.yml)
 [![doc-gen4](https://github.com/kootru-repo/kstar-verify/actions/workflows/docgen.yml/badge.svg)](https://kootru-repo.github.io/kstar-verify/)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kootru-repo/kstar-verify/v1.0.0-submission?filepath=notebook%2Fk_star_demo.ipynb)
 [![Lean](https://img.shields.io/badge/Lean4-v4.29.0--rc8-blueviolet)](lean4/lean-toolchain)
 [![sorry-free](https://img.shields.io/badge/sorry-0-brightgreen)](lean4/generated/verification_manifest.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -11,8 +12,13 @@
      [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.NNNNNNN.svg)](https://doi.org/10.5281/zenodo.NNNNNNN)
      See SUBMISSION_CHECKLIST.html "Human-gated: Zenodo DOI minting" for the update workflow. -->
 
-Machine verification for: **Krawtchouk spectral correspondence between
-Hamming schemes and quantum measurement design** (companion manuscript submission).
+This repository is the machine-executable companion to a paper on
+**Krawtchouk spectral correspondence between Hamming schemes and
+quantum measurement design**.  The paper argues that a specific 137-
+operator Pauli set (K\*) reconstructs 4-qubit quantum states more
+accurately than random Pauli sampling on noisy hardware; this repo
+proves every mathematical statement in Lean 4 and replicates every
+hardware fidelity from bundled IBM / Rigetti raw data.
 
 Every mathematical claim and empirical result in the manuscript is verified
 by deterministic code with no AI in the loop.
@@ -22,9 +28,9 @@ by deterministic code with no AI in the loop.
 (~3 min end-to-end, all data bundled; runs every paper claim with
 PASS/FAIL assertions).  Click the Binder badge above — nothing to
 configure.  For the tiered
-30s / 2min / 10min / 30min / 60min onramp (manifest peek, axiom table,
-notebook, Lean rebuild, Docker rebuild), see
-[VERIFICATION.md](VERIFICATION.md).
+30s / 2min / 10min / (+2min optional QPU) / 30min / 60min onramp
+(manifest peek, axiom table, notebook, live-QPU preflight, Lean
+rebuild, Docker rebuild), see [VERIFICATION.md](VERIFICATION.md).
 
 The notebook is the **demo-and-assert** surface: one executable file,
 concrete outputs, loud asserts on drift.  The tiered `run_all.py`
@@ -112,7 +118,7 @@ python run_all.py --registry proofs_registry.yaml --tier 2 3 5
 
 ## Running individual tiers
 
-Follow [Quick start](#quick-start-any-os-8-min) to install, then
+Follow [Quick start](#quick-start-any-os-5-min-math-only) to install, then
 run tiers individually:
 
 ### Pure-math tiers (no data needed)
@@ -296,7 +302,7 @@ kstar-verify/
 ├── tier6-chains/        Tier 6: End-to-end implication chains (44 checks)
 ├── tier7-claims/        Tier 7: Manuscript claim verification (285 checks)
 ├── tier-interp/         Statement audits: ablation, fuzzing, completeness
-├── notebook/            Jupyter demo (`k_star_demo.ipynb`, 63 cells, <3 min)
+├── notebook/            Jupyter demo (`k_star_demo.ipynb`, 69 cells, <3 min)
 ├── data/                QPU JSON files (408 files, ~13 MB; bundled in repo)
 ├── results/             Generated reports (HTML, text, JSON)
 ├── run_all.py              Master orchestrator

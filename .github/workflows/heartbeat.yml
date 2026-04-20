@@ -103,6 +103,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `Heartbeat failed: ${new Date().toISOString().slice(0, 10)}`,
-              body: `The weekly verification heartbeat failed. This is usually dependency drift (Mathlib, elan, Python packages).\n\nRun: ${runUrl}\n\nRecovery checklist:\n- [ ] Check Mathlib toolchain compatibility (lean4/lean-toolchain vs. Mathlib's manifest)\n- [ ] Check Python pip install logs for breaking major versions\n- [ ] Re-run \`python lean4/scripts/generate_all.py\` locally to triage\n\nThe submitted manifest (at v1.0.0-submission-submission tag) is unaffected - this watchdog only monitors current-main.`,
+              body: `The weekly verification heartbeat failed. This is usually dependency drift (Mathlib, elan, Python packages).\n\nRun: ${runUrl}\n\nRecovery checklist:\n- [ ] Check Mathlib toolchain compatibility (lean4/lean-toolchain vs. Mathlib's manifest)\n- [ ] Check Python pip install logs for breaking major versions\n- [ ] Re-run \`python lean4/scripts/generate_all.py\` locally to triage\n\nThe submitted manifest (at v1.0.0-submission tag) is unaffected - this watchdog only monitors current-main.`,
               labels: ['heartbeat-failure', 'automated']
             });

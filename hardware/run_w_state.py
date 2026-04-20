@@ -564,7 +564,11 @@ def _checkpoint(output_dir: Path, backend_name: str, seeds: list[int],
         f"w_repeat_partial_{time.strftime('%Y%m%d_%H%M%S')}_run{len(runs):02d}.json"
     )
     with ck.open("w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2)
+        # default=str serialises datetime (and any other non-native
+        # type backend.properties().to_dict() can embed inside
+        # provenance.calibration) as an ISO string rather than
+        # raising TypeError.
+        json.dump(payload, f, indent=2, default=str)
     print(f"  [checkpoint] {ck.name}", flush=True)
 
 
@@ -680,7 +684,10 @@ def _finalize(output_dir: Path, backend_name: str, seeds: list[int],
     }
     outfile = output_dir / f"w_repeat_results_{time.strftime('%Y%m%d_%H%M%S')}.json"
     with outfile.open("w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2)
+        # default=str handles the datetime values that
+        # backend.properties().to_dict() embeds inside
+        # provenance.calibration.gate_errors / qubit_properties.
+        json.dump(output, f, indent=2, default=str)
     print(f"\n  Saved: {outfile}")
     return output
 

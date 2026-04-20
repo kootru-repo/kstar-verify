@@ -1,7 +1,7 @@
 {
   "description": "SHA-256 checksums for all tracked data and bundled artifacts",
   "generated_by": "verify_integrity.py --generate-manifest",
-  "generated_at": "2026-04-20T10:07:48",
+  "generated_at": "2026-04-20T16:52:42",
   "file_count": 435,
   "files": {
     "data/8qubit-w-rigetti/null-model/dtr_distribution_product.npy": "66fe1e07be9b6e81841b8d70cfec89b6a34754c438007a5f3c1594161aba9499",
@@ -411,9 +411,9 @@
     "data/verification/verification_results.json": "761547583c0f20e188b35e1ec130298c8adca60b5b21a14e68de8dbfed95dde5",
     "data/w_repeat_results.json": "656afb7a8048f90666eda3c0588c3c6f46214f9f93ac411159e660cdfc14bdea",
     "data/w_repeat_results_enriched.json": "656afb7a8048f90666eda3c0588c3c6f46214f9f93ac411159e660cdfc14bdea",
-    "tier7-claims/tex/cover_letter.tex": "fd1a06c4abc3cf1469247ff5e1ee68234d2257d500c22059849dbf7fbc3620d7",
+    "tier7-claims/tex/cover_letter.tex": "d930a218a06e4bfab9a9af541c4e90f0cea695ffdcd6373ea5fb439539d0f204",
     "tier7-claims/tex/manuscript.tex": "719e2eb216a83b2612b9a5c1315446528fa003d049e618057cd18d069b1cbe5b",
-    "tier7-claims/tex/refs.bib": "af8798c36364750761d34ade389921f0e5b9e61e7a995558697670d67aa65f19",
+    "tier7-claims/tex/refs.bib": "e39c91539ffee65367cbf5b7883650003bae31191f3a26896229abda18a73528",
     "tier7-claims/tex/supplemental_material.tex": "7d301f89aef3914e1c774f2ff79c6b4f584d0fc5ff65ee8484b4191a74a1e4e7",
     "tier7-claims/figures/fig1_fidelity.pdf": "5c23d59ebf3db80f734e95898d9717309b78ff05e9f416c334fcd1c78c68a1e5",
     "tier7-claims/figures/fig1_fidelity.png": "4c3fb3b3e65c176cabebb9cd0176e60a2a1e00258acd384c9f202568efec429e",
@@ -433,10 +433,10 @@
     "tier7-claims/figures/gen_figures.py": "2f964e313f96097823df7cb1fd084c0af635f382d996ad4609ef7cf11cedeecf",
     "tier7-claims/scripts/significance_results_n4.json": "8cb8f662ea1dc4357724b72ecbda063de1c47a7a11f631d86eb4dd2a91c305b5",
     "tier7-claims/scripts/sota_comparison_n4.json": "8093cea15ba8f74c73d68091dc14fdc0207198f6dfe7d5b3b75b0e0cabbf8ddd",
-    "tier7-claims/cross_validate_lean.py": "889d4bfcd0193ea9c427f1f0f1984b30bdde57bc89ed87c9b2f5c621fe92d220",
+    "tier7-claims/cross_validate_lean.py": "143d32faadea38825870103a5ce987e48ba15f03ab47f2df7ca56fa185b9a3f2",
     "tier7-claims/ibm_floquet_dtc_test.py": "9337bdd4d5a1a0f58dc8712c73df40167d00cfc833bde5147c6fa3082c18fe45",
     "tier7-claims/run_all.py": "814bf55ecbf52bcdbdba1f7327509bb60a07fa679cd5c64a16c1b9bcc09a4c19",
-    "tier7-claims/verify_manuscript_claims.py": "530e53ceb0e71ea54dd5c9a648500da7c56643145fdca053d4e9fc1fb2799f5f",
+    "tier7-claims/verify_manuscript_claims.py": "9c79416d2b2113d379db2a33d00e61b6624e9db909778ef3a19d1329a1a4a862",
     "proofs_registry.yaml": "e25794c27e7ece422216fbcd119e2ad6a5b33a293e62d92c2c633f76c63ec911",
     "requirements.txt": "a9ffafc8c3c6b25014b344b0872410bb03513e0725eca25366d5bd5fd27b5f3e"
   }

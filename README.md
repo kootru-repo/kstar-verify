@@ -302,7 +302,7 @@ kstar-verify/
 ├── tier6-chains/        Tier 6: End-to-end implication chains (44 checks)
 ├── tier7-claims/        Tier 7: Manuscript claim verification (285 checks)
 ├── tier-interp/         Statement audits: ablation, fuzzing, completeness
-├── notebook/            Jupyter demo (`k_star_demo.ipynb`, 69 cells, <3 min)
+├── notebook/            Jupyter demo (`k_star_demo.ipynb`, 74 cells, <3 min)
 ├── data/                QPU JSON files (408 files, ~13 MB; bundled in repo)
 ├── results/             Generated reports (HTML, text, JSON)
 ├── run_all.py              Master orchestrator

@@ -1,0 +1,21 @@
+{
+  "source": "hardware_results_ibm_fez_20260307_214922.json",
+  "f_mle_ratio_form": 0.495579,
+  "f_mle_full_hradil": 0.887454,
+  "f_subspace_mle": 0.926,
+  "f_dfe_informative": 0.618,
+  "n_informative_in_kstar": 11,
+  "missing_operators": [
+    "XXYY",
+    "XYYX",
+    "YXXY",
+    "YYXX",
+    "ZZZZ"
+  ],
+  "notes": {
+    "f_mle_ratio_form": "Ratio-form R-operator (b/y with clipping); used in Table I",
+    "f_mle_full_hradil": "Full Hradil R-operator (pole-free); SM Sec. VII D reanalysis",
+    "f_subspace_mle": "Least-squares fit in {|0000>, |1111>} subspace",
+    "f_dfe_informative": "Direct fidelity estimation lower bound from K*-informative operators"
+  }
+}

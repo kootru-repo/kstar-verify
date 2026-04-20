@@ -1,0 +1,485 @@
+[
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "liftNormSq_q4_two",
+    "orig": 4,
+    "new": 5
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "q4_lift_norms_distinct",
+    "orig": 4,
+    "new": 3
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "q4_lift_norms_distinct",
+    "orig": 4,
+    "new": 5
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "q4_lift_norms_distinct",
+    "orig": 1,
+    "new": 0
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "q4_lift_norms_distinct",
+    "orig": 4,
+    "new": 5
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "q4_lift_norms_distinct",
+    "orig": 4,
+    "new": 5
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "q4_lift_norms_distinct",
+    "orig": 1,
+    "new": 0
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "exists_nonzero_lns_ne_one_of_qge4",
+    "orig": 0,
+    "new": 1
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "exists_nonzero_lns_ne_one_of_qge4",
+    "orig": 1,
+    "new": 0
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "exists_nonzero_lns_ne_one_of_qge4",
+    "orig": 0,
+    "new": 1
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "exists_nonzero_lns_ne_one_of_qge4",
+    "orig": 1,
+    "new": 0
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q2_table",
+    "orig": 2,
+    "new": 3
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q2_table",
+    "orig": 2,
+    "new": 3
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q2_table",
+    "orig": 1,
+    "new": 0
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q3_table",
+    "orig": 3,
+    "new": 4
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q3_table",
+    "orig": 3,
+    "new": 2
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q3_table",
+    "orig": 1,
+    "new": 2
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q3_table",
+    "orig": 2,
+    "new": 1
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q3_table",
+    "orig": 2,
+    "new": 1
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q4_table",
+    "orig": 4,
+    "new": 5
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q4_table",
+    "orig": 4,
+    "new": 3
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q4_table",
+    "orig": 4,
+    "new": 5
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q5_table",
+    "orig": 5,
+    "new": 6
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q5_table",
+    "orig": 5,
+    "new": 4
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q5_table",
+    "orig": 5,
+    "new": 6
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q5_table",
+    "orig": 5,
+    "new": 4
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q5_table",
+    "orig": 2,
+    "new": 3
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q5_table",
+    "orig": 3,
+    "new": 2
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q5_table",
+    "orig": 2,
+    "new": 3
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q5_table",
+    "orig": 3,
+    "new": 2
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q7_table",
+    "orig": 7,
+    "new": 8
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q7_table",
+    "orig": 7,
+    "new": 6
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q7_table",
+    "orig": 7,
+    "new": 8
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q7_table",
+    "orig": 7,
+    "new": 6
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q7_table",
+    "orig": 7,
+    "new": 8
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q7_table",
+    "orig": 7,
+    "new": 6
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q7_table",
+    "orig": 3,
+    "new": 4
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q7_table",
+    "orig": 4,
+    "new": 3
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q7_table",
+    "orig": 3,
+    "new": 4
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q11_middle",
+    "orig": 11,
+    "new": 12
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q11_middle",
+    "orig": 11,
+    "new": 10
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q11_middle",
+    "orig": 5,
+    "new": 6
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q11_middle",
+    "orig": 6,
+    "new": 5
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q11_middle",
+    "orig": 5,
+    "new": 6
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "lns_q11_middle",
+    "orig": 6,
+    "new": 5
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "iff_fails_at_q4",
+    "orig": 0,
+    "new": 1
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "iff_fails_at_q4",
+    "orig": 4,
+    "new": 5
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "iff_fails_at_q4",
+    "orig": 4,
+    "new": 3
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "iff_fails_at_q4",
+    "orig": 4,
+    "new": 5
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "iff_fails_at_q4",
+    "orig": 0,
+    "new": 1
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/QaryGram.lean",
+    "theorem": "iff_fails_at_q4",
+    "orig": 4,
+    "new": 5
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/WeightSatAllN.lean",
+    "theorem": "weight12_saturation_K5_nge4",
+    "orig": 4,
+    "new": 5
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Combinatorics/WeightSatAllN.lean",
+    "theorem": "weight12_saturation_K5_nge4",
+    "orig": 4,
+    "new": 3
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/WeightSatAllN.lean",
+    "theorem": "weight12_saturation_K5_nge4",
+    "orig": 4,
+    "new": 5
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Combinatorics/WeightSatAllN.lean",
+    "theorem": "weight12_saturation_K5_nge4",
+    "orig": 4,
+    "new": 3
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_moves_when_b_ne_y",
+    "orig": 1,
+    "new": 2
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_moves_when_b_ne_y",
+    "orig": 2,
+    "new": 3
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_moves_when_b_ne_y",
+    "orig": 2,
+    "new": 1
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_moves_when_b_ne_y",
+    "orig": 0,
+    "new": 1
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_moves_when_b_ne_y",
+    "orig": 0,
+    "new": 1
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_moves_when_b_ne_y",
+    "orig": 1,
+    "new": 2
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_moves_when_b_ne_y",
+    "orig": 2,
+    "new": 3
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_moves_when_b_ne_y",
+    "orig": 2,
+    "new": 1
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_nontrivial",
+    "orig": 1,
+    "new": 2
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_nontrivial",
+    "orig": 1,
+    "new": 0
+  },
+  {
+    "mode": "single",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_nontrivial",
+    "orig": 0,
+    "new": 1
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_nontrivial",
+    "orig": 1,
+    "new": 2
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_nontrivial",
+    "orig": 0,
+    "new": 1
+  },
+  {
+    "mode": "global",
+    "module": "KstarFormal/Quantum/HradilDerivation.lean",
+    "theorem": "R_closed_nontrivial",
+    "orig": 1,
+    "new": 0
+  }
+]

@@ -1,0 +1,9 @@
+HiGHS set-cover certification of K* basis compression
+  n_qubits        : 4
+  K* operators    : 137
+  candidate bases : 81 (= 3^4)
+  status          : HighsStatus.kOk
+  primal optimum  : 29.0
+  mip_gap         : 0.0
+  EXPECTED        : 29
+  result          : OPTIMUM CERTIFIED

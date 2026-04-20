@@ -1,0 +1,60 @@
+{
+  "description": "DTC XY correlator Pearson correlation (hardware vs noiseless ideal)",
+  "source": "floquet_dtc_results_ibm_kingston_20260401_113933.json",
+  "n_correlators": 9,
+  "pearson_r": 0.9353,
+  "p_value": 0.000213,
+  "ci_95": [
+    0.7156,
+    0.9866
+  ],
+  "sign_agreement": 8,
+  "sign_total": 9,
+  "correlator_pairs": [
+    {
+      "label": "XX_0,1",
+      "ideal": -0.122581,
+      "hardware": -0.11084
+    },
+    {
+      "label": "YY_0,1",
+      "ideal": -0.122581,
+      "hardware": -0.063477
+    },
+    {
+      "label": "XY_0,1",
+      "ideal": 0.067237,
+      "hardware": 0.083984
+    },
+    {
+      "label": "XX_1,2",
+      "ideal": 0.096007,
+      "hardware": 0.077637
+    },
+    {
+      "label": "YY_1,2",
+      "ideal": 0.096007,
+      "hardware": 0.09375
+    },
+    {
+      "label": "XY_1,2",
+      "ideal": 0.043683,
+      "hardware": -0.007812
+    },
+    {
+      "label": "XX_2,3",
+      "ideal": -0.121996,
+      "hardware": -0.116211
+    },
+    {
+      "label": "YY_2,3",
+      "ideal": -0.121996,
+      "hardware": -0.128906
+    },
+    {
+      "label": "XY_2,3",
+      "ideal": 0.067144,
+      "hardware": 0.13916
+    }
+  ]
+}

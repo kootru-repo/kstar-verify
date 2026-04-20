@@ -1,0 +1,179 @@
+{
+  "KstarFormal.QaryGram.bose_mesner_combinatorial_iff": [
+    "propext",
+    "Quot.sound"
+  ],
+  "KstarFormal.WeightSatAllN.weight12_saturation_K5_all_n": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "M_w_K5_sum": [
+    "propext",
+    "M_w_K5_sum._native.native_decide.ax_1_1"
+  ],
+  "bose_mesner_combinatorial_iff": [
+    "propext",
+    "Quot.sound"
+  ],
+  "cor1_approx_locality_stmt": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "cor1_approx_locality_universal": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "cor2_operator_lower_bound_n4": [
+    "propext",
+    "kstar_exceeds_lower_bound._native.native_decide.ax_1_1",
+    "operator_lower_bound_eq._native.native_decide.ax_1_1"
+  ],
+  "delsarteDual_K5_all_pos": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound",
+    "delsarteDual_K5_all_pos._native.native_decide.ax_1_1",
+    "delsarteDual_K5_all_pos._native.native_decide.ax_1_2",
+    "delsarteDual_K5_all_pos._native.native_decide.ax_1_3",
+    "delsarteDual_K5_all_pos._native.native_decide.ax_1_4",
+    "delsarteDual_K5_all_pos._native.native_decide.ax_1_5"
+  ],
+  "hradil_R_closed_form": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "kfull_n5": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound",
+    "n5_K4_rank_deficient._native.native_decide.ax_1_1",
+    "n5_K5_full_rank._native.native_decide.ax_1_1",
+    "n5_K5_full_rank._native.native_decide.ax_1_2",
+    "n5_K5_full_rank._native.native_decide.ax_1_3",
+    "n5_K5_full_rank._native.native_decide.ax_1_4",
+    "n5_K5_full_rank._native.native_decide.ax_1_5",
+    "n5_K5_full_rank._native.native_decide.ax_1_6"
+  ],
+  "lem1_hessian_diagonal": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "lem1_hessian_universal": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "lem2_purity_bound": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "lem2_purity_universal": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "lem3_eigenvalue_monotonicity_n4": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound",
+    "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_1",
+    "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_2",
+    "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_3",
+    "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_4",
+    "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_5"
+  ],
+  "lem3_eigenvalue_monotonicity_universal": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "lem4_hypergeometric_bound": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "lem5_spectral_decomposition_n4": [
+    "propext",
+    "eigenvalues_K5_eq._native.native_decide.ax_1_1"
+  ],
+  "lem6_support_completeness_n4": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound",
+    "all_c_w_positive._native.native_decide.ax_1_1",
+    "all_c_w_positive._native.native_decide.ax_1_2",
+    "all_c_w_positive._native.native_decide.ax_1_3",
+    "all_c_w_positive._native.native_decide.ax_1_4",
+    "all_c_w_positive._native.native_decide.ax_1_5"
+  ],
+  "physical_kstar_count_n4": [
+    "propext"
+  ],
+  "psd_contraction": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "thm1_basin_separation": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound",
+    "expected_missing_n4._native.native_decide.ax_1_1",
+    "kstar_eq_five._native.native_decide.ax_1_1",
+    "kstar_eq_five._native.native_decide.ax_1_2",
+    "kstar_eq_five._native.native_decide.ax_1_3",
+    "kstar_eq_five._native.native_decide.ax_1_4"
+  ],
+  "thm1_basin_universal": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "thm2_spectral_char_universal": [
+    "DensityMatrix",
+    "fidelity_orthogonal_zero",
+    "fidelity_witness_traceproj_decomp",
+    "propext",
+    "qfidelity",
+    "witnessMinus",
+    "witnessPlus",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "thm2_spectral_characterization": [
+    "DensityMatrix",
+    "fidelity_orthogonal_zero",
+    "propext",
+    "qfidelity",
+    "witnessMinus",
+    "witnessPlus",
+    "Classical.choice",
+    "Quot.sound",
+    "kstar_full_eq_four._native.native_decide.ax_1_1",
+    "kstar_full_eq_four._native.native_decide.ax_1_2",
+    "kstar_full_eq_four._native.native_decide.ax_1_3",
+    "kstar_full_eq_four._native.native_decide.ax_1_4",
+    "kstar_full_eq_four._native.native_decide.ax_1_5",
+    "kstar_full_eq_four._native.native_decide.ax_1_6"
+  ],
+  "thm3_asymptotic_separation": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "weight12_saturation_K5_all_n": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "weight_3_not_saturated": [
+    "propext",
+    "weight_3_not_saturated._native.native_decide.ax_1_1"
+  ]
+}

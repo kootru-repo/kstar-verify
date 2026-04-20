@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K* Verification Suite - machine-verified certificate</title>
+<style>
+:root {
+  --fg: #1a202c; --muted: #4a5568; --dim: #718096;
+  --bg: #f7fafc; --card: #ffffff; --border: #e2e8f0;
+  --accent: #2b6cb0;
+}
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg);
+  font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font: 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: #edf2f7; padding: 1px 4px; border-radius: 3px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 24px; }
+header { padding: 32px 0 16px; border-bottom: 1px solid var(--border); }
+h1 { margin: 0 0 6px; font-size: 28px; }
+h2 { margin: 32px 0 12px; font-size: 20px;
+  border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+h3 { margin: 20px 0 8px; font-size: 16px; }
+.sub { color: var(--muted); margin: 0; }
+.badges { margin: 12px 0 0; }
+.pill { display:inline-block; color:#fff; padding:3px 10px;
+  border-radius: 12px; font-size: 12px; margin: 2px 4px 2px 0; }
+.chip { display:inline-block; font-size: 11px; padding: 1px 6px;
+  border-radius: 8px; background: #e2e8f0; color: var(--muted);
+  margin-right: 2px; }
+.chip.tier-tier1,.chip.tier-tier1-sage { background:#c6f6d5; color:#22543d; }
+.chip.tier-tier2 { background:#bee3f8; color:#2a4365; }
+.chip.tier-tier3 { background:#fefcbf; color:#744210; }
+.chip.tier-tier5 { background:#fed7d7; color:#742a2a; }
+.card { background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+ol.onramp { padding-left: 20px; margin: 0; }
+ol.onramp li { margin: 8px 0; }
+.tiers { display:grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tiers .t { background: var(--card); border: 1px solid var(--border);
+  border-radius: 6px; padding: 10px 12px; font-size: 13px; }
+.tiers .t b { display:block; font-size: 14px; margin-bottom: 2px; }
+.tiers .t .d { color: var(--muted); font-size: 12px; }
+table.claims, table.axiom-table { width: 100%; border-collapse: collapse;
+  font-size: 13px; }
+table.claims th, table.claims td,
+table.axiom-table th, table.axiom-table td {
+  text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border);
+  vertical-align: top; }
+table.claims th { background: #edf2f7; font-weight: 600; }
+table.claims tr.group-header td { background: #f7fafc;
+  border-top: 2px solid var(--border); padding: 10px 8px; }
+.dim { color: var(--dim); }
+.tone-ok { color: #276749; }
+.tone-warn { color: #9c4221; }
+.tone-err { color: #9b2c2c; }
+.tone-info { color: #2c5282; }
+.lean-link { display: inline-block; }
+.lean-link .badge { font-size: 10px; padding: 1px 5px; border-radius: 3px;
+  color: #fff; background: var(--accent); }
+.lean-link.tone-ok .badge { background: #276749; }
+.lean-link.tone-warn .badge { background: #9c4221; }
+footer { margin: 48px 0 24px; padding-top: 16px; color: var(--muted);
+  font-size: 12px; border-top: 1px solid var(--border); }
+.kbar { display:flex; gap: 12px; flex-wrap: wrap; margin: 8px 0; }
+.kbar a { background: var(--card); border: 1px solid var(--border);
+  padding: 6px 10px; border-radius: 6px; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>K* Verification Suite</h1>
+  <p class="sub">Machine-verified certificate for the companion manuscript on
+     Krawtchouk spectral correspondence and measurement design.  Every
+     numerical claim and every theorem in the paper is discharged by
+     deterministic code; this page is the referee onramp.</p>
+  <div class="badges"><span class="pill" style="background:#2b6cb0"><b>28</b>&nbsp;claims registered</span> <span class="pill" style="background:#2f855a"><b>22</b>&nbsp;Lean-proved</span> <span class="pill" style="background:#2f855a"><b>27</b>&nbsp;tier-covered</span> <span class="pill" style="background:#2f855a"><b>0</b>&nbsp;sorry</span> <span class="pill" style="background:#2b6cb0"><b>leanprover/lean4:v4.29.0-rc8</b>&nbsp;Lean toolchain</span></div>
+  <div class="kbar">
+    <a href="./find/">Search all declarations</a>
+    <a href="./KstarFormal.html">Browse library</a>
+    <a href="https://github.com/kootru-repo/kstar-verify">Source repository</a>
+    <a href="https://github.com/kootru-repo/kstar-verify/blob/master/VERIFICATION.md">Tiered onramp (30 s / 2 min / 10 min / 30 min)</a>
+    <a href="https://github.com/kootru-repo/kstar-verify/blob/master/proofs_registry.yaml">proofs_registry.yaml</a>
+  </div>
+</header>
+
+<section>
+<h2>Referee: five-minute tour</h2>
+<div class="card">
+<ol class="onramp">
+  <li><b>Pick a claim</b> in the table below.  Click the <code>Lean</code>
+      link to jump to the formal statement and proof.</li>
+  <li><b>Confirm no <code>sorry</code></b>: the badge above shows
+      <code>0 sorry</code>, derived from
+      <code>lean4/generated/verification_manifest.json</code> at build time.</li>
+  <li><b>Read the axiom table</b> below: every named axiom is listed
+      with the claims that depend on it.  There are no hidden
+      assumptions.</li>
+  <li><b>Run the notebook</b> for a 3-minute end-to-end demo of every
+      paper figure and table:
+      <code>notebook/k_star_demo.ipynb</code> (Binder-runnable; no
+      install required).</li>
+  <li><b>For deeper reproduction</b>: clone the repo and run
+      <code>./validate.sh</code> &mdash; rebuilds Lean, SageMath, and
+      Python tiers from source in &lt;60 min.</li>
+</ol>
+</div>
+</section>
+
+<section>
+<h2>Eight independent verification tiers</h2>
+<p class="sub">Each claim is discharged by at least one tier.  Redundant
+tiers on a single claim reduce single-point-of-failure risk.</p>
+<div class="tiers">
+  <div class="t"><b>Tier 1 - SageMath</b><span class="d">Exact-arithmetic
+     combinatorial facts: K*, weight budgets, Krawtchouk eigenvalues.</span></div>
+  <div class="t"><b>Tier 2 - SymPy</b><span class="d">Symbolic
+     verification of closed-form identities and algebraic proofs.</span></div>
+  <div class="t"><b>Tier 3 - NumPy</b><span class="d">Floating-point
+     evaluation at n=4..9 and q=2..7; spectral/condition-number checks.</span></div>
+  <div class="t"><b>Tier 4 - Independent re-derivation</b><span class="d">
+     Verifies the previous tiers via a disjoint numerical path (catches
+     transcription errors).</span></div>
+  <div class="t"><b>Tier 5 - Fidelity reconstructions</b><span class="d">
+     Hardware expectation values -&gt; MLE -&gt; fidelity using the exact
+     algorithms described in the paper.</span></div>
+  <div class="t"><b>Tier 6 - Dependency chains</b><span class="d">
+     DAG-walks the <code>depends_on</code> edges to guarantee every
+     proof's premises are themselves verified.</span></div>
+  <div class="t"><b>Tier 7 - Manuscript claims</b><span class="d">
+     Parses the <code>.tex</code> sources and asserts every numerical
+     value matches its data source.</span></div>
+  <div class="t"><b>Lean4</b><span class="d">Kernel-checked formal
+     proofs of all theorem/lemma/proposition claims; axiom footprint
+     audited per-claim.</span></div>
+</div>
+</section>
+
+<section>
+<h2>Claim &rarr; machine evidence</h2>
+<p class="sub">Auto-generated from
+<a href="https://github.com/kootru-repo/kstar-verify/blob/master/proofs_registry.yaml">
+<code>proofs_registry.yaml</code></a>. Click any Lean theorem to jump to
+its formal statement.</p>
+<table class="claims">
+<thead><tr>
+  <th>id</th><th>label</th><th>type</th><th>status</th>
+  <th>Lean4 theorem</th><th>tiers</th>
+</tr></thead>
+<tbody>
+<tr class='group-header'><td colspan='6'><b>Theorems</b> &middot; 3</td></tr>
+<tr><td><code>thm:asymptotic</code></td><td>Theorem 3 (Asymptotic K* separation)</td><td class='type-theorem'>theorem</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=thm3_asymptotic_separation#doc" class="lean-link tone-ok"><code>thm3_asymptotic_separation</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier5'>tier5</span></td></tr>
+<tr><td><code>thm:basin</code></td><td>Theorem 1 (Basin separation)</td><td class='type-theorem'>theorem</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=thm1_basin_separation#doc" class="lean-link tone-ok"><code>thm1_basin_separation</code> <span class="badge">Lean*</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr><td><code>thm:spectral-char</code></td><td>Theorem 2 (Spectral characterization of basin separation)</td><td class='type-theorem'>theorem</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=thm2_spectral_characterization#doc" class="lean-link tone-ok"><code>thm2_spectral_characterization</code> <span class="badge">Lean*</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr class='group-header'><td colspan='6'><b>Lemmas</b> &middot; 6</td></tr>
+<tr><td><code>lem:completeness</code></td><td>Lemma 6 (Support-completeness criterion)</td><td class='type-lemma'>lemma</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=lem6_support_completeness_n4#doc" class="lean-link tone-ok"><code>lem6_support_completeness_n4</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span></td></tr>
+<tr><td><code>lem:coupon</code></td><td>Lemma 4 (Coupon-collector / hypergeometric threshold)</td><td class='type-lemma'>lemma</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=lem4_hypergeometric_bound#doc" class="lean-link tone-ok"><code>lem4_hypergeometric_bound</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span></td></tr>
+<tr><td><code>lem:hessian</code></td><td>Lemma 1 (Fisher-Hessian spectral decomposition)</td><td class='type-lemma'>lemma</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=lem1_hessian_diagonal#doc" class="lean-link tone-ok"><code>lem1_hessian_diagonal</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr><td><code>lem:monotone</code></td><td>Lemma 3 (Eigenvalue monotonicity)</td><td class='type-lemma'>lemma</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=lem3_eigenvalue_monotonicity_n4#doc" class="lean-link tone-ok"><code>lem3_eigenvalue_monotonicity_n4</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr><td><code>lem:purity_main</code></td><td>Lemma 2 (Purity bound on positivity excursion)</td><td class='type-lemma'>lemma</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=lem2_purity_bound#doc" class="lean-link tone-ok"><code>lem2_purity_bound</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr><td><code>lem:spectral_q_main</code></td><td>Lemma 5 (Spectral decomposition, general q)</td><td class='type-lemma'>lemma</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=lem5_spectral_decomposition_n4#doc" class="lean-link tone-ok"><code>lem5_spectral_decomposition_n4</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr class='group-header'><td colspan='6'><b>Propositions</b> &middot; 5</td></tr>
+<tr><td><code>prop:hradil_R_operator</code></td><td>Hradil R-operator closed form and fixed-point characterization</td><td class='type-proposition'>proposition</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=hradil_R_closed_form#doc" class="lean-link tone-ok"><code>hradil_R_closed_form</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier5'>tier5</span></td></tr>
+<tr><td><code>prop:mass-threshold</code></td><td>SM Proposition 3 (Spectral mass threshold)</td><td class='type-proposition'>proposition</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=weight12_saturation_K5_all_n#doc" class="lean-link tone-ok"><code>weight12_saturation_K5_all_n</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span></td></tr>
+<tr><td><code>prop:psd_contraction</code></td><td>SM Proposition 4 (PSD contraction)</td><td class='type-proposition'>proposition</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=psd_contraction#doc" class="lean-link tone-ok"><code>psd_contraction</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span></td></tr>
+<tr><td><code>prop:spec-complete</code></td><td>SM Proposition 2 (Spectral completeness threshold)</td><td class='type-proposition'>proposition</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=lem6_support_completeness_n4#doc" class="lean-link tone-ok"><code>lem6_support_completeness_n4</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span></td></tr>
+<tr><td><code>prop:spectral_q</code></td><td>SM Proposition 1 (Spectral decomposition)</td><td class='type-proposition'>proposition</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=bose_mesner_combinatorial_iff#doc" class="lean-link tone-ok"><code>bose_mesner_combinatorial_iff</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr class='group-header'><td colspan='6'><b>Corollarys</b> &middot; 4</td></tr>
+<tr><td><code>cor:approx_local</code></td><td>Corollary 1 (Approximate locality)</td><td class='type-corollary'>corollary</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=cor1_approx_locality_stmt#doc" class="lean-link tone-ok"><code>cor1_approx_locality_stmt</code> <span class="badge">Lean*</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr><td><code>cor:fidelity_lower_bound</code></td><td>Corollary (Fidelity lower bound under MLE near-purity)</td><td class='type-corollary'>corollary</td><td class='tone-ok'>proved</td><td><span class="dim">textbook</span></td><td><span class='chip tier-tier2'>tier2</span></td></tr>
+<tr><td><code>cor:lower_bound</code></td><td>Corollary 2 (Operator lower bound)</td><td class='type-corollary'>corollary</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=cor2_operator_lower_bound_n4#doc" class="lean-link tone-ok"><code>cor2_operator_lower_bound_n4</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr><td><code>cor:support</code></td><td>SM Corollary 1 (Support-completeness)</td><td class='type-corollary'>corollary</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=bose_mesner_combinatorial_iff#doc" class="lean-link tone-ok"><code>bose_mesner_combinatorial_iff</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span></td></tr>
+<tr class='group-header'><td colspan='6'><b>Facts</b> &middot; 8</td></tr>
+<tr><td><code>fact:basis_cover_optimality_n4</code></td><td>Tensor-product basis cover of K* at n=4 has optimum chi-bar = 29</td><td class='type-fact'>fact</td><td class='tone-ok'>proved</td><td><span class="dim">textbook</span></td><td><span class='chip tier-tier3'>tier3</span></td></tr>
+<tr><td><code>fact:delsarte_dual_K5</code></td><td>Delsarte LP dual feasibility certificate at K*=5</td><td class='type-fact'>fact</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=delsarteDual_K5_all_pos#doc" class="lean-link tone-ok"><code>delsarteDual_K5_all_pos</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier1'>tier1</span></td></tr>
+<tr><td><code>fact:eigenvalue_table_n4_q2</code></td><td>Krawtchouk eigenvalue table at n=4, q=2 for K = 0, 1, 2, 3, 4, 5</td><td class='type-fact'>fact</td><td class='tone-ok'>proved</td><td><span class="dim">textbook</span></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr><td><code>fact:ghz_kstar_gap</code></td><td>GHZ stabilizer non-coverage by K*(4)</td><td class='type-fact'>fact</td><td class='tone-ok'>proved</td><td><span class="dim">textbook</span></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr><td><code>fact:kfull_scaling</code></td><td>K_full(n) = n for n = 4..8</td><td class='type-fact'>fact</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=kfull_n5#doc" class="lean-link tone-ok"><code>kfull_n5</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier1'>tier1</span></td></tr>
+<tr><td><code>fact:kstar_count</code></td><td>K* operator count decomposition (1+12+54+54+16=137)</td><td class='type-fact'>fact</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=M_w_K5_sum#doc" class="lean-link tone-ok"><code>M_w_K5_sum</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr><td><code>fact:kstar_python_lean_bridge</code></td><td>K* selector Python&lt;-&gt;Lean bridge (n=4, q=2)</td><td class='type-fact'>fact</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=physical_kstar_count_n4#doc" class="lean-link tone-ok"><code>physical_kstar_count_n4</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier3'>tier3</span> <span class='chip tier-tier1'>tier1</span></td></tr>
+<tr><td><code>fact:weight3_undersaturation_K5</code></td><td>Weight-3 strict undersaturation by K=5 (closed-form deficit 19 C(n,3))</td><td class='type-fact'>fact</td><td class='tone-ok'>proved</td><td><a href="./find/?pattern=weight_3_not_saturated#doc" class="lean-link tone-ok"><code>weight_3_not_saturated</code> <span class="badge">Lean</span></a></td><td><span class='chip tier-tier2'>tier2</span> <span class='chip tier-tier3'>tier3</span></td></tr>
+<tr class='group-header'><td colspan='6'><b>Equations</b> &middot; 2</td></tr>
+<tr><td><code>eq:hoeffding</code></td><td>Hoeffding&#x27;s inequality applied to Pauli-expectation estimators</td><td class='type-equation'>equation</td><td class='tone-info'>verified_only</td><td><span class="dim">textbook</span></td><td><span class='dim'>-</span></td></tr>
+<tr><td><code>eq:kappa</code></td><td>Condition number of Gram matrix G(K*)</td><td class='type-equation'>equation</td><td class='tone-ok'>proved</td><td><span class="dim">textbook</span></td><td><span class='chip tier-tier3'>tier3</span></td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2>Axiom audit</h2>
+<p class="sub">Lean's trust basis consists of its three core axioms
+(<code>propext</code>, <code>Classical.choice</code>,
+<code>Quot.sound</code>).  Any additional named axiom used by a proof
+is listed below with the count of claims that depend on it.  The full
+per-claim axiom list is machine-generated into
+<code>lean4/generated/verification_manifest.json</code>.</p>
+<table class='axiom-table'><thead><tr><th>Named axiom</th><th>Claims using</th><th>Claim ids</th></tr></thead><tbody><tr><td><code>fidelity_orthogonal_zero</code></td><td>1</td><td class='dim'>thm:spectral-char</td></tr></tbody></table>
+</section>
+
+<section>
+<h2>Independent reproduction</h2>
+<div class="card">
+<h3>Minimum-install path (~3 min)</h3>
+<p>Open <a href="https://github.com/kootru-repo/kstar-verify/blob/master/notebook/k_star_demo.ipynb">
+<code>notebook/k_star_demo.ipynb</code></a> on Binder (no local
+install).  The notebook replays every paper figure and table with
+loud <code>assert</code> statements; a passing run means every
+numerical claim lands within the declared tolerance.</p>
+
+<h3>Full Lean rebuild (~45 min, ~4 GB disk)</h3>
+<pre><code>git clone https://github.com/kootru-repo/kstar-verify
+cd kstar-verify/lean4
+elan self update &amp;&amp; elan default $(cat lean-toolchain)
+lake exe cache get
+lake build</code></pre>
+
+<h3>Full pipeline (Lean + Sage + Python + HW replay)</h3>
+<pre><code>./validate.sh   # from repo root; writes generated/verification_manifest.json</code></pre>
+</div>
+</section>
+
+<footer>
+  Generated 2026-04-20 04:08 UTC from commit
+  <code><a href="https://github.com/kootru-repo/kstar-verify/commit/76967ae7ef95">
+  76967ae7ef95</a></code>.  Documentation produced by
+  <a href="https://github.com/leanprover/doc-gen4">doc-gen4</a>.  Every
+  number on this page comes from <code>proofs_registry.yaml</code>
+  or <code>lean4/generated/verification_manifest.json</code>; nothing
+  is hand-authored.
+</footer>
+
+</div>
+</body>
+</html>

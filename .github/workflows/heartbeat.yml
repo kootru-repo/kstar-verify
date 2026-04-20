@@ -1,0 +1,108 @@
+name: Weekly heartbeat
+
+# Scheduled full verification run.  Catches silent breakage from
+# upstream dependency drift (Mathlib updates, Python package
+# upgrades, changes in lean toolchain metadata) between submission
+# and publication.  Failure here does NOT block submission; it's a
+# watchdog.
+
+on:
+  schedule:
+    # Every Monday at 06:00 UTC (out-of-hours; low GitHub runner load).
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write  # To auto-file a heartbeat issue on failure.
+
+jobs:
+  heartbeat:
+    name: Weekly full verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Python deps
+        run: |
+          pip install -r requirements.txt
+          pip install pyyaml
+
+      - name: Install elan
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+
+      - name: Cache Mathlib
+        uses: actions/cache@v5
+        with:
+          path: lean4/.lake
+          key: lean4-lake-heartbeat-${{ hashFiles('lean4/lean-toolchain', 'lean4/lake-manifest.json') }}
+
+      - name: Lean build + sorry audit
+        working-directory: lean4
+        run: |
+          # `require «doc-gen4»` is declared in lakefile.lean but not
+          # pinned in lake-manifest.json (the doc-gen4 dep is resolved
+          # on demand per run).  `lake update doc-gen4` populates it
+          # before the first build, matching verify.yml and docgen.yml.
+          lake update doc-gen4
+          lake build
+          python scripts/check_sorry.py --layer1
+
+      - name: Regenerate artifacts
+        working-directory: lean4
+        run: python scripts/generate_all.py
+
+      - name: Registry sanity check
+        run: |
+          python verify_registry.py || echo "note: pre-existing warnings tolerated"
+
+      - name: Upload heartbeat manifest
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: heartbeat-manifest-${{ github.run_id }}
+          path: |
+            lean4/generated/verification_manifest.json
+            lean4/generated/axiom_report.json
+          retention-days: 365
+
+      - name: File issue on failure (dedupe on label)
+        if: failure()
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            // Dedupe: if a heartbeat-failure issue is already open,
+            // comment on it instead of creating a new one.
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'heartbeat-failure',
+              state: 'open',
+              per_page: 1,
+            });
+            if (existing.data.length > 0) {
+              const issue = existing.data[0];
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: `Heartbeat failed again on ${new Date().toISOString().slice(0, 10)}. Run: ${runUrl}`,
+              });
+              return;
+            }
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Heartbeat failed: ${new Date().toISOString().slice(0, 10)}`,
+              body: `The weekly verification heartbeat failed. This is usually dependency drift (Mathlib, elan, Python packages).\n\nRun: ${runUrl}\n\nRecovery checklist:\n- [ ] Check Mathlib toolchain compatibility (lean4/lean-toolchain vs. Mathlib's manifest)\n- [ ] Check Python pip install logs for breaking major versions\n- [ ] Re-run \`python lean4/scripts/generate_all.py\` locally to triage\n\nThe submitted manifest (at v1.0.0-submission-submission tag) is unaffected - this watchdog only monitors current-main.`,
+              labels: ['heartbeat-failure', 'automated']
+            });

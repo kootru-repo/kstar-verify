@@ -1,0 +1,33 @@
+{
+  "description": "Saturate-and-fill simulation: K* vs proportional vs K*-ratio-random-intra",
+  "params": {
+    "n_qubits": 4,
+    "m_budget": 137,
+    "depol": 0.03,
+    "readout": 0.02,
+    "n_shots": 1000,
+    "n_trials": 20,
+    "weights_shared": {"w0": 1, "w1": 12, "w2": 54},
+    "kstar_split": {"w3": 54, "w4": 16},
+    "proportional_split": {"w3": 40, "w4": 30}
+  },
+  "strategies": {
+    "K*": "Deterministic K* selection {1,12,54,54,16}",
+    "SFP": "Saturate w0-w2, proportional w3/w4 (40:30), random intra-weight",
+    "SFK": "Saturate w0-w2, K*-ratio w3/w4 (54:16), random intra-weight"
+  },
+  "results": {
+    "W": {"Kstar": 0.817, "SFP": 0.607, "SFK": 0.717},
+    "GHZ": {"Kstar": 0.806, "SFP": 0.440, "SFK": 0.593},
+    "Product": {"Kstar": 0.975, "SFP": 0.958, "SFK": 0.965},
+    "Haar_mean": {"Kstar": 0.07, "SFP": 0.07, "SFK": 0.07}
+  },
+  "advantage_decomposition": {
+    "total_Kstar_minus_SFP_structured_mean": 0.198,
+    "weight_ratio_effect_SFK_minus_SFP_structured_mean": 0.090,
+    "intra_weight_effect_Kstar_minus_SFK_structured_mean": 0.107,
+    "weight_ratio_fraction": 0.58,
+    "intra_weight_fraction": 0.42
+  },
+  "timestamp": "2026-03-16T10:07:00Z"
+}

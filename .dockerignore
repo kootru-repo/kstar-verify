@@ -1,0 +1,51 @@
+# Keep the Docker build context small.
+# Anything listed here is NOT sent to the Docker daemon during `docker build`.
+
+# VCS metadata
+.git/
+.gitignore
+.gitattributes
+
+# Build artifacts (regenerated inside the container anyway)
+lean4/.lake/
+lean4/build/
+lean4/generated/
+lean4/_scratch/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+**/.ipynb_checkpoints/
+notebook/k_star_demo.executed.ipynb
+
+# Submission scratch
+backup-*
+*.ARCHIVED.*
+backups/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Heavy data (mounted at runtime if needed)
+results/
+
+# Docker itself
+Dockerfile
+Dockerfile.*
+.dockerignore

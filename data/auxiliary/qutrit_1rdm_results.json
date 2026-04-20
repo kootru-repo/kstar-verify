@@ -1,0 +1,12 @@
+{
+  "description": "Qutrit 1-RDM fidelity from simulation",
+  "source": "qutrit simulation (q=3, n=2)",
+  "W_1rdm": {
+    "mean": 0.972,
+    "std": 0.028
+  },
+  "GHZ_1rdm": {
+    "mean": 0.915,
+    "std": 0.044
+  }
+}

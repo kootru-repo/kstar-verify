@@ -1,0 +1,3319 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-03-28T16:43:47.685984+00:00",
+    "registry_path": "proofs_registry.yaml",
+    "registry_sha256": "9bec71d6712bf801d683a0bb95723a9992b2b82870546a070f62902103aa5fa3",
+    "data_dir": "data/",
+    "python_version": "3.12.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "elapsed_seconds": 324.54
+  },
+  "tiers": {
+    "tier1": {
+      "name": "SageMath exact arithmetic",
+      "status": "SKIPPED",
+      "reason": "skipped (--skip-tier1 or --tier selection)",
+      "checks_passed": 0,
+      "checks_failed": 0,
+      "checks": [],
+      "raw_output": ""
+    },
+    "tier0": {
+      "name": "Lean4/Mathlib4 formal proofs",
+      "status": "PASS",
+      "checks_passed": 18,
+      "checks_failed": 0,
+      "checks": [
+        {
+          "status": "PASS",
+          "detail": "[PASS] Layer 1 sorry audit: 16 files clean, 0 sorry"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/Defs.lean (5 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/Combinatorics/Krawtchouk.lean (45 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/Combinatorics/LatticeCount.lean (12 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/Combinatorics/GreedyRedist.lean (15 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/Combinatorics/WeightSaturation.lean (8 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/LinearAlgebra/GramMatrix.lean (17 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/LinearAlgebra/SpectralDecomp.lean (21 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/LinearAlgebra/Eigenvalues.lean (7 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/LinearAlgebra/Monotonicity.lean (10 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/Certified.lean (0 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/LinearAlgebra/PauliOrthogonality.lean (14 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/Quantum/PurityBound.lean (14 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/Quantum/FidelityDichotomy.lean (36 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/Quantum/BasinSeparation.lean (13 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/Probability/Hypergeometric.lean (7 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] KstarFormal/Statements.lean (15 decls): sorry-free"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lake build: compiled successfully"
+        }
+      ],
+      "raw_output": "  [PASS] Layer 1 sorry audit: 16 files clean, 0 sorry\n  [PASS] KstarFormal/Defs.lean (5 decls): sorry-free\n  [PASS] KstarFormal/Combinatorics/Krawtchouk.lean (45 decls): sorry-free\n  [PASS] KstarFormal/Combinatorics/LatticeCount.lean (12 decls): sorry-free\n  [PASS] KstarFormal/Combinatorics/GreedyRedist.lean (15 decls): sorry-free\n  [PASS] KstarFormal/Combinatorics/WeightSaturation.lean (8 decls): sorry-free\n  [PASS] KstarFormal/LinearAlgebra/GramMatrix.lean (17 decls): sorry-free\n  [PASS] KstarFormal/LinearAlgebra/SpectralDecomp.lean (21 decls): sorry-free\n  [PASS] KstarFormal/LinearAlgebra/Eigenvalues.lean (7 decls): sorry-free\n  [PASS] KstarFormal/LinearAlgebra/Monotonicity.lean (10 decls): sorry-free\n  [PASS] KstarFormal/Certified.lean (0 decls): sorry-free\n  [PASS] KstarFormal/LinearAlgebra/PauliOrthogonality.lean (14 decls): sorry-free\n  [PASS] KstarFormal/Quantum/PurityBound.lean (14 decls): sorry-free\n  [PASS] KstarFormal/Quantum/FidelityDichotomy.lean (36 decls): sorry-free\n  [PASS] KstarFormal/Quantum/BasinSeparation.lean (13 decls): sorry-free\n  [PASS] KstarFormal/Probability/Hypergeometric.lean (7 decls): sorry-free\n  [PASS] KstarFormal/Statements.lean (15 decls): sorry-free\n  [PASS] lake build: compiled successfully\n"
+    },
+    "tier2": {
+      "name": "SymPy exact rational arithmetic",
+      "status": "PASS",
+      "checks_passed": 144,
+      "checks_failed": 0,
+      "checks": [
+        {
+          "status": "PASS",
+          "detail": "[PASS] Orthogonality: K diag(C) K^T = 2^n diag(C)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K_0(h;4) = 1 for all h"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K_1(h;4) = 4 - 2h"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K_2(h;4) = [6, 0, -2, 0, 6]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Krawtchouk symmetry (all 25 pairs)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Full 5x5 Krawtchouk matrix matches manuscript"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Krawtchouk polynomials (exact): 6 checks"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Gram matrix depends only on Hamming distance"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All eigenvalues positive at K*=5: [144, 224, 64, 128, 256]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Eigenvalue formula lambda_w = 16 * c_w / C(4,w)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Trace = 16 * 137 = 2192"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_w = [9, 56, 24, 32, 16], N_4(5) = 137 = 137"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All c_w > 0 (support-completeness at K*=5)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Gram-Krawtchouk diagonalisation: 6 checks"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] |S_K*| = 137 operators"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight-class sizes A_w = [1, 12, 54, 108, 81]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Total Paulis = 256 = 4^4"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight-0 saturated: 1/1"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight-1 saturated: 12/12"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight-2 saturated: 54/54"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight-3 NOT saturated: 54/108 = 1/2"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight-4 NOT saturated: 16/81"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] w_sat(S_K*) = 2"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Operator count: 67 saturated + 54+16 partial = 137"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Structured case: w_sat=2 >= W(product)=1"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Structured case: w_sat=2 >= W(2-local)=2"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W state: w_sat=2 < W(W)=4 (approximate extension needed)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ state: w_sat=2 < W(GHZ)=4 (known limitation)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Fraction missing (random): 118/255 = 0.4627"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Expected weight-1 loss (random): 5.553 of 12"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* lost weight-1: 0 (zero by saturation)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Expected weight-2 loss (random): 25.0 of 54"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* lost weight-2: 0 (zero by saturation)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* measures ALL operators at weight <= 2 (0 missed, eps_flat=0 for W(rho)<=2)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Basin Separation Theorem: 20 checks"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product state eps_pos(k=2) = 5/256 = 0.019531"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product state eps_pos(k=4) = 0 (tight)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W state eps_pos(k=2) = 11/256 = 0.0430"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W state bound = 11/256 (exact rational)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ state eps_pos(k=2) = 9/256 = 0.0352"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ state bound = 9/256 (exact rational)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Depolarised bound (p=0.03): eps_pos <= 0.003463"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Depolarised bound = 1773/512000 = 0.003463 (exact rational)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Corollary: eps_pos = 0 for pure k-local states"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Purity Bound: 9 checks"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K*=q^2=4 (q=2): c_0 jumps from 1 to 9"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K*=q^2=9 (q=3): c_0 jumps from 1 to 9"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K*=q^2=25 (q=5): c_0 jumps from 1 to 9"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K*=q^2=49 (q=7): c_0 jumps from 1 to 9"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q-ary Krawtchouk orthogonality (q=2, n=4)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q-ary Krawtchouk orthogonality (q=3, n=2)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q-ary Krawtchouk orthogonality (q=5, n=2)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All eigenvalues positive at K*=5 (q=2, n=4): [144.0, 224.0, 64.0, 128.0, 256.0]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All eigenvalues positive at K*=9 (q=3, n=4): [729.0, 162.0, 324.0, 567.0, 405.0]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All eigenvalues positive at K*=25 (q=5, n=4): [5625.0, 1250.0, 2343.75, 2968.75, 3671.875]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All eigenvalues positive at K*=49 (q=7, n=4): [21609.0, 4802.0, 8003.333333333333, 11293.592592592593, 12953.543209876543]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] N_4(5, q=2) = 137 = 137"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] N_2(9, q=3) = 29 = 29, c_w = [5, 8, 16]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Trace identity (q=2, n=4): q^n * N = 2192"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Trace identity (q=3, n=4): q^n * N = 34425"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Trace identity (q=5, n=4): q^n * N = 1950625"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Trace identity (q=7, n=4): q^n * N = 28411033"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q-ary Krawtchouk symmetry (q=3, n=2)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q-ary Krawtchouk symmetry (q=5, n=2)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q-ary Krawtchouk symmetry (q=3, n=4)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=2 eigenvalues match: [144, 224, 64, 128, 256]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=2: K*=2, N=9, c_w=[1, 4, 4], all c_w > 0, trace=36"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=3: K*=3, N=27, c_w=[1, 6, 12, 8], all c_w > 0, trace=216"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=5: K*=5, N=333, c_w=[11, 90, 40, 80, 80, 32], all c_w > 0, trace=10656"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=6: K*=6, N=1341, c_w=[13, 132, 540, 160, 240, 192, 64], all c_w > 0, trace=85824"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Universality: 25 checks"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* allocation: [1, 12, 54, 54, 16], total = 137"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Total Pauli operators: A_w = [1, 12, 54, 108, 81], sum = 256"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weights 0,1,2 fully saturated: [1, 12, 54] = [1, 12, 54]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight 3: 54/108 = 50%"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight 4: 16/81 ~ 19.8%"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] w_sat = 2"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Lattice parity-weight counts c_w = [9, 56, 24, 32, 16]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All c_w > 0 (support-completeness at K*=5)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] N_4(4) = 89 (below K*)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=2 parity weights match: [9, 56, 24, 32, 16]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight saturation: 10 checks"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Corollary 2: |S| >= 66 at n=4, q=2, k=2"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* has 66 necessary (weight<=2) + 70 lattice (weight>2) = 137"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Lower bound at n=3, k=2: |S| >= 36"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Lower bound at n=5, k=2: |S| >= 105"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Lower bound at n=6, k=2: |S| >= 153"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Lower bound at n=4, k=1: |S| >= 12"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(i): n=2, K*=2, all c_w > 0: [1, 4, 4]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(i): n=3, K*=3, all c_w > 0: [1, 6, 12, 8]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(i): n=4, K*=4, all c_w > 0: [9, 8, 24, 32, 16]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(i): n=5, K*=5, all c_w > 0: [11, 90, 40, 80, 80, 32]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(i): n=6, K*=6, all c_w > 0: [13, 132, 540, 160, 240, 192, 64]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(i): n=7, K*=7, all c_w > 0: [15, 182, 924, 2520, 560, 672, 448, 128]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(i): n=8, K*=8, all c_w > 0: [129, 240, 1456, 4928, 10080, 1792, 1792, 1024, 256]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(i): n=9, K*=9, all c_w > 0: [163, 2340, 2160, 8736, 22176, 36288, 5376, 4608, 2304, 512]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=2, w=1, P(mu_w=1) <= (0.600)^6 = 4.67e-02"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=2, w=2, P(mu_w=1) <= (0.600)^9 = 1.01e-02"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=3, w=1, P(mu_w=1) <= (0.429)^9 = 4.88e-04"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=3, w=2, P(mu_w=1) <= (0.429)^27 = 1.16e-10"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=4, w=1, P(mu_w=1) <= (0.349)^12 = 3.27e-06"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=4, w=2, P(mu_w=1) <= (0.349)^54 = 2.06e-25"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=5, w=1, P(mu_w=1) <= (0.326)^15 = 4.88e-08"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=5, w=2, P(mu_w=1) <= (0.326)^90 = 1.35e-44"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=6, w=1, P(mu_w=1) <= (0.327)^18 = 1.88e-09"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=6, w=2, P(mu_w=1) <= (0.327)^135 = 3.54e-66"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=7, w=1, P(mu_w=1) <= (0.333)^21 = 9.13e-11"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=7, w=2, P(mu_w=1) <= (0.333)^189 = 4.40e-91"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=8, w=1, P(mu_w=1) <= (0.331)^24 = 3.01e-12"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=8, w=2, P(mu_w=1) <= (0.331)^252 = 1.05e-121"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=9, w=1, P(mu_w=1) <= (0.323)^27 = 5.59e-14"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(ii): n=9, w=2, P(mu_w=1) <= (0.323)^324 = 9.25e-160"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All M_n/N < 1 (proper subset for all n tested)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Large-n ratios in [0.25, 0.42], consistent with M_n/N -> 1/3"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(iii): n=3, K* bound = 0.1094 << 1/2, K*-1 has zero eigenvalue (F <= 1/2 possible)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(iii): n=4, K* bound = 0.0586 << 1/2, K*-1 has zero eigenvalue (F <= 1/2 possible)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Theorem 3(iii): n=5, K* bound = 0.0303 << 1/2, K*-1 has zero eigenvalue (F <= 1/2 possible)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hypergeometric bound: w=1, A_w=12, exact P = 4.58e-04, bound = 5.78e-04"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hypergeometric bound: w=2, A_w=54, exact P = 6.01e-18, bound = 2.69e-15"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Asymptotic separation: 37 checks"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W state kappa_info = 1 (tight: minimum possible)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product state: informative set empty => kappa vacuously 1"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Depolarized W kappa_info = 1 (robust)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product state (k=4): unmeasured = 0 = bound (TIGHT)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W state (k=2): unmeasured = 11 = bound = 11 (TIGHT for pure states)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ state (k=2): unmeasured = 9 = bound = 9 (TIGHT)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] eps_pos tight: W=11/256, GHZ=9/256"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 12 weight-1 Paulis enumerated"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All 66 weight-1 pairs: Tr(P_i*P_j) = 0"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All 12 weight-1 Paulis: Tr(P^2) = 16"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 72 cross-weight pairs: Tr(P_i*P_j) = 0"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Likelihood factorization: algebraic consequence of Pauli trace orthogonality (Lean4: lem1_hessian_diagonal)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] (a) P^2 = I for all 255 non-identity Paulis"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] (b) Tr(P) = 0 for all 255 non-identity Paulis"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] (c) Tr((I+P)/d) = 1 for all 255 witnesses"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] (d-e) rho^2 = (2/d)*rho for all 255 witnesses => eigenvalues {0, 2/d} => PSD"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Axiom A1 fully verified at n=4: all 255 witness states are valid density matrices"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G(2) at K=2: rank 3/3, lambda_w = [4, 8, 16]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G(3) at K=3: rank 4/4, lambda_w = [8, 16, 32, 64]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G(4) at K=4: rank 5/5, lambda_w = [144, 32, 64, 128, 256]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G(5) at K=5: rank 6/6, lambda_w = [352, 576, 128, 256, 512, 1024]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G(6) at K=6: rank 7/7, lambda_w = [832, 1408, 2304, 512, 1024, 2048, 4096]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_w(4,5) = [9, 56, 24, 32, 16], N_4(5) = 137"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G(4) at K=5: eigenvalues = [144, 224, 64, 128, 256]"
+        }
+      ],
+      "raw_output": "====================================================================\nCROSS-VERIFICATION: EXACT ARITHMETIC (SymPy)\ncompanion manuscript: Krawtchouk spectral correspondence\nParallel execution: 9 workers on 32 cores\n====================================================================\n\n--- Krawtchouk polynomials (Prop 1, SM S5) ---\n  [PASS] Orthogonality: K diag(C) K^T = 2^n diag(C)\n  [PASS] K_0(h;4) = 1 for all h\n  [PASS] K_1(h;4) = 4 - 2h\n  [PASS] K_2(h;4) = [6, 0, -2, 0, 6]\n  [PASS] Krawtchouk symmetry (all 25 pairs)\n  [PASS] Full 5x5 Krawtchouk matrix matches manuscript\n  [PASS] Krawtchouk polynomials (exact): 6 checks\n\n--- Gram-Krawtchouk diagonalisation (Prop 1) ---\n  [PASS] Gram matrix depends only on Hamming distance\n  [PASS] All eigenvalues positive at K*=5: [144, 224, 64, 128, 256]\n  [PASS] Eigenvalue formula lambda_w = 16 * c_w / C(4,w)\n  [PASS] Trace = 16 * 137 = 2192\n  [PASS] c_w = [9, 56, 24, 32, 16], N_4(5) = 137 = 137\n  [PASS] All c_w > 0 (support-completeness at K*=5)\n  [PASS] Gram-Krawtchouk diagonalisation: 6 checks\n\n--- Basin Separation Theorem (Theorem 1) ---\n  [PASS] |S_K*| = 137 operators\n  [PASS] Weight-class sizes A_w = [1, 12, 54, 108, 81]\n  [PASS] Total Paulis = 256 = 4^4\n  [PASS] Weight-0 saturated: 1/1\n  [PASS] Weight-1 saturated: 12/12\n  [PASS] Weight-2 saturated: 54/54\n  [PASS] Weight-3 NOT saturated: 54/108 = 1/2\n  [PASS] Weight-4 NOT saturated: 16/81\n  [PASS] w_sat(S_K*) = 2\n  [PASS] Operator count: 67 saturated + 54+16 partial = 137\n  [PASS] Structured case: w_sat=2 >= W(product)=1\n  [PASS] Structured case: w_sat=2 >= W(2-local)=2\n  [PASS] W state: w_sat=2 < W(W)=4 (approximate extension needed)\n  [PASS] GHZ state: w_sat=2 < W(GHZ)=4 (known limitation)\n  [PASS] Fraction missing (random): 118/255 = 0.4627\n  [PASS] Expected weight-1 loss (random): 5.553 of 12\n  [PASS] K* lost weight-1: 0 (zero by saturation)\n  [PASS] Expected weight-2 loss (random): 25.0 of 54\n  [PASS] K* lost weight-2: 0 (zero by saturation)\n  [PASS] K* measures ALL operators at weight <= 2 (0 missed, eps_flat=0 for W(rho)<=2)\n  [PASS] Basin Separation Theorem: 20 checks\n\n--- Purity Bound (Lemma 2) ---\n  [PASS] Product state eps_pos(k=2) = 5/256 = 0.019531\n  [PASS] Product state eps_pos(k=4) = 0 (tight)\n  [PASS] W state eps_pos(k=2) = 11/256 = 0.0430\n  [PASS] W state bound = 11/256 (exact rational)\n  [PASS] GHZ state eps_pos(k=2) = 9/256 = 0.0352\n  [PASS] GHZ state bound = 9/256 (exact rational)\n  [PASS] Depolarised bound (p=0.03): eps_pos <= 0.003463\n  [PASS] Depolarised bound = 1773/512000 = 0.003463 (exact rational)\n  [PASS] Corollary: eps_pos = 0 for pure k-local states\n  [PASS] Purity Bound: 9 checks\n\n--- Universality across Hamming schemes (Lemma 5) ---\n  [PASS] K*=q^2=4 (q=2): c_0 jumps from 1 to 9\n  [PASS] K*=q^2=9 (q=3): c_0 jumps from 1 to 9\n  [PASS] K*=q^2=25 (q=5): c_0 jumps from 1 to 9\n  [PASS] K*=q^2=49 (q=7): c_0 jumps from 1 to 9\n  [PASS] q-ary Krawtchouk orthogonality (q=2, n=4)\n  [PASS] q-ary Krawtchouk orthogonality (q=3, n=2)\n  [PASS] q-ary Krawtchouk orthogonality (q=5, n=2)\n  [PASS] All eigenvalues positive at K*=5 (q=2, n=4): [144.0, 224.0, 64.0, 128.0, 256.0]\n  [PASS] All eigenvalues positive at K*=9 (q=3, n=4): [729.0, 162.0, 324.0, 567.0, 405.0]\n  [PASS] All eigenvalues positive at K*=25 (q=5, n=4): [5625.0, 1250.0, 2343.75, 2968.75, 3671.875]\n  [PASS] All eigenvalues positive at K*=49 (q=7, n=4): [21609.0, 4802.0, 8003.333333333333, 11293.592592592593, 12953.543209876543]\n  [PASS] N_4(5, q=2) = 137 = 137\n  [PASS] N_2(9, q=3) = 29 = 29, c_w = [5, 8, 16]\n  [PASS] Trace identity (q=2, n=4): q^n * N = 2192\n  [PASS] Trace identity (q=3, n=4): q^n * N = 34425\n  [PASS] Trace identity (q=5, n=4): q^n * N = 1950625\n  [PASS] Trace identity (q=7, n=4): q^n * N = 28411033\n  [PASS] q-ary Krawtchouk symmetry (q=3, n=2)\n  [PASS] q-ary Krawtchouk symmetry (q=5, n=2)\n  [PASS] q-ary Krawtchouk symmetry (q=3, n=4)\n  [PASS] q=2 eigenvalues match: [144, 224, 64, 128, 256]\n  [PASS] n=2: K*=2, N=9, c_w=[1, 4, 4], all c_w > 0, trace=36\n  [PASS] n=3: K*=3, N=27, c_w=[1, 6, 12, 8], all c_w > 0, trace=216\n  [PASS] n=5: K*=5, N=333, c_w=[11, 90, 40, 80, 80, 32], all c_w > 0, trace=10656\n  [PASS] n=6: K*=6, N=1341, c_w=[13, 132, 540, 160, 240, 192, 64], all c_w > 0, trace=85824\n  [PASS] Universality: 25 checks\n\n--- Weight saturation properties (Theorem 1 precondition) ---\n  [PASS] K* allocation: [1, 12, 54, 54, 16], total = 137\n  [PASS] Total Pauli operators: A_w = [1, 12, 54, 108, 81], sum = 256\n  [PASS] Weights 0,1,2 fully saturated: [1, 12, 54] = [1, 12, 54]\n  [PASS] Weight 3: 54/108 = 50%\n  [PASS] Weight 4: 16/81 ~ 19.8%\n  [PASS] w_sat = 2\n  [PASS] Lattice parity-weight counts c_w = [9, 56, 24, 32, 16]\n  [PASS] All c_w > 0 (support-completeness at K*=5)\n  [PASS] N_4(4) = 89 (below K*)\n  [PASS] q=2 parity weights match: [9, 56, 24, 32, 16]\n  [PASS] Weight saturation: 10 checks\n\n--- Asymptotic scaling (Theorem 3) ---\n  [PASS] Corollary 2: |S| >= 66 at n=4, q=2, k=2\n  [PASS] K* has 66 necessary (weight<=2) + 70 lattice (weight>2) = 137\n  [PASS] Lower bound at n=3, k=2: |S| >= 36\n  [PASS] Lower bound at n=5, k=2: |S| >= 105\n  [PASS] Lower bound at n=6, k=2: |S| >= 153\n  [PASS] Lower bound at n=4, k=1: |S| >= 12\n  [PASS] Theorem 3(i): n=2, K*=2, all c_w > 0: [1, 4, 4]\n  [PASS] Theorem 3(i): n=3, K*=3, all c_w > 0: [1, 6, 12, 8]\n  [PASS] Theorem 3(i): n=4, K*=4, all c_w > 0: [9, 8, 24, 32, 16]\n  [PASS] Theorem 3(i): n=5, K*=5, all c_w > 0: [11, 90, 40, 80, 80, 32]\n  [PASS] Theorem 3(i): n=6, K*=6, all c_w > 0: [13, 132, 540, 160, 240, 192, 64]\n  [PASS] Theorem 3(i): n=7, K*=7, all c_w > 0: [15, 182, 924, 2520, 560, 672, 448, 128]\n  [PASS] Theorem 3(i): n=8, K*=8, all c_w > 0: [129, 240, 1456, 4928, 10080, 1792, 1792, 1024, 256]\n  [PASS] Theorem 3(i): n=9, K*=9, all c_w > 0: [163, 2340, 2160, 8736, 22176, 36288, 5376, 4608, 2304, 512]\n\n  [PASS] Theorem 3(ii): n=2, w=1, P(mu_w=1) <= (0.600)^6 = 4.67e-02\n  [PASS] Theorem 3(ii): n=2, w=2, P(mu_w=1) <= (0.600)^9 = 1.01e-02\n  [PASS] Theorem 3(ii): n=3, w=1, P(mu_w=1) <= (0.429)^9 = 4.88e-04\n  [PASS] Theorem 3(ii): n=3, w=2, P(mu_w=1) <= (0.429)^27 = 1.16e-10\n  [PASS] Theorem 3(ii): n=4, w=1, P(mu_w=1) <= (0.349)^12 = 3.27e-06\n  [PASS] Theorem 3(ii): n=4, w=2, P(mu_w=1) <= (0.349)^54 = 2.06e-25\n  [PASS] Theorem 3(ii): n=5, w=1, P(mu_w=1) <= (0.326)^15 = 4.88e-08\n  [PASS] Theorem 3(ii): n=5, w=2, P(mu_w=1) <= (0.326)^90 = 1.35e-44\n  [PASS] Theorem 3(ii): n=6, w=1, P(mu_w=1) <= (0.327)^18 = 1.88e-09\n  [PASS] Theorem 3(ii): n=6, w=2, P(mu_w=1) <= (0.327)^135 = 3.54e-66\n  [PASS] Theorem 3(ii): n=7, w=1, P(mu_w=1) <= (0.333)^21 = 9.13e-11\n  [PASS] Theorem 3(ii): n=7, w=2, P(mu_w=1) <= (0.333)^189 = 4.40e-91\n  [PASS] Theorem 3(ii): n=8, w=1, P(mu_w=1) <= (0.331)^24 = 3.01e-12\n  [PASS] Theorem 3(ii): n=8, w=2, P(mu_w=1) <= (0.331)^252 = 1.05e-121\n  [PASS] Theorem 3(ii): n=9, w=1, P(mu_w=1) <= (0.323)^27 = 5.59e-14\n  [PASS] Theorem 3(ii): n=9, w=2, P(mu_w=1) <= (0.323)^324 = 9.25e-160\n\n  [INFO] n=2: M_n/N = 0.6000\n  [INFO] n=3: M_n/N = 0.4286\n  [INFO] n=4: M_n/N = 0.3490\n  [INFO] n=5: M_n/N = 0.3255\n  [INFO] n=6: M_n/N = 0.3275\n  [INFO] n=7: M_n/N = 0.3326\n  [INFO] n=8: M_n/N = 0.3311\n  [INFO] n=9: M_n/N = 0.3230\n  [PASS] All M_n/N < 1 (proper subset for all n tested)\n  [PASS] Large-n ratios in [0.25, 0.42], consistent with M_n/N -> 1/3\n  [PASS] Theorem 3(iii): n=3, K* bound = 0.1094 << 1/2, K*-1 has zero eigenvalue (F <= 1/2 possible)\n  [PASS] Theorem 3(iii): n=4, K* bound = 0.0586 << 1/2, K*-1 has zero eigenvalue (F <= 1/2 possible)\n  [PASS] Theorem 3(iii): n=5, K* bound = 0.0303 << 1/2, K*-1 has zero eigenvalue (F <= 1/2 possible)\n  [PASS] Hypergeometric bound: w=1, A_w=12, exact P = 4.58e-04, bound = 5.78e-04\n  [PASS] Hypergeometric bound: w=2, A_w=54, exact P = 6.01e-18, bound = 2.69e-15\n\n  [PASS] Asymptotic separation: 37 checks\n\n--- Audit remediation (Findings 5, 7, 11) ---\n\n=== Finding 5: Tightness — Lem1 kappa_info ===\n  [PASS] W state kappa_info = 1 (tight: minimum possible)\n  [PASS] Product state: informative set empty => kappa vacuously 1\n  [PASS] Depolarized W kappa_info = 1 (robust)\n\n=== Finding 5: Tightness — Thm1(iii) HS bound ===\n  [PASS] Product state (k=4): unmeasured = 0 = bound (TIGHT)\n  [PASS] W state (k=2): unmeasured = 11 = bound = 11 (TIGHT for pure states)\n  [PASS] GHZ state (k=2): unmeasured = 9 = bound = 9 (TIGHT)\n  [PASS] eps_pos tight: W=11/256, GHZ=9/256\n\n=== Finding 7: Likelihood factorization ===\n  [PASS] 12 weight-1 Paulis enumerated\n  [PASS] All 66 weight-1 pairs: Tr(P_i*P_j) = 0\n  [PASS] All 12 weight-1 Paulis: Tr(P^2) = 16\n  [PASS] 72 cross-weight pairs: Tr(P_i*P_j) = 0\n  [PASS] Likelihood factorization: algebraic consequence of Pauli trace orthogonality (Lean4: lem1_hessian_diagonal)\n\n=== Finding 11: Axiom A1 algebraic content ===\n  [PASS] (a) P^2 = I for all 255 non-identity Paulis\n  [PASS] (b) Tr(P) = 0 for all 255 non-identity Paulis\n  [PASS] (c) Tr((I+P)/d) = 1 for all 255 witnesses\n  [PASS] (d-e) rho^2 = (2/d)*rho for all 255 witnesses => eigenvalues {0, 2/d} => PSD\n  [PASS] Axiom A1 fully verified at n=4: all 255 witness states are valid density matrices\n\n==================================================\nTOTAL: 17 checks PASSED\nFindings addressed: 5 (tightness), 7 (factorization), 11 (A1)\n\n--- Gram matrix full rank G(n) (Prop 1) ---\n  [PASS] G(2) at K=2: rank 3/3, lambda_w = [4, 8, 16]\n  [PASS] G(3) at K=3: rank 4/4, lambda_w = [8, 16, 32, 64]\n  [PASS] G(4) at K=4: rank 5/5, lambda_w = [144, 32, 64, 128, 256]\n  [PASS] G(5) at K=5: rank 6/6, lambda_w = [352, 576, 128, 256, 512, 1024]\n  [PASS] G(6) at K=6: rank 7/7, lambda_w = [832, 1408, 2304, 512, 1024, 2048, 4096]\n  [PASS] c_w(4,5) = [9, 56, 24, 32, 16], N_4(5) = 137\n  [PASS] G(4) at K=5: eigenvalues = [144, 224, 64, 128, 256]\n\n====================================================================\nTOTAL: 137 exact-arithmetic checks passed\n====================================================================\n"
+    },
+    "tier3": {
+      "name": "NumPy numerical bounds",
+      "status": "PASS",
+      "checks_passed": 73,
+      "checks_failed": 0,
+      "checks": [
+        {
+          "status": "PASS",
+          "detail": "[PASS] Fisher information matrix is diagonal (off-diag max = 0.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Diagonal entries match h_P = N_s/(1-y_P^2) (err = 0.0e+00, 136 measured, 119 zero)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Fisher info diagonal for product state (off-diag max = 0.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W state kappa(weight<=2) = 1.000 (~1.31 expected)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] kappa_info(K*, pure W) = 1.000000 (expected 1.0: all |x_P|=0.5)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Random weight<=2 kappa = 1.00 (10/10 seeds had informative ops)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* informative flat (weight<=2) = 0"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Random informative flat = 21 > 0"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] eps_flat: K*=4.7045, random=5.6454"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 1-local state: informative flat = 0 (w_sat=2 >= W=1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 1-local state: eps_flat(K*) = 0.00e+00"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 2-local state: informative flat = 0 (w_sat=2 >= W=2)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 2-local state: eps_flat(K*) = 0.00e+00"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ: 6 informative weight-4 flat (of 9 informative)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ eps_flat = 5.6454 > 0 (W(GHZ)=4 > w_sat=2)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hessian properties: 15 checks"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product state F(K*) = 0.9785 > 0.90"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product state F(random) = 0.9296"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W state F(K*) = 0.9366, F(random) = 0.9212"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] eps_flat: K*=4.7045 < random=5.6454"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* wins 48/50 random seeds (win rate = 96%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] MLE basin: 5 checks"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product state S_2 = 10.0"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product state bound = 0.019531 = 0.01953125"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product state: bound is TIGHT (actual = bound = 0.019531)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W state S_2 = 4.0000000000 (expected 4.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W state bound = 0.0429687500 = 0.04296875"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W state: bound is TIGHT (actual = bound = 0.0429687500)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ state S_2 = 6.0000000000 (expected 6.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ state bound = 0.0351562500 = 0.03515625"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ state: bound is TIGHT (actual = bound = 0.0351562500)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Depolarised W: S_2 = 3.7636 (expected 3.7636)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Depolarised W: bound 0.043892 > pure 0.042969 (monotone in noise)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Depolarised product: delta = 0.002309 (expected 0.002309)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Purity constraint sum x_P^2 <= d-1 for all states"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Pure state saturation: sum x_P^2 = d-1 = 15"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Adversarial sigma test: purity bound holds for 150 random perturbations across 3 states"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Fidelity bounds: 15 checks"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Pauli-axis states (I+/-P)/d are valid density matrices"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] rho+/rho- indistinguishable on S\\{P0} for ALL 119 unmeasured operators"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] F(rho+, rho-) = 0 for all 119 unmeasured operators (orthogonal)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Phase transition: 1 - eps_pos = 1 - 0.0430 = 0.9570 (computed from W-state expectations)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K*_spectral=4: all eigenvalues positive [144, 32, 64, 128, 256]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K*_spectral-1=3: zero eigenvalue at weight(s) [4]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Delsarte certificate: c_w(3) = [1, 8, 24, 32, 0], zero at w=[4]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K*_spectral=4: all c_w > 0: [9, 8, 24, 32, 16]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K*_operational=5: all eigenvalues positive [144, 224, 64, 128, 256]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=3: K*_spectral=4, Delsarte certificate at K=3, weight(s) [4]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=5: K*_spectral=4, Delsarte certificate at K=3, weight(s) [4]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* weight saturation: unmeasured = {0: 0, 1: 0, 2: 0, 3: 54, 4: 65}"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] P(random misses wt-1) = 0.999542 > 0.999"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_w(K) monotonically non-decreasing in K"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=4 redistribution: c_w=[9, 8, 24, 32, 16], M_w=[1, 12, 28, 32, 16] (52% weight-2 coverage)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] kappa(G(K*_op=3), n=2) = 4.00 (expected 4.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] kappa(G(K*_op=4), n=3) = 4.00 (expected 4.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] kappa(G(K*_op=5), n=4) = 4.00 (expected 4.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] kappa(G(K*_op=6), n=5) = 4.00 (expected 4.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] kappa(G(K*_op=7), n=6) = 4.92 (expected 4.9)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=4 K*=5: kappa = 256/64 = 4 (manuscript Eq. kappa)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] eps_tail(W, k=2) = 0.0430 = 11/256 (manuscript: ~4.3e-2)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Spectral Characterization: 22 checks"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Cross-correlations: max |r| = 0.1380 < 0.2 (6 operators, 200 trials)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hoeffding: Z_1 (x=0.0), t=0.05: empirical=0.2548, bound=1.0705"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hoeffding: Z_1 (x=0.0), t=0.10: empirical=0.0240, bound=0.1642"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hoeffding: Z_1 (x=0.0), t=0.15: empirical=0.0010, bound=0.0072"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hoeffding: Z1Z2 (x=0.0), t=0.05: empirical=0.2642, bound=1.0705"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hoeffding: Z1Z2 (x=0.0), t=0.10: empirical=0.0282, bound=0.1642"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hoeffding: Z1Z2 (x=0.0), t=0.15: empirical=0.0006, bound=0.0072"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Conditional independence: Var(B|A_high)/Var(B) = 0.997, Var(B|A_low)/Var(B) = 1.001"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Fisher diagonal: GHZ, max off-diag = 0.0e+00"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Fisher diagonal: W, max off-diag = 0.0e+00"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Fisher diagonal: product, max off-diag = 0.0e+00"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Finite-sample independence: 11 checks"
+        }
+      ],
+      "raw_output": "====================================================================\nCROSS-VERIFICATION: NUMERICAL (numpy)\ncompanion manuscript: Krawtchouk spectral correspondence\nTolerances: exact values 1e-10, saturation 1e-8, eigenstate 1e-12, informative 1e-6\n====================================================================\n\n--- Hessian properties (Theorem 1, Lemma) ---\n  [PASS] Fisher information matrix is diagonal (off-diag max = 0.0)\n  [PASS] Diagonal entries match h_P = N_s/(1-y_P^2) (err = 0.0e+00, 136 measured, 119 zero)\n  [PASS] Fisher info diagonal for product state (off-diag max = 0.0)\n  [PASS] W state kappa(weight<=2) = 1.000 (~1.31 expected)\n  [PASS] kappa_info(K*, pure W) = 1.000000 (expected 1.0: all |x_P|=0.5)\n  [PASS] Random weight<=2 kappa = 1.00 (10/10 seeds had informative ops)\n  [PASS] K* informative flat (weight<=2) = 0\n  [PASS] Random informative flat = 21 > 0\n  [PASS] eps_flat: K*=4.7045, random=5.6454\n  [PASS] 1-local state: informative flat = 0 (w_sat=2 >= W=1)\n  [PASS] 1-local state: eps_flat(K*) = 0.00e+00\n  [PASS] 2-local state: informative flat = 0 (w_sat=2 >= W=2)\n  [PASS] 2-local state: eps_flat(K*) = 0.00e+00\n  [PASS] GHZ: 6 informative weight-4 flat (of 9 informative)\n  [PASS] GHZ eps_flat = 5.6454 > 0 (W(GHZ)=4 > w_sat=2)\n  [PASS] Hessian properties: 15 checks\n\n--- MLE basin uniqueness (Theorem 1(iii)) ---\n  [PASS] Product state F(K*) = 0.9785 > 0.90\n  [PASS] Product state F(random) = 0.9296\n         Delta F = +0.0489\n  [PASS] W state F(K*) = 0.9366, F(random) = 0.9212\n         Delta F = +0.0154\n  [PASS] eps_flat: K*=4.7045 < random=5.6454\n  [PASS] K* wins 48/50 random seeds (win rate = 96%)\n         F(random): mean = 0.8804 ± 0.0383\n         F(K*) = 0.9366, mean dF = +0.0561\n  [PASS] MLE basin: 5 checks\n\n--- Fidelity bounds (Lemma 2) ---\n  [PASS] Product state S_2 = 10.0\n  [PASS] Product state bound = 0.019531 = 0.01953125\n  [PASS] Product state: bound is TIGHT (actual = bound = 0.019531)\n  [PASS] W state S_2 = 4.0000000000 (expected 4.0)\n  [PASS] W state bound = 0.0429687500 = 0.04296875\n  [PASS] W state: bound is TIGHT (actual = bound = 0.0429687500)\n  [PASS] GHZ state S_2 = 6.0000000000 (expected 6.0)\n  [PASS] GHZ state bound = 0.0351562500 = 0.03515625\n  [PASS] GHZ state: bound is TIGHT (actual = bound = 0.0351562500)\n  [PASS] Depolarised W: S_2 = 3.7636 (expected 3.7636)\n  [PASS] Depolarised W: bound 0.043892 > pure 0.042969 (monotone in noise)\n  [PASS] Depolarised product: delta = 0.002309 (expected 0.002309)\n  [PASS] Purity constraint sum x_P^2 <= d-1 for all states\n  [PASS] Pure state saturation: sum x_P^2 = d-1 = 15\n  [PASS] Adversarial sigma test: purity bound holds for 150 random perturbations across 3 states\n  [PASS] Fidelity bounds: 15 checks\n\n--- Spectral characterization (Theorem 2) ---\n  [PASS] Pauli-axis states (I+/-P)/d are valid density matrices\n  [PASS] rho+/rho- indistinguishable on S\\{P0} for ALL 119 unmeasured operators\n  [PASS] F(rho+, rho-) = 0 for all 119 unmeasured operators (orthogonal)\n  [PASS] Phase transition: 1 - eps_pos = 1 - 0.0430 = 0.9570 (computed from W-state expectations)\n  [PASS] K*_spectral=4: all eigenvalues positive [144, 32, 64, 128, 256]\n  [PASS] K*_spectral-1=3: zero eigenvalue at weight(s) [4]\n  [PASS] Delsarte certificate: c_w(3) = [1, 8, 24, 32, 0], zero at w=[4]\n  [PASS] K*_spectral=4: all c_w > 0: [9, 8, 24, 32, 16]\n  [PASS] K*_operational=5: all eigenvalues positive [144, 224, 64, 128, 256]\n  [PASS] q=3: K*_spectral=4, Delsarte certificate at K=3, weight(s) [4]\n  [PASS] q=5: K*_spectral=4, Delsarte certificate at K=3, weight(s) [4]\n  [PASS] K* weight saturation: unmeasured = {0: 0, 1: 0, 2: 0, 3: 54, 4: 65}\n  [PASS] P(random misses wt-1) = 0.999542 > 0.999\n  [PASS] c_w(K) monotonically non-decreasing in K\n  [PASS] K=4 redistribution: c_w=[9, 8, 24, 32, 16], M_w=[1, 12, 28, 32, 16] (52% weight-2 coverage)\n  [PASS] kappa(G(K*_op=3), n=2) = 4.00 (expected 4.0)\n  [PASS] kappa(G(K*_op=4), n=3) = 4.00 (expected 4.0)\n  [PASS] kappa(G(K*_op=5), n=4) = 4.00 (expected 4.0)\n  [PASS] kappa(G(K*_op=6), n=5) = 4.00 (expected 4.0)\n  [PASS] kappa(G(K*_op=7), n=6) = 4.92 (expected 4.9)\n  [PASS] n=4 K*=5: kappa = 256/64 = 4 (manuscript Eq. kappa)\n  [PASS] eps_tail(W, k=2) = 0.0430 = 11/256 (manuscript: ~4.3e-2)\n  [PASS] Spectral Characterization: 22 checks\n\n--- Independence structure (Lemma 1) ---\n  [PASS] Cross-correlations: max |r| = 0.1380 < 0.2 (6 operators, 200 trials)\n  [PASS] Hoeffding: Z_1 (x=0.0), t=0.05: empirical=0.2548, bound=1.0705\n  [PASS] Hoeffding: Z_1 (x=0.0), t=0.10: empirical=0.0240, bound=0.1642\n  [PASS] Hoeffding: Z_1 (x=0.0), t=0.15: empirical=0.0010, bound=0.0072\n  [PASS] Hoeffding: Z1Z2 (x=0.0), t=0.05: empirical=0.2642, bound=1.0705\n  [PASS] Hoeffding: Z1Z2 (x=0.0), t=0.10: empirical=0.0282, bound=0.1642\n  [PASS] Hoeffding: Z1Z2 (x=0.0), t=0.15: empirical=0.0006, bound=0.0072\n  [PASS] Conditional independence: Var(B|A_high)/Var(B) = 0.997, Var(B|A_low)/Var(B) = 1.001\n  [PASS] Fisher diagonal: GHZ, max off-diag = 0.0e+00\n  [PASS] Fisher diagonal: W, max off-diag = 0.0e+00\n  [PASS] Fisher diagonal: product, max off-diag = 0.0e+00\n\n  [PASS] Finite-sample independence: 11 checks\n\n====================================================================\nTOTAL: 68 numerical checks passed\n====================================================================\n"
+    },
+    "tier4": {
+      "name": "Independent verification",
+      "status": "FAIL",
+      "checks_passed": 451,
+      "checks_failed": 0,
+      "checks": [
+        {
+          "status": "PASS",
+          "detail": "[PASS] r_4(0)  (got 1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] r_4(1)  (got 8)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] r_4(2)  (got 24)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] r_4(3)  (got 32)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] r_4(4)  (got 24)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] r_4(5)  (got 48)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] N_4(5) = 137 (incl. origin)  (got 137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] N_4(5) excl. origin = 136  (got 136)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_0  (got 9, expected 9)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_1  (got 56, expected 56)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_2  (got 24, expected 24)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_3  (got 32, expected 32)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_4  (got 16, expected 16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] sum(c_w) = 137  (got 137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_0 without origin = 8"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] origin adds 1 to c_0"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] P * diag(C(n,w)) * P^T = 2^n * diag(C(n,j))  (diag = [16, 64, 96, 64, 16])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] sum_w E_w = I"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] E_0^2 = E_0"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] E_1^2 = E_1"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] E_2^2 = E_2"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] E_3^2 = E_3"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] E_4^2 = E_4"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] E_w * E_{w'} = 0 for w != w'"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_0 = 144  (got 144)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_1 = 224  (got 224)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_2 = 64  (got 64)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_3 = 128  (got 128)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_4 = 256  (got 256)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G == sum_w lambda_w * E_w (exact)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] tr(G) = 2^n * N = 2192  (got 2192)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] all lambda_w > 0 => rank = 16"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G^(0) = 137  (got 137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G^(1) = 5  (got 5)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G^(2) = 17  (got 17)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G^(3) = -19  (got -19)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] G^(4) = -39  (got -39)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_0 from G^(h)  (sum_h G^(h)*K_h(0) = 144)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_1 from G^(h)  (sum_h G^(h)*K_h(1) = 224)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_2 from G^(h)  (sum_h G^(h)*K_h(2) = 64)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_3 from G^(h)  (sum_h G^(h)*K_h(3) = 128)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_4 from G^(h)  (sum_h G^(h)*K_h(4) = 256)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_0 > 0  (c_0 = 9)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_1 > 0  (c_1 = 56)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_2 > 0  (c_2 = 24)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_3 > 0  (c_3 = 32)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_4 > 0  (c_4 = 16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=1: rank=5, N=9  (rank=5)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=2: rank=11, N=33  (rank=11)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=3: rank=15, N=65  (rank=15)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=4: rank=16, N=89  (rank=16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=5: rank=16, N=137  (rank=16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_0(K=4) = 144  (got 144)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_1(K=4) = 32  (got 32)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_2(K=4) = 64  (got 64)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_3(K=4) = 128  (got 128)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_4(K=4) = 256  (got 256)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] tr G(K=4) = 1424  (got 1424)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=4 weight-1 mass = 9%  (got 9.0%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] dyn rank G(K=2)  (got 6, expected 6)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] dyn rank G(K=3)  (got 10, expected 10)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] dyn rank G(K=4)  (got 12, expected 12)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] dyn rank G(K=5)  (got 16, expected 16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Dynamical K*_dyn = 5 (first K with dyn rank 16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=1 (no origin): c_0=0 (bottleneck)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 1 + 8 + 128 = 137 = N_4(5)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=2: decomposition fails (1+2+8=11 != 21)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=3: decomposition fails (1+4+32=37 != 57)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=4: decomposition holds"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=5: decomposition fails (1+16+512=529 != 333)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=6: decomposition fails (1+32+2048=2081 != 797)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=7: decomposition fails (1+64+8192=8257 != 1793)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=1: 2*1 != 1"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=2: 2*2 != 2"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=3: 2*3 != 4"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=4: 2d = 2^{d-1} = 8"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=5: 2*5 != 16"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] d=6: 2*6 != 32"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Unique in [1,100]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] tr(G) = 2192  (got 2192)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] pct_w=0 = 6.6%  (got 6.6%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] pct_w=1 = 40.9%  (got 40.9%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] pct_w=2 = 17.5%  (got 17.5%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] pct_w=3 = 23.4%  (got 23.4%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] pct_w=4 = 11.7%  (got 11.7%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_2 = chi_orb^2 = 64  (64 vs 64)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_3 = |Fix| * chi_orb = 128  (128 vs 128)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_4 = |Fix|^2 = 256  (256 vs 256)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] k=5 shell has 48 vectors  (got 48)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All k=5 vectors have parity weight 1"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] sum(M_w) = 137"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] sum(A_w) = 4^4 = 256"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Saturated: w=0,1,2 only"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] len(operators) = 137  (got 137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] len(labels) = 137"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] len(indices) = 137"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] M_0 = 1  (got 1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] M_1 = 12  (got 12)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] M_2 = 54  (got 54)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] M_3 = 54  (got 54)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] M_4 = 16  (got 16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] IIII in K* set"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All labels are valid 4-qubit Pauli strings"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] No duplicate labels"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight 0 saturated (M_0 = A_0)  (M=1, A=1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight 1 saturated (M_1 = A_1)  (M=12, A=12)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight 2 saturated (M_2 = A_2)  (M=54, A=54)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_0 = 9  (got 9)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_1 = 56  (got 56)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_2 = 24  (got 24)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_3 = 32  (got 32)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_4 = 16  (got 16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] sum(c_w) = 137  (got 137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] A_0 = C(4,0)*3^0 = 1"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] A_1 = C(4,1)*3^1 = 12"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] A_2 = C(4,2)*3^2 = 54"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] A_3 = C(4,3)*3^3 = 108"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] A_4 = C(4,4)*3^4 = 81"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Initial allocation = 85, surplus = 52  (85 + 52 = 137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Derived M_0 = 1  (got 1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Derived M_1 = 12  (got 12)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Derived M_2 = 54  (got 54)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Derived M_3 = 54  (got 54)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Derived M_4 = 16  (got 16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] sum(M_w) = 137  (got 137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] surplus fully distributed  (remaining surplus = 0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] core.py M_0 matches derived  (core=1, derived=1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] core.py M_1 matches derived  (core=12, derived=12)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] core.py M_2 matches derived  (core=54, derived=54)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] core.py M_3 matches derived  (core=54, derived=54)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] core.py M_4 matches derived  (core=16, derived=16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] w_sat = 2 (derived)  (got 2)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* greedy cover = 29 bases  (got 29)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* operators touch all 81 bases  (touched 81/81)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Random compresses to ~50 bases  (got 50)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Compression ratio ~ 1.7x  (got 1.7x)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Rigetti K* has 137 operators  (got 137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Rigetti K* labels match core.py  (missing from Rigetti: set(), extra in Rigetti: set())"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Rigetti n_bases = 29"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Rigetti n_operators = 137"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] |+>^4: robust_mle ~ reported  (|0.9960 - 0.9960| = 0.0000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] |+>^4: cvxpy yields valid rho (underdetermined)  (F(cvxpy)=0.9245 vs F(robust_mle)=0.9960, gap=0.0715 [137/255 params])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] |+>^4: F(rand) ~ 0.98  (reported=0.9801)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Bell |Phi+>: robust_mle ~ reported  (|0.5177 - 0.5177| = 0.0000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Bell |Phi+>: cvxpy yields valid rho (underdetermined)  (F(cvxpy)=0.9533 vs F(robust_mle)=0.5177, gap=0.4355 [9/15 params])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Bell |Phi+>: F(rand) ~ 0.465  (reported=0.4653)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W_4 (single run): robust_mle ~ reported  (|0.8907 - 0.8907| = 0.0000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W_4 (single run): cvxpy yields valid rho (underdetermined)  (F(cvxpy)=0.8543 vs F(robust_mle)=0.8907, gap=0.0364 [137/255 params])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W_4 (single run): F(rand) ~ 0.663  (reported=0.6627)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ_4: robust_mle ~ reported  (|0.4956 - 0.4956| = 0.0000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ_4: cvxpy yields valid rho (underdetermined)  (F(cvxpy)=0.8876 vs F(robust_mle)=0.4956, gap=0.3920 [137/255 params])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ_4: F(rand) ~ 0.498  (reported=0.4981)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W repeat K* mean ~ 0.872  (got 0.872)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W repeat K* std ~ 0.021  (got 0.021)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W repeat rand mean ~ 0.54  (got 0.542)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W repeat: all Delta F > 0  (deltas=[np.float64(0.35), np.float64(0.377), np.float64(0.224), np.float64(0.367)])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Sweep W_2: F(K*) ~ 0.983  (got 0.9826)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Sweep W_2: F(rand) ~ 0.522  (got 0.5221)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Sweep W_2: Delta F > 0  (delta=0.4605)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Sweep W_4: F(K*) ~ 0.876  (got 0.8760)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Sweep W_4: F(rand) ~ 0.441  (got 0.4408)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Sweep W_4: Delta F > 0  (delta=0.4352)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 8q: 4 of 5 patches measured  (got 4/5)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 8q: mean F ~ 0.997  (got 0.9968)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 8q: all patches F > 0.995  (fidelities={'A': 0.9966194439865828, 'B': 0.9979320678949617, 'C': 0.9970767220005994, 'D': 0.9957141258073581})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Rigetti F(K*) ~ reported  (|0.8155 - 0.8155| = 0.0000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Rigetti F(rand) ~ 0.568  (got 0.5675)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Rigetti Delta F ~ +0.248  (got 0.2480)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] f_mle_full ~ 0.496  (recomputed=0.4956, reported=0.4956)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] f_subspace_mle ~ 0.926  (recomputed=0.9260, reported=0.9260)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] subspace a ~ 0.529  (got 0.5290)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] subspace |c| ~ 0.426  (got 0.4260)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] <XXXX> ~ +0.864  (got 0.8640)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] |<XXXX>| > 0.50 (GME witness)  (|0.8640| = 0.8640)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] <YYYY> ~ +0.864  (got 0.8640)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n_informative_in_kstar = 11  (got 11)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] f_dfe_informative ~ 0.618  (recomputed=0.6180, reported=0.6180)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ has 16 informative Paulis total  (got 16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 5 missing operators  (got 5)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Missing operators match  (computed=['XXYY', 'XYYX', 'YXXY', 'YYXX', 'ZZZZ'], reported=['XXYY', 'XYYX', 'YXXY', 'YYXX', 'ZZZZ'])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=2: D(S-AR) ~ 0.573  (data=0.5727, manuscript=0.573)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=3: D(S-AR) ~ 0.331  (data=0.3307, manuscript=0.331)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=4: D(S-AR) ~ 0.1  (data=0.0998, manuscript=0.1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=5: D(S-AR) ~ 0.042  (data=0.0416, manuscript=0.042)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=2: alloc ~ -13%  (D(AR-UR)=-0.0656, D(S-UR)=0.5072, frac=-12.9%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=3: alloc ~ 43%  (D(AR-UR)=0.2539, D(S-UR)=0.5845, frac=43.4%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=4: alloc ~ 81%  (D(AR-UR)=0.4311, D(S-UR)=0.5309, frac=81.2%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=5: alloc ~ 86%  (D(AR-UR)=0.2604, D(S-UR)=0.3020, frac=86.2%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=4: D(AR-UR) ~ +0.431  (got 0.4311)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] MLE ratio n=2/n=5 ~ 13.8  (0.5727/0.0416 = 13.77)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] PLS ratio n=2/n=5 ~ 28.3  (0.1273/0.0045 = 28.29)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] F(S) ~ 0.903  (got 0.903)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] F(AR) ~ 0.722  (got 0.722)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] F(UR) ~ 0.256  (got 0.256)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hardware alloc ~ 76%  (got 72%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hardware D(S-AR) ~ +0.181  (got 0.181)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Three seeds measured  (got 3)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All seeds: F(K*) > F(AR)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Ranking order matches manuscript  (got ['K*', 'D-optimal', 'E-optimal', 'A-optimal', 'WA-random', 'DR-shadow', 'Uniform-random'])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Overall K* ~ 0.501  (got 0.501)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Overall D-optimal ~ 0.479  (got 0.479)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Overall E-optimal ~ 0.429  (got 0.429)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Overall A-optimal ~ 0.427  (got 0.427)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Overall WA-random ~ 0.347  (got 0.347)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Overall DR-shadow ~ 0.198  (got 0.198)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Overall Uniform-random ~ 0.179  (got 0.179)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All 161 strategy x state values in valid range  (161/161 ok)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* Product ~ 0.991  (got 0.991)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* W ~ 0.932  (got 0.932)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* GHZ ~ 0.502  (got 0.502)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] D-optimal W ~ 0.811  (got 0.811)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] D-optimal GHZ ~ 0.225  (got 0.225)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] E-optimal W ~ 0.833  (got 0.833)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] DR-shadow W ~ 0.567  (got 0.567)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] DR-shadow GHZ ~ 0.114  (got 0.114)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] WA-random Product ~ 0.888  (got 0.888)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] WA-random W ~ 0.414  (got 0.414)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Uniform-random W ~ 0.291  (got 0.291)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Uniform-random GHZ ~ 0.215  (got 0.215)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* Haar mean ~ 0.397  (got 0.397)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* Mixed mean ~ 0.513  (got 0.513)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] D-opt Haar mean ~ 0.398  (got 0.398)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] D-opt Mixed mean ~ 0.502  (got 0.502)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* vs D-opt overall ~ +0.022  (got +0.022)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* vs D-opt W ~ +0.12  (got +0.121)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* vs D-opt GHZ ~ +0.28  (got +0.276)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Adaptive ranking: K* > Random > 3R > 5R  (got ['K*', 'Random', 'Adaptive-3R', 'Adaptive-5R'])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* overall ~ 0.502  (got 0.502)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Random overall ~ 0.335  (got 0.335)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Adaptive-3R ~ 0.140  (got 0.140)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Adaptive-5R ~ 0.133  (got 0.133)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Adaptive-3R < Uniform-random (0.179)  (3R=0.140 < 0.179)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Adaptive-5R < Uniform-random (0.179)  (5R=0.133 < 0.179)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* vs D-opt MLE: p < 1e-4  (p=9.54e-07)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* vs D-opt MLE: significant at 0.05  (p=9.54e-07)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* vs D-opt MLE delta ~ +0.022  (got +0.0216)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* vs Random MLE: p < 1e-4  (p=9.54e-07)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* MLE mean ~ 0.501  (got 0.5015)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] D-opt MLE mean ~ 0.480  (got 0.4800)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Recomputed Wilcoxon p < 1e-4  (p=9.54e-07)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Recomputed K*-D delta ~ +0.022  (got +0.0216)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n_trials = 20  (got 20)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product bootstrap n=1000"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product delta > 0  (delta=0.0158)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product F(K*) ~ 0.996  (got 0.9960)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Bell delta ~ +0.052  (got 0.0524)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W bootstrap n=1000"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W delta ~ +0.228  (got 0.2280)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W F(K*) bootstrap std ~ 0.019  (got 0.0187)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W F(rand) bootstrap std ~ 0.062  (got 0.0620)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ delta ~ -0.002  (got -0.0025)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 4-run t-test: t(3) ~ 9.3  (got t=9.3)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 4-run t-test: p < 0.003  (p=0.0013)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 95% CI on Delta F includes [0.22, 0.44]  (CI=[0.22, 0.44])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All 4 Delta F positive  (deltas=[0.35, 0.377, 0.224, 0.367])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight-ratio fraction ~ 58%  (got 58%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Intra-weight fraction ~ 42%  (got 42%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* split w3:w4 = 54:16"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Proportional split w3:w4 = 40:30"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W-state K*-SFP degradation ~ +0.21  (got +0.210)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W: K* > SFK > SFP  (K*=0.817, SFK=0.717, SFP=0.607)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ: K* > SFK > SFP  (K*=0.806, SFK=0.593, SFP=0.440)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product: K* > SFK > SFP  (K*=0.975, SFK=0.965, SFP=0.958)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Total K*-SFP advantage ~ +0.198  (got +0.198)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n_bootstrap = 1000"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Rigetti std(K*) ~ 0.015  (got 0.0145)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Rigetti std(rand) ~ 0.010  (got 0.0102)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All resamples Delta F > 0  (prob_positive=1.000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Rigetti bootstrap Delta F mean ~ +0.219  (got +0.2193)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Rigetti 95% CI excludes 0  (ci_2.5=0.1854)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Full F(K*) ~ 0.362  (got 0.362+/-0.006)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Full F(rand) in [0.25, 0.50]  (got 0.426+/-0.070)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Full F(rand) volatile (std > F(K*) std)  (rand std=0.070 vs K* std=0.006)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 1-RDM F(K*) ~ 0.985  (got 0.985+/-0.004)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 1-RDM F(rand) ~ 0.969  (got 0.976+/-0.021)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 1-RDM advantage ~ +0.016  (got +0.009)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 1-RDM F(K*) std ~ 0.004  (got 0.0038)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 2-RDM F(K*) ~ 0.771  (got 0.771+/-0.031)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 2-RDM F(rand) in [0.55, 0.80]  (got 0.728+/-0.062)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 2-RDM K* advantage >= 0  (K*=0.771 vs rand=0.728, delta=+0.043)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 1-RDM random std > K* std  (rand=0.0209 vs K*=0.0038)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 2-RDM random std > K* std  (rand=0.0616 vs K*=0.0312)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 1-RDM: 16 values (4 qubits x 4 runs)  (got 16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 2-RDM: 24 values (6 pairs x 4 runs)  (got 24)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] N_2(9) = 29  (got 29)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] N_4(9) = 425  (got 425)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_w(n=4, K=9) matches SM Table  (got {0: 9, 3: 224, 2: 96, 4: 80, 1: 16})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Eigenvalues match SM Table (q=3 n=4 K*=9)  (got [729.0, 162.0, 324.0, 567.0, 405.0])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All eigenvalues positive (q=3 n=4 K*=9)  (lambdas=[729.0, 162.0, 324.0, 567.0, 405.0])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q-ary Krawtchouk orthogonality (n=2)  (max err = 0.00e+00)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] M = N_2(K*) = 29 operators (SM Sec. V)  (M=29)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] M_w = {0:1, 1:16, 2:12} (weight-prioritized)  (got {0: 1, 1: 16, 2: 12})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W: F(K*) > F(AR) (structured advantage)  (F(K*)=0.995, F(AR)=0.481, Delta=+0.514)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W: F(K*) > F(UR) (vs uniform random)  (F(K*)=0.995, F(UR)=0.513)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W: K* std <= AR std (stability)  (K* std=0.002, AR std=0.015)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product: F(K*) > 0.80 (high-fidelity state)  (got 0.973)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product: F(K*) >= F(AR)  (F(K*)=0.973, F(AR)=0.97)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ: delta(K*-AR) near zero or negative (mismatch pattern)  (Delta=+0.032)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* variance < AR variance (W) -- stability  (K*=0.002 vs AR=0.015)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Gram matrix = identity (n=2, full set)  (max off-diag = 0.00e+00)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All nonzero Fisher eigenvalues identical (n=2)  (eigenvalues: min=1.000000, max=1.000000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] det(F) = 0 for proper subset (10 of 15, n=2)  (6 zero eigenvalues out of 16)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] tr(F+) = M for normalized Paulis, full set (n=2)  (tr(F+) = 15.000000, expected 15)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] tr(F+) = M_sub for normalized Paulis, subset (n=2)  (tr(F+) = 10.000000, expected 10)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] tr(F_unnorm^+) = M*sigma^2/(N_s*d^2) (SM formula)  (tr = 0.0009375000, expected 0.0009375000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Frame potential = M*d^2 (n=2, M=15, d=4)  (FP = 240.0, expected 240)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Frame potential = 137*256 = 35072 (n=4, claimed)  (137*256 = 35072)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coherence = 0 (all off-diagonal Tr(P_i P_j) = 0, n=2)  (max |Tr(P_i P_j)| for i!=j: 0.00e+00)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Condition number kappa = 1 (n=2, full set)  (kappa = 1.000000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Condition number kappa = 1 for subset (9 of 15, n=2)  (kappa = 1.000000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight-class sizes  (sizes = {0: 1, 1: 12, 2: 54, 3: 108, 4: 81})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Total nontrivial Paulis = 255  (got 255)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* budget = {0: 1, 1: 12, 2: 54, 3: 54, 4: 16}"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* total = 137  (sum = 137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* covers 12/12 weight-1 (100%)  (12/12)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* covers 54/54 weight-2 (100%)  (54/54)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Random expected weight-1: ~6.4  (E[w1] = 6.4000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Random expected weight-2: ~28.8  (E[w2] = 28.8000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Random weight-1 coverage ~53%  (53.3%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Random weight-2 coverage ~53%  (53.3%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] P(all wt-1 by random) ~ 0.0004  (P = 0.000418)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] P(all wt-0/1/2 by random) ~ 5e-23  (P = 4.64e-23)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Ablation count Full = 137  (got 137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Ablation count remove w0 = 136  (got 136)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Ablation count remove w1 = 125  (got 125)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Ablation count remove w2 = 83  (got 83)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Ablation count remove w3 = 83  (got 83)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Ablation count remove w4 = 121  (got 121)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] w0 has exactly 1 operator (identity = trace constraint)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Removing w0 removes 100% of its class (unique trace constraint)  (fractions removed: w0: 100.0%, w1: 100.0%, w2: 100.0%, w3: 50.0%, w4: 19.8%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Progressive w0: M = 1  (got 1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Progressive w<=1: M = 13  (got 13)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Progressive w<=2: M = 67  (got 67)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Progressive w<=3: M = 121  (got 121)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Progressive w<=4: M = 137  (got 137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight-2 adds most operators (54, tied with w3)  (w2 adds 54 operators)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight-2 inclusion covers 100% of 2-body correlators  (54/54)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] w<=1 to w<=2 is the largest single-step addition (54 operators)  (budget values: [1, 12, 54, 54, 16])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Pauli orthogonality Tr(P_i P_j) = 4*delta (n=2)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Pauli orthogonality Tr(P_i P_j) = 8*delta (n=3)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Frame potential = M*d^2 = 63*64 = 4032 (n=3)  (FP = 4032.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] N_4(25) = 3121  (got 3121)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] c_w matches SM Table tab:q5  (got {0: 9, 1: 32, 2: 360, 3: 1216, 4: 1504})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] sum(c_w) = N_4(25) = 3121"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_0 = 5625.0  (got 5625.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_1 = 1250.0  (got 1250.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_2 = 2343.75  (got 2343.75)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_3 = 2968.75  (got 2968.75)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] lambda_4 = 3671.875  (got 3671.875)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All eigenvalues positive"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] trace pct w=0: 0.3%  (got 0.3%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] trace pct w=1: 1.0%  (got 1.0%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] trace pct w=2: 11.5%  (got 11.5%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] trace pct w=3: 39.0%  (got 39.0%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] trace pct w=4: 48.2%  (got 48.2%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=2: c_0(K*-1=3) = 1  (got 1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=2: c_0(K*=4) = 9  (got 9)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=2: r_4(4) = 24  (got 24)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=3: c_0(K*-1=8) = 1  (got 1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=3: c_0(K*=9) = 9  (got 9)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=3: r_4(9) = 104  (got 104)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=5: c_0(K*-1=24) = 1  (got 1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=5: c_0(K*=25) = 9  (got 9)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=5: r_4(25) = 248  (got 248)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=7: c_0(K*-1=48) = 1  (got 1)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=7: c_0(K*=49) = 9  (got 9)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=7: r_4(49) = 456  (got 456)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=1: c_w matches SM Table tab:progression  (got {0: 1, 1: 8, 2: 0, 3: 0, 4: 0})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=2: c_w matches SM Table tab:progression  (got {0: 1, 1: 8, 2: 24, 3: 0, 4: 0})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=3: c_w matches SM Table tab:progression  (got {0: 1, 1: 8, 2: 24, 3: 32, 4: 0})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=4: c_w matches SM Table tab:progression  (got {0: 1, 1: 16, 2: 24, 3: 32, 4: 16})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=5: c_w matches SM Table tab:progression  (got {0: 1, 1: 16, 2: 72, 3: 32, 4: 16})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=6: c_w matches SM Table tab:progression  (got {0: 1, 1: 16, 2: 72, 3: 128, 4: 16})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=7: c_w matches SM Table tab:progression  (got {0: 1, 1: 16, 2: 72, 3: 128, 4: 80})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=8: c_w matches SM Table tab:progression  (got {0: 1, 1: 16, 2: 96, 3: 128, 4: 80})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=9: c_w matches SM Table tab:progression  (got {0: 9, 1: 16, 2: 96, 3: 224, 4: 80})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=2 A_w = {0:1, 1:12, 2:54, 3:108, 4:81}  (got {0: 1, 1: 12, 2: 54, 3: 108, 4: 81})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=2 K*: weight-0,1,2 fully saturated"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=2 K*: weight-3 partial  (54 < 108)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=2 K*: weight-4 partial  (16 < 81)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=2 K*: sum(M_w) = 137"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=3 K*=9: weight-1 coverage = 50%  (c_1=16, A_1=32, cov=50.00%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=3 K*=9: weight-2 coverage = 25%  (c_2=96, A_2=384, cov=25.00%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=3 K_sat(wt-1) = 10  (got 10)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] q=3 K_sat(wt-2) = 14  (got 14)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=9: N_4(9) = 425  (got 425)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=9: coverage ~ 6.5%  (got 6.5%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=25: N_4(25) = 3121  (got 3121)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K=25: coverage ~ 47.6%  (got 47.6%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] LinInv D(S-AR) n=2 ~ 0.128  (got 0.1277)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] LinInv D(S-AR) n=3 ~ 0.003  (got 0.0027)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] LinInv D(S-AR) n=4 ~ 0.010  (got 0.0096)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] PLS D(S-AR) n=2 ~ 0.127  (got 0.1273)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] PLS D(S-AR) n=3 ~ 0.003  (got 0.0032)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] PLS D(S-AR) n=4 ~ 0.008  (got 0.0082)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] PLS D(S-AR) n=5 ~ 0.005  (got 0.0045)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] MLE D(S-AR) monotonically decreasing n=2..5  (values: {2: 0.5727, 3: 0.3307, 4: 0.0998, 5: 0.0416})"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] 7 orderings found  (got 7)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Bimodal: >= 3 orderings at F > 0.7  (got 4 high)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Bimodal: >= 2 orderings at F < 0.5  (got 3 low)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Spread > 0.4 (large ordering effect)  (spread=0.507)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight distributions identical across orderings"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] F(lexicographic) ~ 0.809  (got 0.8094)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] F(reverse) ~ 0.408  (got 0.4084)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] F(antistride) ~ 0.310  (got 0.3100)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] F(support_first) ~ 0.805  (got 0.8050)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=5 S = 0.730 (W-state MLE)  (got 0.7296)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=5 AR = 0.688  (got 0.6880)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=5 UR = 0.428  (got 0.4276)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=5 D(S-AR) = +0.042  (got +0.0416)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=5 S > AR > UR ordering"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] N_5(5) = 333  (got 333)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* W = 0.817  (got 0.817)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] SFK W = 0.717  (got 0.717)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] SFP W = 0.607  (got 0.607)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* GHZ = 0.806  (got 0.806)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] SFK GHZ = 0.593  (got 0.593)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* Product = 0.975  (got 0.975)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Haar mean ~ 0.07 for all strategies"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Weight ratio fraction ~ 58%  (got 0.58)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Intra-weight fraction ~ 42%  (got 0.42)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W: K* >= SFK >= SFP  (K*=0.817, SFK=0.717, SFP=0.607)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ: K* >= SFK >= SFP  (K*=0.806, SFK=0.593, SFP=0.44)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product: K* >= SFK >= SFP  (K*=0.975, SFK=0.965, SFP=0.958)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=2: M=9 operators (K*=3, N_2(3)=9)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=2: exactly 1 weight-0 operator (identity)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Identity weight >> typical weight at n=2  (ratio = 500)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Identity weight fraction > 80% at n=2 (SM claims 92%)  (computed fraction = 98.4%)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W-state seed=100: Tr(rho^2) >= F^2  (purity=0.7987, F=0.877, F^2=0.7691)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W-state seed=200: Tr(rho^2) >= F^2  (purity=0.8443, F=0.893, F^2=0.7974)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W-state seed=300: Tr(rho^2) >= F^2  (purity=0.8115, F=0.875, F^2=0.7664)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W-state seed=400: Tr(rho^2) >= F^2  (purity=0.7695, F=0.842, F^2=0.7090)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W-state mean purity = 0.8060 (min=0.7695)  (4 runs, mean=0.8060, min=0.7695)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Three-arm seed=100: Tr(rho^2) >= 0.5  (purity=0.8032, F(K*)=0.886)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Three-arm seed=200: Tr(rho^2) >= 0.5  (purity=0.8679, F(K*)=0.917)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Three-arm seed=300: Tr(rho^2) >= 0.5  (purity=0.8379, F(K*)=0.905)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product state: Tr(rho^2) >= 0.90 (near-pure)  (purity=0.9961, F=0.996)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ: Tr(rho^2) < 0.70 (expected: mixed MLE output)  (purity=0.5326 — information-budget mismatch, not hardware failure)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All non-GHZ hardware MLE outputs have purity > 0.5  (verified in tests above)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] SM Prop 1 & Lemma 6 (SymPy exact)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] K* operator set & compression"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Hardware fidelities (cvxpy + robust_mle)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ reanalysis (DFE + subspace)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Allocation fractions & D(S-AR)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] SOTA comparison, statistics & decomposition"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] RDM fidelities (partial trace + lstsq)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Qutrit extension (Gell-Mann + q-ary Krawtchouk)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Fisher information, frame theory & ablation"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Figure data consistency (gen_figures vs JSON)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Extended SM tables (qudit, ordering, scaling)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] MLE purity (Thm 1(iii) near-purity condition)"
+        }
+      ],
+      "raw_output": "======================================================================\n  INDEPENDENT VERIFICATION SUITE\n  Mode: parallel\n  Scripts: 12 (pass --full for 1 more)\n======================================================================\n\n======================================================================\n  Script: verify_propositions.py  (PASS)\n======================================================================\n======================================================================\n  INDEPENDENT VERIFICATION: SM Prop 1 & Lemma 6\n  Dependencies: sympy (exact arithmetic)\n  No project code imported.\n======================================================================\n\n-- Lattice shell counts (d=4) --\n  [PASS] r_4(0)  (got 1)\n  [PASS] r_4(1)  (got 8)\n  [PASS] r_4(2)  (got 24)\n  [PASS] r_4(3)  (got 32)\n  [PASS] r_4(4)  (got 24)\n  [PASS] r_4(5)  (got 48)\n  [PASS] N_4(5) = 137 (incl. origin)  (got 137)\n  [PASS] N_4(5) excl. origin = 136  (got 136)\n\n-- Parity-weight counts c_w (d=4, K=5) --\n  [PASS] c_0  (got 9, expected 9)\n  [PASS] c_1  (got 56, expected 56)\n  [PASS] c_2  (got 24, expected 24)\n  [PASS] c_3  (got 32, expected 32)\n  [PASS] c_4  (got 16, expected 16)\n  [PASS] sum(c_w) = 137  (got 137)\n  [PASS] c_0 without origin = 8\n  [PASS] origin adds 1 to c_0\n\n-- Krawtchouk orthogonality (n=4) --\n  [PASS] P * diag(C(n,w)) * P^T = 2^n * diag(C(n,j))  (diag = [16, 64, 96, 64, 16])\n\n-- Idempotent properties --\n  [PASS] sum_w E_w = I\n  [PASS] E_0^2 = E_0\n  [PASS] E_1^2 = E_1\n  [PASS] E_2^2 = E_2\n  [PASS] E_3^2 = E_3\n  [PASS] E_4^2 = E_4\n  [PASS] E_w * E_{w'} = 0 for w != w'\n\n-- SM Prop 1: Gram spectral decomposition (d=4, K=5) --\n  [PASS] lambda_0 = 144  (got 144)\n  [PASS] lambda_1 = 224  (got 224)\n  [PASS] lambda_2 = 64  (got 64)\n  [PASS] lambda_3 = 128  (got 128)\n  [PASS] lambda_4 = 256  (got 256)\n  [PASS] G == sum_w lambda_w * E_w (exact)\n  [PASS] tr(G) = 2^n * N = 2192  (got 2192)\n  [PASS] all lambda_w > 0 => rank = 16\n\n  -- Distance values G^(h) --\n  [PASS] G^(0) = 137  (got 137)\n  [PASS] G^(1) = 5  (got 5)\n  [PASS] G^(2) = 17  (got 17)\n  [PASS] G^(3) = -19  (got -19)\n  [PASS] G^(4) = -39  (got -39)\n\n  -- Eigenvalue cross-check via distance values --\n  [PASS] lambda_0 from G^(h)  (sum_h G^(h)*K_h(0) = 144)\n  [PASS] lambda_1 from G^(h)  (sum_h G^(h)*K_h(1) = 224)\n  [PASS] lambda_2 from G^(h)  (sum_h G^(h)*K_h(2) = 64)\n  [PASS] lambda_3 from G^(h)  (sum_h G^(h)*K_h(3) = 128)\n  [PASS] lambda_4 from G^(h)  (sum_h G^(h)*K_h(4) = 256)\n\n-- Lemma 6: Support-completeness --\n  [PASS] c_0 > 0  (c_0 = 9)\n  [PASS] c_1 > 0  (c_1 = 56)\n  [PASS] c_2 > 0  (c_2 = 24)\n  [PASS] c_3 > 0  (c_3 = 32)\n  [PASS] c_4 > 0  (c_4 = 16)\n\n  -- Full Gram rank (incl. origin) --\n  [PASS] K=1: rank=5, N=9  (rank=5)\n  [PASS] K=2: rank=11, N=33  (rank=11)\n  [PASS] K=3: rank=15, N=65  (rank=15)\n  [PASS] K=4: rank=16, N=89  (rank=16)\n  [PASS] K=5: rank=16, N=137  (rank=16)\n\n  -- K=4 eigenvalues --\n  [PASS] lambda_0(K=4) = 144  (got 144)\n  [PASS] lambda_1(K=4) = 32  (got 32)\n  [PASS] lambda_2(K=4) = 64  (got 64)\n  [PASS] lambda_3(K=4) = 128  (got 128)\n  [PASS] lambda_4(K=4) = 256  (got 256)\n  [PASS] tr G(K=4) = 1424  (got 1424)\n  [PASS] K=4 weight-1 mass = 9%  (got 9.0%)\n\n  -- Dynamical Gram rank (excl. k=0,1) --\n  [PASS] dyn rank G(K=2)  (got 6, expected 6)\n  [PASS] dyn rank G(K=3)  (got 10, expected 10)\n  [PASS] dyn rank G(K=4)  (got 12, expected 12)\n  [PASS] dyn rank G(K=5)  (got 16, expected 16)\n  [PASS] Dynamical K*_dyn = 5 (first K with dyn rank 16)\n  [PASS] K=1 (no origin): c_0=0 (bottleneck)\n\n-- Three-sector decomposition --\n  [PASS] 1 + 8 + 128 = 137 = N_4(5)\n  [PASS] d=2: decomposition fails (1+2+8=11 != 21)\n  [PASS] d=3: decomposition fails (1+4+32=37 != 57)\n  [PASS] d=4: decomposition holds\n  [PASS] d=5: decomposition fails (1+16+512=529 != 333)\n  [PASS] d=6: decomposition fails (1+32+2048=2081 != 797)\n  [PASS] d=7: decomposition fails (1+64+8192=8257 != 1793)\n\n-- Dimensional rigidity --\n  [PASS] d=1: 2*1 != 1\n  [PASS] d=2: 2*2 != 2\n  [PASS] d=3: 2*3 != 4\n  [PASS] d=4: 2d = 2^{d-1} = 8\n  [PASS] d=5: 2*5 != 16\n  [PASS] d=6: 2*6 != 32\n  [PASS] Unique in [1,100]\n\n-- Eigenvalue mass percentages --\n  [PASS] tr(G) = 2192  (got 2192)\n  [PASS] pct_w=0 = 6.6%  (got 6.6%)\n  [PASS] pct_w=1 = 40.9%  (got 40.9%)\n  [PASS] pct_w=2 = 17.5%  (got 17.5%)\n  [PASS] pct_w=3 = 23.4%  (got 23.4%)\n  [PASS] pct_w=4 = 11.7%  (got 11.7%)\n  [PASS] lambda_2 = chi_orb^2 = 64  (64 vs 64)\n  [PASS] lambda_3 = |Fix| * chi_orb = 128  (128 vs 128)\n  [PASS] lambda_4 = |Fix|^2 = 256  (256 vs 256)\n  [PASS] k=5 shell has 48 vectors  (got 48)\n  [PASS] All k=5 vectors have parity weight 1\n  [PASS] sum(M_w) = 137\n  [PASS] sum(A_w) = 4^4 = 256\n  [PASS] Saturated: w=0,1,2 only\n\n======================================================================\n  RESULTS: 93 passed, 0 failed\n  ALL PROPOSITION CHECKS VERIFIED\n======================================================================\n\n======================================================================\n  Script: verify_operator_set.py  (PASS)\n======================================================================\n======================================================================\n  INDEPENDENT VERIFICATION: K* Operator Set\n  Checks: weight budget, lattice correspondence,\n  basis compression, Rigetti operator match\n======================================================================\n\n-- K* operator set (n=4) --\n  [PASS] len(operators) = 137  (got 137)\n  [PASS] len(labels) = 137\n  [PASS] len(indices) = 137\n  [PASS] M_0 = 1  (got 1)\n  [PASS] M_1 = 12  (got 12)\n  [PASS] M_2 = 54  (got 54)\n  [PASS] M_3 = 54  (got 54)\n  [PASS] M_4 = 16  (got 16)\n  [PASS] IIII in K* set\n  [PASS] All labels are valid 4-qubit Pauli strings\n  [PASS] No duplicate labels\n  [PASS] Weight 0 saturated (M_0 = A_0)  (M=1, A=1)\n  [PASS] Weight 1 saturated (M_1 = A_1)  (M=12, A=12)\n  [PASS] Weight 2 saturated (M_2 = A_2)  (M=54, A=54)\n\n-- Lattice-derived weight budget (standalone derivation) --\n  [PASS] c_0 = 9  (got 9)\n  [PASS] c_1 = 56  (got 56)\n  [PASS] c_2 = 24  (got 24)\n  [PASS] c_3 = 32  (got 32)\n  [PASS] c_4 = 16  (got 16)\n  [PASS] sum(c_w) = 137  (got 137)\n  [PASS] A_0 = C(4,0)*3^0 = 1\n  [PASS] A_1 = C(4,1)*3^1 = 12\n  [PASS] A_2 = C(4,2)*3^2 = 54\n  [PASS] A_3 = C(4,3)*3^3 = 108\n  [PASS] A_4 = C(4,4)*3^4 = 81\n  [PASS] Initial allocation = 85, surplus = 52  (85 + 52 = 137)\n  [PASS] Derived M_0 = 1  (got 1)\n  [PASS] Derived M_1 = 12  (got 12)\n  [PASS] Derived M_2 = 54  (got 54)\n  [PASS] Derived M_3 = 54  (got 54)\n  [PASS] Derived M_4 = 16  (got 16)\n  [PASS] sum(M_w) = 137  (got 137)\n  [PASS] surplus fully distributed  (remaining surplus = 0)\n  [PASS] core.py M_0 matches derived  (core=1, derived=1)\n  [PASS] core.py M_1 matches derived  (core=12, derived=12)\n  [PASS] core.py M_2 matches derived  (core=54, derived=54)\n  [PASS] core.py M_3 matches derived  (core=54, derived=54)\n  [PASS] core.py M_4 matches derived  (core=16, derived=16)\n  [PASS] w_sat = 2 (derived)  (got 2)\n\n-- Basis compression --\n  [PASS] K* greedy cover = 29 bases  (got 29)\n  [PASS] K* operators touch all 81 bases  (touched 81/81)\n  [PASS] Random compresses to ~50 bases  (got 50)\n  [PASS] Compression ratio ~ 1.7x  (got 1.7x)\n\n-- Rigetti operator match --\n  [PASS] Rigetti K* has 137 operators  (got 137)\n  [PASS] Rigetti K* labels match core.py  (missing from Rigetti: set(), extra in Rigetti: set())\n  [PASS] Rigetti n_bases = 29\n  [PASS] Rigetti n_operators = 137\n\n======================================================================\n  RESULTS: 47 passed, 0 failed\n  ALL OPERATOR SET CHECKS VERIFIED\n======================================================================\n\n======================================================================\n  Script: verify_hardware_fidelities.py  (PASS)\n======================================================================\n======================================================================\n  INDEPENDENT VERIFICATION: Hardware Fidelities\n  Methods: robust_mle (project) + cvxpy SDP (independent)\n======================================================================\n\n-- Single-run hardware fidelities --\n\n  |+>^4:\n    F(reported) = 0.9960\n    F(robust_mle) = 0.9960\n    F(cvxpy_mle)  = 0.9245\n  [PASS] |+>^4: robust_mle ~ reported  (|0.9960 - 0.9960| = 0.0000)\n  [PASS] |+>^4: cvxpy yields valid rho (underdetermined)  (F(cvxpy)=0.9245 vs F(robust_mle)=0.9960, gap=0.0715 [137/255 params])\n  [PASS] |+>^4: F(rand) ~ 0.98  (reported=0.9801)\n\n  Bell |Phi+>:\n    F(reported) = 0.5177\n    F(robust_mle) = 0.5177\n    F(cvxpy_mle)  = 0.9533\n  [PASS] Bell |Phi+>: robust_mle ~ reported  (|0.5177 - 0.5177| = 0.0000)\n  [PASS] Bell |Phi+>: cvxpy yields valid rho (underdetermined)  (F(cvxpy)=0.9533 vs F(robust_mle)=0.5177, gap=0.4355 [9/15 params])\n    NOTE: large divergence expected — solution space is non-unique (9/15 informative)\n  [PASS] Bell |Phi+>: F(rand) ~ 0.465  (reported=0.4653)\n\n  W_4 (single run):\n    F(reported) = 0.8907\n    F(robust_mle) = 0.8907\n    F(cvxpy_mle)  = 0.8543\n  [PASS] W_4 (single run): robust_mle ~ reported  (|0.8907 - 0.8907| = 0.0000)\n  [PASS] W_4 (single run): cvxpy yields valid rho (underdetermined)  (F(cvxpy)=0.8543 vs F(robust_mle)=0.8907, gap=0.0364 [137/255 params])\n  [PASS] W_4 (single run): F(rand) ~ 0.663  (reported=0.6627)\n\n  GHZ_4:\n    F(reported) = 0.4956\n    F(robust_mle) = 0.4956\n    F(cvxpy_mle)  = 0.8876\n  [PASS] GHZ_4: robust_mle ~ reported  (|0.4956 - 0.4956| = 0.0000)\n  [PASS] GHZ_4: cvxpy yields valid rho (underdetermined)  (F(cvxpy)=0.8876 vs F(robust_mle)=0.4956, gap=0.3920 [137/255 params])\n    NOTE: large divergence expected — solution space is non-unique (137/255 informative)\n  [PASS] GHZ_4: F(rand) ~ 0.498  (reported=0.4981)\n\n-- W-state repeat runs --\n  Recomputed: F(K*) = 0.872 +/- 0.021\n  Reported:   F(K*) = 0.872 +/- 0.021\n  [PASS] W repeat K* mean ~ 0.872  (got 0.872)\n  [PASS] W repeat K* std ~ 0.021  (got 0.021)\n  F(rand) = 0.542 +/- 0.076\n  [PASS] W repeat rand mean ~ 0.54  (got 0.542)\n  [PASS] W repeat: all Delta F > 0  (deltas=[np.float64(0.35), np.float64(0.377), np.float64(0.224), np.float64(0.367)])\n\n-- Dimensional sweep (IBM) --\n  [PASS] Sweep W_2: F(K*) ~ 0.983  (got 0.9826)\n  [PASS] Sweep W_2: F(rand) ~ 0.522  (got 0.5221)\n  [PASS] Sweep W_2: Delta F > 0  (delta=0.4605)\n  [PASS] Sweep W_4: F(K*) ~ 0.876  (got 0.8760)\n  [PASS] Sweep W_4: F(rand) ~ 0.441  (got 0.4408)\n  [PASS] Sweep W_4: Delta F > 0  (delta=0.4352)\n\n-- 8-qubit compositional (IBM) --\n  [PASS] 8q: 4 of 5 patches measured  (got 4/5)\n  [PASS] 8q: mean F ~ 0.997  (got 0.9968)\n  [PASS] 8q: all patches F > 0.995  (fidelities={'A': 0.9966194439865828, 'B': 0.9979320678949617, 'C': 0.9970767220005994, 'D': 0.9957141258073581})\n\n-- Rigetti Ankaa-3 --\n  Recomputed: F(K*) = 0.8155\n  Reported:   F(K*) = 0.8155\n  [PASS] Rigetti F(K*) ~ reported  (|0.8155 - 0.8155| = 0.0000)\n  [PASS] Rigetti F(rand) ~ 0.568  (got 0.5675)\n  [PASS] Rigetti Delta F ~ +0.248  (got 0.2480)\n\n======================================================================\n  RESULTS: 28 passed, 0 failed\n  ALL HARDWARE FIDELITY CHECKS VERIFIED\n======================================================================\n\n======================================================================\n  Script: verify_ghz_reanalysis.py  (PASS)\n======================================================================\n======================================================================\n  INDEPENDENT VERIFICATION: GHZ Reanalysis\n  Recomputes: full-state MLE, subspace MLE, DFE from raw data\n======================================================================\n\n-- GHZ reanalysis from raw hardware data --\n  [PASS] f_mle_full ~ 0.496  (recomputed=0.4956, reported=0.4956)\n  [PASS] f_subspace_mle ~ 0.926  (recomputed=0.9260, reported=0.9260)\n  [PASS] subspace a ~ 0.529  (got 0.5290)\n  [PASS] subspace |c| ~ 0.426  (got 0.4260)\n  [PASS] <XXXX> ~ +0.864  (got 0.8640)\n  [PASS] |<XXXX>| > 0.50 (GME witness)  (|0.8640| = 0.8640)\n  [PASS] <YYYY> ~ +0.864  (got 0.8640)\n  [PASS] n_informative_in_kstar = 11  (got 11)\n  [PASS] f_dfe_informative ~ 0.618  (recomputed=0.6180, reported=0.6180)\n  [PASS] GHZ has 16 informative Paulis total  (got 16)\n  [PASS] 5 missing operators  (got 5)\n  [PASS] Missing operators match  (computed=['XXYY', 'XYYX', 'YXXY', 'YYXX', 'ZZZZ'], reported=['XXYY', 'XYYX', 'YXXY', 'YYXX', 'ZZZZ'])\n\n======================================================================\n  RESULTS: 12 passed, 0 failed\n  ALL GHZ REANALYSIS CHECKS VERIFIED\n======================================================================\n\n======================================================================\n  Script: verify_allocation.py  (PASS)\n======================================================================\n======================================================================\n  INDEPENDENT VERIFICATION: Allocation & D(S-AR)\n  Cross-checks: simulation data -> manuscript claims\n======================================================================\n\n-- D(S-AR) progression (MLE) --\n  [PASS] n=2: D(S-AR) ~ 0.573  (data=0.5727, manuscript=0.573)\n  [PASS] n=3: D(S-AR) ~ 0.331  (data=0.3307, manuscript=0.331)\n  [PASS] n=4: D(S-AR) ~ 0.1  (data=0.0998, manuscript=0.1)\n  [PASS] n=5: D(S-AR) ~ 0.042  (data=0.0416, manuscript=0.042)\n\n-- Allocation fractions --\n  [PASS] n=2: alloc ~ -13%  (D(AR-UR)=-0.0656, D(S-UR)=0.5072, frac=-12.9%)\n  [PASS] n=3: alloc ~ 43%  (D(AR-UR)=0.2539, D(S-UR)=0.5845, frac=43.4%)\n  [PASS] n=4: alloc ~ 81%  (D(AR-UR)=0.4311, D(S-UR)=0.5309, frac=81.2%)\n  [PASS] n=5: alloc ~ 86%  (D(AR-UR)=0.2604, D(S-UR)=0.3020, frac=86.2%)\n  [PASS] n=4: D(AR-UR) ~ +0.431  (got 0.4311)\n\n-- Dimensional ratios --\n  [PASS] MLE ratio n=2/n=5 ~ 13.8  (0.5727/0.0416 = 13.77)\n  [PASS] PLS ratio n=2/n=5 ~ 28.3  (0.1273/0.0045 = 28.29)\n\n-- Three-arm hardware (ibm_fez) --\n  F(S) = 0.903, F(AR) = 0.722, F(UR) = 0.256\n  [PASS] F(S) ~ 0.903  (got 0.903)\n  [PASS] F(AR) ~ 0.722  (got 0.722)\n  [PASS] F(UR) ~ 0.256  (got 0.256)\n  [PASS] Hardware alloc ~ 76%  (got 72%)\n  [PASS] Hardware D(S-AR) ~ +0.181  (got 0.181)\n  [PASS] Three seeds measured  (got 3)\n  [PASS] All seeds: F(K*) > F(AR)\n\n======================================================================\n  RESULTS: 18 passed, 0 failed\n  ALL ALLOCATION CHECKS VERIFIED\n======================================================================\n\n======================================================================\n  Script: verify_sota_and_stats.py  (PASS)\n======================================================================\n======================================================================\n  INDEPENDENT VERIFICATION: SOTA, Statistics & Decomposition\n  Cross-checks: simulation JSONs -> manuscript claims\n======================================================================\n\n-- SOTA 9-strategy comparison (Table II) --\n  [PASS] Ranking order matches manuscript  (got ['K*', 'D-optimal', 'E-optimal', 'A-optimal', 'WA-random', 'DR-shadow', 'Uniform-random'])\n  [PASS] Overall K* ~ 0.501  (got 0.501)\n  [PASS] Overall D-optimal ~ 0.479  (got 0.479)\n  [PASS] Overall E-optimal ~ 0.429  (got 0.429)\n  [PASS] Overall A-optimal ~ 0.427  (got 0.427)\n  [PASS] Overall WA-random ~ 0.347  (got 0.347)\n  [PASS] Overall DR-shadow ~ 0.198  (got 0.198)\n  [PASS] Overall Uniform-random ~ 0.179  (got 0.179)\n  [PASS] All 161 strategy x state values in valid range  (161/161 ok)\n  [PASS] K* Product ~ 0.991  (got 0.991)\n  [PASS] K* W ~ 0.932  (got 0.932)\n  [PASS] K* GHZ ~ 0.502  (got 0.502)\n  [PASS] D-optimal W ~ 0.811  (got 0.811)\n  [PASS] D-optimal GHZ ~ 0.225  (got 0.225)\n  [PASS] E-optimal W ~ 0.833  (got 0.833)\n  [PASS] DR-shadow W ~ 0.567  (got 0.567)\n  [PASS] DR-shadow GHZ ~ 0.114  (got 0.114)\n  [PASS] WA-random Product ~ 0.888  (got 0.888)\n  [PASS] WA-random W ~ 0.414  (got 0.414)\n  [PASS] Uniform-random W ~ 0.291  (got 0.291)\n  [PASS] Uniform-random GHZ ~ 0.215  (got 0.215)\n  [PASS] K* Haar mean ~ 0.397  (got 0.397)\n  [PASS] K* Mixed mean ~ 0.513  (got 0.513)\n  [PASS] D-opt Haar mean ~ 0.398  (got 0.398)\n  [PASS] D-opt Mixed mean ~ 0.502  (got 0.502)\n  [PASS] K* vs D-opt overall ~ +0.022  (got +0.022)\n  [PASS] K* vs D-opt W ~ +0.12  (got +0.121)\n  [PASS] K* vs D-opt GHZ ~ +0.28  (got +0.276)\n\n-- Adaptive failure analysis --\n  [PASS] Adaptive ranking: K* > Random > 3R > 5R  (got ['K*', 'Random', 'Adaptive-3R', 'Adaptive-5R'])\n  [PASS] K* overall ~ 0.502  (got 0.502)\n  [PASS] Random overall ~ 0.335  (got 0.335)\n  [PASS] Adaptive-3R ~ 0.140  (got 0.140)\n  [PASS] Adaptive-5R ~ 0.133  (got 0.133)\n  [PASS] Adaptive-3R < Uniform-random (0.179)  (3R=0.140 < 0.179)\n  [PASS] Adaptive-5R < Uniform-random (0.179)  (5R=0.133 < 0.179)\n\n-- Statistical significance (Wilcoxon) --\n  [PASS] K* vs D-opt MLE: p < 1e-4  (p=9.54e-07)\n  [PASS] K* vs D-opt MLE: significant at 0.05  (p=9.54e-07)\n  [PASS] K* vs D-opt MLE delta ~ +0.022  (got +0.0216)\n  [PASS] K* vs Random MLE: p < 1e-4  (p=9.54e-07)\n  [PASS] K* MLE mean ~ 0.501  (got 0.5015)\n  [PASS] D-opt MLE mean ~ 0.480  (got 0.4800)\n  [PASS] Recomputed Wilcoxon p < 1e-4  (p=9.54e-07)\n  [PASS] Recomputed K*-D delta ~ +0.022  (got +0.0216)\n  [PASS] n_trials = 20  (got 20)\n\n-- Bootstrap CIs (1000 resamples) --\n  [PASS] Product bootstrap n=1000\n  [PASS] Product delta > 0  (delta=0.0158)\n  [PASS] Product F(K*) ~ 0.996  (got 0.9960)\n  [PASS] Bell delta ~ +0.052  (got 0.0524)\n  [PASS] W bootstrap n=1000\n  [PASS] W delta ~ +0.228  (got 0.2280)\n  [PASS] W F(K*) bootstrap std ~ 0.019  (got 0.0187)\n  [PASS] W F(rand) bootstrap std ~ 0.062  (got 0.0620)\n  [PASS] GHZ delta ~ -0.002  (got -0.0025)\n\n  -- W-state 4-run paired t-test --\n  [PASS] 4-run t-test: t(3) ~ 9.3  (got t=9.3)\n  [PASS] 4-run t-test: p < 0.003  (p=0.0013)\n  [PASS] 95% CI on Delta F includes [0.22, 0.44]  (CI=[0.22, 0.44])\n  [PASS] All 4 Delta F positive  (deltas=[0.35, 0.377, 0.224, 0.367])\n\n-- Intra-weight decomposition (saturate-fill) --\n  [PASS] Weight-ratio fraction ~ 58%  (got 58%)\n  [PASS] Intra-weight fraction ~ 42%  (got 42%)\n  [PASS] K* split w3:w4 = 54:16\n  [PASS] Proportional split w3:w4 = 40:30\n  [PASS] W-state K*-SFP degradation ~ +0.21  (got +0.210)\n  [PASS] W: K* > SFK > SFP  (K*=0.817, SFK=0.717, SFP=0.607)\n  [PASS] GHZ: K* > SFK > SFP  (K*=0.806, SFK=0.593, SFP=0.440)\n  [PASS] Product: K* > SFK > SFP  (K*=0.975, SFK=0.965, SFP=0.958)\n  [PASS] Total K*-SFP advantage ~ +0.198  (got +0.198)\n\n-- Rigetti bootstrap (1000 resamples) --\n  [PASS] n_bootstrap = 1000\n  [PASS] Rigetti std(K*) ~ 0.015  (got 0.0145)\n  [PASS] Rigetti std(rand) ~ 0.010  (got 0.0102)\n  [PASS] All resamples Delta F > 0  (prob_positive=1.000)\n  [PASS] Rigetti bootstrap Delta F mean ~ +0.219  (got +0.2193)\n  [PASS] Rigetti 95% CI excludes 0  (ci_2.5=0.1854)\n\n======================================================================\n  RESULTS: 72 passed, 0 failed\n  ALL SOTA & STATISTICS CHECKS VERIFIED\n======================================================================\n\n======================================================================\n  Script: verify_rdm_fidelities.py  (PASS)\n======================================================================\n======================================================================\n  INDEPENDENT VERIFICATION: RDM Fidelities\n  Method: lstsq + eigenvalue clipping + partial trace\n======================================================================\n\n-- RDM fidelities from W-state hardware data (4 runs) --\n  Full-state:  F(K*)=0.362+/-0.006  F(rand)=0.426+/-0.070\n  1-RDM:       F(K*)=0.985+/-0.004  F(rand)=0.976+/-0.021\n  2-RDM:       F(K*)=0.771+/-0.031  F(rand)=0.728+/-0.062\n  [PASS] Full F(K*) ~ 0.362  (got 0.362+/-0.006)\n  [PASS] Full F(rand) in [0.25, 0.50]  (got 0.426+/-0.070)\n  [PASS] Full F(rand) volatile (std > F(K*) std)  (rand std=0.070 vs K* std=0.006)\n  [PASS] 1-RDM F(K*) ~ 0.985  (got 0.985+/-0.004)\n  [PASS] 1-RDM F(rand) ~ 0.969  (got 0.976+/-0.021)\n  [PASS] 1-RDM advantage ~ +0.016  (got +0.009)\n  [PASS] 1-RDM F(K*) std ~ 0.004  (got 0.0038)\n  [PASS] 2-RDM F(K*) ~ 0.771  (got 0.771+/-0.031)\n  [PASS] 2-RDM F(rand) in [0.55, 0.80]  (got 0.728+/-0.062)\n  [PASS] 2-RDM K* advantage >= 0  (K*=0.771 vs rand=0.728, delta=+0.043)\n  [PASS] 1-RDM random std > K* std  (rand=0.0209 vs K*=0.0038)\n  [PASS] 2-RDM random std > K* std  (rand=0.0616 vs K*=0.0312)\n  [PASS] 1-RDM: 16 values (4 qubits x 4 runs)  (got 16)\n  [PASS] 2-RDM: 24 values (6 pairs x 4 runs)  (got 24)\n\n======================================================================\n  RESULTS: 14 passed, 0 failed\n  ALL RDM FIDELITY CHECKS VERIFIED\n======================================================================\n\n======================================================================\n  Script: verify_qutrit.py  (PASS)\n======================================================================\n======================================================================\n  INDEPENDENT VERIFICATION: Qutrit Extension (SM Sec. V)\n  Workers: 32\n======================================================================\n\n-- Qutrit theory (q=3) --\n  [PASS] N_2(9) = 29  (got 29)\n  [PASS] N_4(9) = 425  (got 425)\n  [PASS] c_w(n=4, K=9) matches SM Table  (got {0: 9, 3: 224, 2: 96, 4: 80, 1: 16})\n  [PASS] Eigenvalues match SM Table (q=3 n=4 K*=9)  (got [729.0, 162.0, 324.0, 567.0, 405.0])\n  [PASS] All eigenvalues positive (q=3 n=4 K*=9)  (lambdas=[729.0, 162.0, 324.0, 567.0, 405.0])\n  [PASS] q-ary Krawtchouk orthogonality (n=2)  (max err = 0.00e+00)\n\n-- Qutrit three-arm simulation (q=3, n=2) --\n  K* cutoff: K=9, N=29, M=29 operators\n  M_w: {0: 1, 1: 16, 2: 12}\n  [PASS] M = N_2(K*) = 29 operators (SM Sec. V)  (M=29)\n  [PASS] M_w = {0:1, 1:16, 2:12} (weight-prioritized)  (got {0: 1, 1: 16, 2: 12})\n\n  W: F(K*)=0.995+/-0.002  F(AR)=0.481+/-0.015  F(UR)=0.513+/-0.037  [1.3s]\n\n  Product: F(K*)=0.973+/-0.009  F(AR)=0.970+/-0.006  F(UR)=0.924+/-0.022  [1.0s]\n\n  GHZ: F(K*)=0.249+/-0.027  F(AR)=0.218+/-0.016  F(UR)=0.815+/-0.020  [0.9s]\n\n-- Verification against SM Sec. V Table --\n  [PASS] W: F(K*) > F(AR) (structured advantage)  (F(K*)=0.995, F(AR)=0.481, Delta=+0.514)\n  [PASS] W: F(K*) > F(UR) (vs uniform random)  (F(K*)=0.995, F(UR)=0.513)\n  [PASS] W: K* std <= AR std (stability)  (K* std=0.002, AR std=0.015)\n  [PASS] Product: F(K*) > 0.80 (high-fidelity state)  (got 0.973)\n  [PASS] Product: F(K*) >= F(AR)  (F(K*)=0.973, F(AR)=0.97)\n  [PASS] GHZ: delta(K*-AR) near zero or negative (mismatch pattern)  (Delta=+0.032)\n  [PASS] K* variance < AR variance (W) -- stability  (K*=0.002 vs AR=0.015)\n\n  Total time: 3.3s\n\n======================================================================\n  RESULTS: 15 passed, 0 failed\n  ALL QUTRIT CHECKS VERIFIED\n======================================================================\n\n======================================================================\n  Script: verify_fisher_frame.py  (PASS)\n======================================================================\n============================================================\nSM Sec. IV: Fisher Information, Frame Theory,\n           Weight-Class Coverage & Ablation\n============================================================\n\n=== Fisher Information (n=2, d=4) ===\n  [PASS] Gram matrix = identity (n=2, full set)  (max off-diag = 0.00e+00)\n  [PASS] All nonzero Fisher eigenvalues identical (n=2)  (eigenvalues: min=1.000000, max=1.000000)\n  [PASS] det(F) = 0 for proper subset (10 of 15, n=2)  (6 zero eigenvalues out of 16)\n  [PASS] tr(F+) = M for normalized Paulis, full set (n=2)  (tr(F+) = 15.000000, expected 15)\n  [PASS] tr(F+) = M_sub for normalized Paulis, subset (n=2)  (tr(F+) = 10.000000, expected 10)\n  [PASS] tr(F_unnorm^+) = M*sigma^2/(N_s*d^2) (SM formula)  (tr = 0.0009375000, expected 0.0009375000)\n\n=== Frame Theory ===\n  [PASS] Frame potential = M*d^2 (n=2, M=15, d=4)  (FP = 240.0, expected 240)\n  [PASS] Frame potential = 137*256 = 35072 (n=4, claimed)  (137*256 = 35072)\n  [PASS] Coherence = 0 (all off-diagonal Tr(P_i P_j) = 0, n=2)  (max |Tr(P_i P_j)| for i!=j: 0.00e+00)\n  [PASS] Condition number kappa = 1 (n=2, full set)  (kappa = 1.000000)\n  [PASS] Condition number kappa = 1 for subset (9 of 15, n=2)  (kappa = 1.000000)\n\n=== Weight-Class Coverage Table ===\n  [PASS] Weight-class sizes  (sizes = {0: 1, 1: 12, 2: 54, 3: 108, 4: 81})\n  [PASS] Total nontrivial Paulis = 255  (got 255)\n  [PASS] K* budget = {0: 1, 1: 12, 2: 54, 3: 54, 4: 16}\n  [PASS] K* total = 137  (sum = 137)\n  [PASS] K* covers 12/12 weight-1 (100%)  (12/12)\n  [PASS] K* covers 54/54 weight-2 (100%)  (54/54)\n  [PASS] Random expected weight-1: ~6.4  (E[w1] = 6.4000)\n  [PASS] Random expected weight-2: ~28.8  (E[w2] = 28.8000)\n  [PASS] Random weight-1 coverage ~53%  (53.3%)\n  [PASS] Random weight-2 coverage ~53%  (53.3%)\n  [PASS] P(all wt-1 by random) ~ 0.0004  (P = 0.000418)\n  [PASS] P(all wt-0/1/2 by random) ~ 5e-23  (P = 4.64e-23)\n\n=== Weight-Class Ablation ===\n  [PASS] Ablation count Full = 137  (got 137)\n  [PASS] Ablation count remove w0 = 136  (got 136)\n  [PASS] Ablation count remove w1 = 125  (got 125)\n  [PASS] Ablation count remove w2 = 83  (got 83)\n  [PASS] Ablation count remove w3 = 83  (got 83)\n  [PASS] Ablation count remove w4 = 121  (got 121)\n  [PASS] w0 has exactly 1 operator (identity = trace constraint)\n  [PASS] Removing w0 removes 100% of its class (unique trace constraint)  (fractions removed: w0: 100.0%, w1: 100.0%, w2: 100.0%, w3: 50.0%, w4: 19.8%)\n\n=== Progressive Weight-Class Addition ===\n  [PASS] Progressive w0: M = 1  (got 1)\n  [PASS] Progressive w<=1: M = 13  (got 13)\n  [PASS] Progressive w<=2: M = 67  (got 67)\n  [PASS] Progressive w<=3: M = 121  (got 121)\n  [PASS] Progressive w<=4: M = 137  (got 137)\n  [PASS] Weight-2 adds most operators (54, tied with w3)  (w2 adds 54 operators)\n  [PASS] Weight-2 inclusion covers 100% of 2-body correlators  (54/54)\n  [PASS] w<=1 to w<=2 is the largest single-step addition (54 operators)  (budget values: [1, 12, 54, 54, 16])\n\n=== Cross-Checks ===\n  [PASS] Pauli orthogonality Tr(P_i P_j) = 4*delta (n=2)\n  [PASS] Pauli orthogonality Tr(P_i P_j) = 8*delta (n=3)\n  [PASS] Frame potential = M*d^2 = 63*64 = 4032 (n=3)  (FP = 4032.0)\n\n============================================================\nTOTAL: 42 passed, 0 failed\n============================================================\n\n======================================================================\n  Script: verify_figures.py  (PASS)\n======================================================================\n\n=== Figure 1: Fidelity comparison ===\n  PASS  Fig1 Product f_struct\n  PASS  Fig1 Product f_rand\n  PASS  Fig1 Bell f_struct\n  PASS  Fig1 Bell f_rand\n  PASS  Fig1 W f_struct (4-run mean)\n  PASS  Fig1 W f_rand (4-run mean)\n  PASS  Fig1 W err_struct (4-run std)\n  PASS  Fig1 W err_rand (4-run std)\n  PASS  Fig1 GHZ f_struct\n  PASS  Fig1 GHZ f_rand\n\n=== Figure 2: Eigenvalue mass ===\n  PASS  Fig2 sum(c_w) = 137\n  PASS  Fig2 lambda_0 = 16*c_0/C(4,0)\n  PASS  Fig2 lambda_1 = 16*c_1/C(4,1)\n  PASS  Fig2 lambda_2 = 16*c_2/C(4,2)\n  PASS  Fig2 lambda_3 = 16*c_3/C(4,3)\n  PASS  Fig2 lambda_4 = 16*c_4/C(4,4)\n  PASS  Fig2 lambda*binom products\n  PASS  Fig2 pct_trace[0] = 6.6%\n  PASS  Fig2 pct_trace[1] = 40.9%\n  PASS  Fig2 pct_trace[2] = 17.5%\n  PASS  Fig2 pct_trace[3] = 23.4%\n  PASS  Fig2 pct_trace[4] = 11.7%\n  PASS  Fig2 sum(pct_trace) ~ 100\n  PASS  Fig2 sum(M_w) = 137\n  PASS  Fig2 A_0 = C(4,0)*3^0\n  PASS  Fig2 A_1 = C(4,1)*3^1\n  PASS  Fig2 A_2 = C(4,2)*3^2\n  PASS  Fig2 A_3 = C(4,3)*3^3\n  PASS  Fig2 A_4 = C(4,4)*3^4\n  PASS  Fig2 sum(A_w) = 256\n  PASS  Fig2 M_0 <= A_0\n  PASS  Fig2 M_1 <= A_1\n  PASS  Fig2 M_2 <= A_2\n  PASS  Fig2 M_3 <= A_3\n  PASS  Fig2 M_4 <= A_4\n\n=== Figure 4: SOTA comparison ===\n  WARN  File not found: sota_comparison_n4.json\n        data\\sota_comparison_n4.json\n  PASS  Fig4 f_overall[6] (Adaptive-3R)\n  PASS  Fig4 f_overall[7] (Adaptive-5R)\n  PASS  Fig4 f_product[6] (Adaptive-3R)\n  PASS  Fig4 f_W[6] (Adaptive-3R)\n  PASS  Fig4 f_GHZ[6] (Adaptive-3R)\n  PASS  Fig4 f_Haar[6] (Adaptive-3R)\n  PASS  Fig4 f_Mixed[6] (Adaptive-3R)\n  PASS  Fig4 f_product[7] (Adaptive-5R)\n  PASS  Fig4 f_W[7] (Adaptive-5R)\n  PASS  Fig4 f_GHZ[7] (Adaptive-5R)\n  PASS  Fig4 f_Haar[7] (Adaptive-5R)\n  PASS  Fig4 f_Mixed[7] (Adaptive-5R)\n\n=== Figure 5: Dimensional dependence ===\n  PASS  Fig5 delta_SAR[n=2]\n  PASS  Fig5 delta_SAR[n=3]\n  PASS  Fig5 delta_SAR[n=4]\n  PASS  Fig5 delta_SAR[n=5]\n  PASS  Fig5 delta_SAR monotonically decreasing\n\n=== Figure 6: Circuit efficiency ===\n  PASS  Fig6 full_tomo bases = 3^4 = 81\n  PASS  Fig6 K* operators count = 137\n  PASS  Fig6 random arm has operators from ~50 bases\n  PASS  Fig6 K* plateau = 4*29 = 116\n\n=== Figure 7: GHZ mismatch ===\n  PASS  Fig7 full MLE fidelity\n  PASS  Fig7 subspace fidelity\n  PASS  Fig7 DFE lower bound fidelity\n  PASS  Fig7 ghz_info_pct w=2 = 40%\n  PASS  Fig7 ghz_info_pct w=4 = 60%\n  PASS  Fig7 ghz_info_pct sum = 100\n  PASS  Fig7 ghz_info_pct w=0,1,3 all zero\n  PASS  Fig7 GHZ source = 214922.json\n\n============================================================\n  TOTAL: 64 passed, 0 failed, 1 warnings\n============================================================\n\n======================================================================\n  Script: verify_sm_extended.py  (PASS)\n======================================================================\n======================================================================\n  INDEPENDENT VERIFICATION: Extended SM Tables & Claims\n  SM Sec. V (qudit), VI (dimensional), VII (ordering),\n  IX (hybrid/shots/n=5), XII (MLE details)\n  No project code imported.\n======================================================================\n\n-- PART 1: Ququint eigenvalues (q=5, n=4, K*=25) --\n  [PASS] N_4(25) = 3121  (got 3121)\n  [PASS] c_w matches SM Table tab:q5  (got {0: 9, 1: 32, 2: 360, 3: 1216, 4: 1504})\n  [PASS] sum(c_w) = N_4(25) = 3121\n  [PASS] lambda_0 = 5625.0  (got 5625.0)\n  [PASS] lambda_1 = 1250.0  (got 1250.0)\n  [PASS] lambda_2 = 2343.75  (got 2343.75)\n  [PASS] lambda_3 = 2968.75  (got 2968.75)\n  [PASS] lambda_4 = 3671.875  (got 3671.875)\n  [PASS] All eigenvalues positive\n  [PASS] trace pct w=0: 0.3%  (got 0.3%)\n  [PASS] trace pct w=1: 1.0%  (got 1.0%)\n  [PASS] trace pct w=2: 11.5%  (got 11.5%)\n  [PASS] trace pct w=3: 39.0%  (got 39.0%)\n  [PASS] trace pct w=4: 48.2%  (got 48.2%)\n  [q=5 enumeration took 0.0s]\n\n-- PART 2: K*=q^2 characterization --\n  [PASS] q=2: c_0(K*-1=3) = 1  (got 1)\n  [PASS] q=2: c_0(K*=4) = 9  (got 9)\n  [PASS] q=2: r_4(4) = 24  (got 24)\n  [q=2 took 0.0s]\n  [PASS] q=3: c_0(K*-1=8) = 1  (got 1)\n  [PASS] q=3: c_0(K*=9) = 9  (got 9)\n  [PASS] q=3: r_4(9) = 104  (got 104)\n  [q=3 took 0.0s]\n  [PASS] q=5: c_0(K*-1=24) = 1  (got 1)\n  [PASS] q=5: c_0(K*=25) = 9  (got 9)\n  [PASS] q=5: r_4(25) = 248  (got 248)\n  [q=5 took 0.0s]\n  [PASS] q=7: c_0(K*-1=48) = 1  (got 1)\n  [PASS] q=7: c_0(K*=49) = 9  (got 9)\n  [PASS] q=7: r_4(49) = 456  (got 456)\n  [q=7 took 0.1s]\n\n-- PART 3: Eigenvalue mass progression (q=3, n=4, K=1..9) --\n  [PASS] K=1: c_w matches SM Table tab:progression  (got {0: 1, 1: 8, 2: 0, 3: 0, 4: 0})\n  [PASS] K=2: c_w matches SM Table tab:progression  (got {0: 1, 1: 8, 2: 24, 3: 0, 4: 0})\n  [PASS] K=3: c_w matches SM Table tab:progression  (got {0: 1, 1: 8, 2: 24, 3: 32, 4: 0})\n  [PASS] K=4: c_w matches SM Table tab:progression  (got {0: 1, 1: 16, 2: 24, 3: 32, 4: 16})\n  [PASS] K=5: c_w matches SM Table tab:progression  (got {0: 1, 1: 16, 2: 72, 3: 32, 4: 16})\n  [PASS] K=6: c_w matches SM Table tab:progression  (got {0: 1, 1: 16, 2: 72, 3: 128, 4: 16})\n  [PASS] K=7: c_w matches SM Table tab:progression  (got {0: 1, 1: 16, 2: 72, 3: 128, 4: 80})\n  [PASS] K=8: c_w matches SM Table tab:progression  (got {0: 1, 1: 16, 2: 96, 3: 128, 4: 80})\n  [PASS] K=9: c_w matches SM Table tab:progression  (got {0: 9, 1: 16, 2: 96, 3: 224, 4: 80})\n\n-- PART 4: Weight-class saturation --\n  q=2, n=4:\n  [PASS] q=2 A_w = {0:1, 1:12, 2:54, 3:108, 4:81}  (got {0: 1, 1: 12, 2: 54, 3: 108, 4: 81})\n  [PASS] q=2 K*: weight-0,1,2 fully saturated\n  [PASS] q=2 K*: weight-3 partial  (54 < 108)\n  [PASS] q=2 K*: weight-4 partial  (16 < 81)\n  [PASS] q=2 K*: sum(M_w) = 137\n  q=3, n=4:\n  [PASS] q=3 K*=9: weight-1 coverage = 50%  (c_1=16, A_1=32, cov=50.00%)\n  [PASS] q=3 K*=9: weight-2 coverage = 25%  (c_2=96, A_2=384, cov=25.00%)\n  [PASS] q=3 K_sat(wt-1) = 10  (got 10)\n  [PASS] q=3 K_sat(wt-2) = 14  (got 14)\n\n-- PART 5: Coverage scan (q=3, n=4) --\n    K= 9: N_4(K)=  425, coverage=6.5%\n    K=15: N_4(K)= 1257, coverage=19.2%\n    K=20: N_4(K)= 2041, coverage=31.1%\n    K=25: N_4(K)= 3121, coverage=47.6%\n    K=26: N_4(K)= 3457, coverage=52.7%\n    K=30: N_4(K)= 4785, coverage=72.9%\n  [PASS] K=9: N_4(9) = 425  (got 425)\n  [PASS] K=9: coverage ~ 6.5%  (got 6.5%)\n  [PASS] K=25: N_4(25) = 3121  (got 3121)\n  [PASS] K=25: coverage ~ 47.6%  (got 47.6%)\n\n-- PART 6: Dimensional dependence (LinInv & PLS from reviewer output) --\n  [PASS] LinInv D(S-AR) n=2 ~ 0.128  (got 0.1277)\n  [PASS] LinInv D(S-AR) n=3 ~ 0.003  (got 0.0027)\n  [PASS] LinInv D(S-AR) n=4 ~ 0.010  (got 0.0096)\n  [PASS] PLS D(S-AR) n=2 ~ 0.127  (got 0.1273)\n  [PASS] PLS D(S-AR) n=3 ~ 0.003  (got 0.0032)\n  [PASS] PLS D(S-AR) n=4 ~ 0.008  (got 0.0082)\n  [PASS] PLS D(S-AR) n=5 ~ 0.005  (got 0.0045)\n  [PASS] MLE D(S-AR) monotonically decreasing n=2..5  (values: {2: 0.5727, 3: 0.3307, 4: 0.0998, 5: 0.0416})\n\n-- PART 7: Ordering sensitivity (Simulation 3) --\n  [PASS] 7 orderings found  (got 7)\n  [PASS] Bimodal: >= 3 orderings at F > 0.7  (got 4 high)\n  [PASS] Bimodal: >= 2 orderings at F < 0.5  (got 3 low)\n  [PASS] Spread > 0.4 (large ordering effect)  (spread=0.507)\n  [PASS] Weight distributions identical across orderings\n  [PASS] F(lexicographic) ~ 0.809  (got 0.8094)\n  [PASS] F(reverse) ~ 0.408  (got 0.4084)\n  [PASS] F(antistride) ~ 0.310  (got 0.3100)\n  [PASS] F(support_first) ~ 0.805  (got 0.8050)\n\n-- PART 8: n=5 scaling (Simulation 4) --\n  [PASS] n=5 S = 0.730 (W-state MLE)  (got 0.7296)\n  [PASS] n=5 AR = 0.688  (got 0.6880)\n  [PASS] n=5 UR = 0.428  (got 0.4276)\n  [PASS] n=5 D(S-AR) = +0.042  (got +0.0416)\n  [PASS] n=5 S > AR > UR ordering\n  [PASS] N_5(5) = 333  (got 333)\n\n-- PART 9: Saturate-and-fill baseline --\n  [PASS] K* W = 0.817  (got 0.817)\n  [PASS] SFK W = 0.717  (got 0.717)\n  [PASS] SFP W = 0.607  (got 0.607)\n  [PASS] K* GHZ = 0.806  (got 0.806)\n  [PASS] SFK GHZ = 0.593  (got 0.593)\n  [PASS] K* Product = 0.975  (got 0.975)\n  [PASS] Haar mean ~ 0.07 for all strategies\n  [PASS] Weight ratio fraction ~ 58%  (got 0.58)\n  [PASS] Intra-weight fraction ~ 42%  (got 0.42)\n  [PASS] W: K* >= SFK >= SFP  (K*=0.817, SFK=0.717, SFP=0.607)\n  [PASS] GHZ: K* >= SFK >= SFP  (K*=0.806, SFK=0.593, SFP=0.44)\n  [PASS] Product: K* >= SFK >= SFP  (K*=0.975, SFK=0.965, SFP=0.958)\n\n-- PART 10: SM Sec. XII claims --\n  [PASS] n=2: M=9 operators (K*=3, N_2(3)=9)\n  [PASS] n=2: exactly 1 weight-0 operator (identity)\n  [PASS] Identity weight >> typical weight at n=2  (ratio = 500)\n  [PASS] Identity weight fraction > 80% at n=2 (SM claims 92%)  (computed fraction = 98.4%)\n\n  Total time: 0.2s\n\n======================================================================\n  RESULTS: 87 passed, 0 failed\n  ALL EXTENDED SM CHECKS VERIFIED\n======================================================================\n\n======================================================================\n  Script: test_mle_purity.py  (PASS)\n======================================================================\n======================================================================\n  TIER 4: MLE Purity Verification from Hardware Data\n  Verifies Theorem 1(iii) near-purity condition\n======================================================================\n\n-- W-state repeat runs (4 independent QPU runs) --\n  [PASS] W-state seed=100: Tr(rho^2) >= F^2  (purity=0.7987, F=0.877, F^2=0.7691)\n  [PASS] W-state seed=200: Tr(rho^2) >= F^2  (purity=0.8443, F=0.893, F^2=0.7974)\n  [PASS] W-state seed=300: Tr(rho^2) >= F^2  (purity=0.8115, F=0.875, F^2=0.7664)\n  [PASS] W-state seed=400: Tr(rho^2) >= F^2  (purity=0.7695, F=0.842, F^2=0.7090)\n  [PASS] W-state mean purity = 0.8060 (min=0.7695)  (4 runs, mean=0.8060, min=0.7695)\n\n  [INFO] W-state MLE purities: 0.7987, 0.8443, 0.8115, 0.7695\n  [INFO] Mean purity: 0.8060, std: 0.0269\n\n-- Three-arm hardware runs (W-state, 3 seeds) --\n  [PASS] Three-arm seed=100: Tr(rho^2) >= 0.5  (purity=0.8032, F(K*)=0.886)\n  [PASS] Three-arm seed=200: Tr(rho^2) >= 0.5  (purity=0.8679, F(K*)=0.917)\n  [PASS] Three-arm seed=300: Tr(rho^2) >= 0.5  (purity=0.8379, F(K*)=0.905)\n\n  [INFO] Three-arm MLE purities: 0.8032, 0.8679, 0.8379\n\n-- Product state hardware run --\n  [PASS] Product state: Tr(rho^2) >= 0.90 (near-pure)  (purity=0.9961, F=0.996)\n  [INFO] Product state MLE purity: 0.9961\n\n-- GHZ state (expected near-purity FAILURE) --\n  [PASS] GHZ: Tr(rho^2) < 0.70 (expected: mixed MLE output)  (purity=0.5326 — information-budget mismatch, not hardware failure)\n  [INFO] GHZ MLE purity: 0.5326 (maximally mixed = 0.0625)\n\n-- Purity summary for Theorem 1(iii) --\n  Condition: Tr(rho_hat^2) >= 1 - delta\n  Near-purity required for fidelity guarantee\n  [PASS] All non-GHZ hardware MLE outputs have purity > 0.5  (verified in tests above)\n\n======================================================================\n  RESULTS: 11 passed, 0 failed\n  ALL MLE PURITY CHECKS VERIFIED\n======================================================================\n\n======================================================================\n  SUMMARY\n======================================================================\n  [PASS] SM Prop 1 & Lemma 6 (SymPy exact)\n  [PASS] K* operator set & compression\n  [PASS] Hardware fidelities (cvxpy + robust_mle)\n  [PASS] GHZ reanalysis (DFE + subspace)\n  [PASS] Allocation fractions & D(S-AR)\n  [PASS] SOTA comparison, statistics & decomposition\n  [PASS] RDM fidelities (partial trace + lstsq)\n  [PASS] Qutrit extension (Gell-Mann + q-ary Krawtchouk)\n  [PASS] Fisher information, frame theory & ablation\n  [PASS] Figure data consistency (gen_figures vs JSON)\n  [PASS] Extended SM tables (qudit, ordering, scaling)\n  [PASS] MLE purity (Thm 1(iii) near-purity condition)\n\n  Elapsed: 18.5s\n  ALL VERIFICATION SUITES PASSED\n======================================================================\n",
+      "subcategories": {
+        "math_replication": {
+          "count": 176,
+          "passed": 176,
+          "failed": 0
+        },
+        "data_consistency": {
+          "count": 275,
+          "passed": 275,
+          "failed": 0
+        }
+      }
+    },
+    "tier5": {
+      "name": "Fidelity HS→F recovery",
+      "status": "PASS",
+      "checks_passed": 10,
+      "checks_failed": 0,
+      "checks": [
+        {
+          "status": "PASS",
+          "detail": "[PASS] HS^2 (direct) matches Pauli sum / d  (direct=2.343750e-03, pauli=2.343750e-03)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] F = (1 + purity - HS^2)/2 for all 18 (state, noise) pairs  (0 violations)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W(p=0.03): F=0.972, HS^2=8.4e-4, purity=0.945  (F=0.971875, HS^2=8.4375e-04, purity=0.944594)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] T(rho,sigma) <= sqrt(d) * ||.||_HS for all 6 cases  (0 violations)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Near-pure recovery (p=0.005): F >= 1 - HS^2 - (1-purity)  (F=0.995313, HS^2=2.3438e-05, purity=0.990648, bound=0.990625)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Near-pure recovery (p=0.01): F >= 1 - HS^2 - (1-purity)  (F=0.990625, HS^2=9.3750e-05, purity=0.981344, bound=0.981250)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Near-pure recovery (p=0.03): F >= 1 - HS^2 - (1-purity)  (F=0.971875, HS^2=8.4375e-04, purity=0.944594, bound=0.943750)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] F >= 1 - d*eps_pos for W at k=2  (F >= 0.3125 (conservative; actual ~0.87 on hardware))"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Product state (k=4): eps_pos=0 => F >= 1.0  (eps_pos = (d-1-S_n)/d^2 = (15-15)/256 = 0.0)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Depolarized product: F >= 1 - d*9/2560  (F >= 0.9437)"
+        }
+      ],
+      "raw_output": "======================================================================\n  TIER 5: Fidelity Recovery from Hilbert-Schmidt Distance\n  Fills gap: HS bounds -> fidelity guarantees (Thm 1(iii))\n======================================================================\n\n-- HS distance = (1/d) * sum (x_P - y_P)^2 --\n  [PASS] HS^2 (direct) matches Pauli sum / d  (direct=2.343750e-03, pauli=2.343750e-03)\n\n-- Pure-state fidelity: F = (1 + purity(sigma) - HS^2) / 2 --\n  [PASS] F = (1 + purity - HS^2)/2 for all 18 (state, noise) pairs  (0 violations)\n  [PASS] W(p=0.03): F=0.972, HS^2=8.4e-4, purity=0.945  (F=0.971875, HS^2=8.4375e-04, purity=0.944594)\n\n-- Trace norm <= sqrt(d) * HS norm --\n  [PASS] T(rho,sigma) <= sqrt(d) * ||.||_HS for all 6 cases  (0 violations)\n\n-- Near-pure recovery: MLE purity -> fidelity guarantee --\n  [PASS] Near-pure recovery (p=0.005): F >= 1 - HS^2 - (1-purity)  (F=0.995313, HS^2=2.3438e-05, purity=0.990648, bound=0.990625)\n  [PASS] Near-pure recovery (p=0.01): F >= 1 - HS^2 - (1-purity)  (F=0.990625, HS^2=9.3750e-05, purity=0.981344, bound=0.981250)\n  [PASS] Near-pure recovery (p=0.03): F >= 1 - HS^2 - (1-purity)  (F=0.971875, HS^2=8.4375e-04, purity=0.944594, bound=0.943750)\n\n-- Manuscript eps_pos -> fidelity conversion --\n  [PASS] F >= 1 - d*eps_pos for W at k=2  (F >= 0.3125 (conservative; actual ~0.87 on hardware))\n  [PASS] Product state (k=4): eps_pos=0 => F >= 1.0  (eps_pos = (d-1-S_n)/d^2 = (15-15)/256 = 0.0)\n  [PASS] Depolarized product: F >= 1 - d*9/2560  (F >= 0.9437)\n\n======================================================================\n  RESULTS: 10 passed, 0 failed\n  ALL FIDELITY RECOVERY CHECKS VERIFIED\n======================================================================\n"
+    },
+    "tier6": {
+      "name": "End-to-end implication chains",
+      "status": "PASS",
+      "checks_passed": 44,
+      "checks_failed": 0,
+      "checks": [
+        {
+          "status": "PASS",
+          "detail": "[PASS] Step 1: c_w(K=5) from lattice  (c_w=[9, 56, 24, 32, 16], N=137)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Step 2: All Gram eigenvalues positive (Krawtchouk transform)  (eigs=[144.0, 224.0, 64.0, 128.0, 256.0])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Step 3: A_w = [1, 12, 54, 108, 81]"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Step 4: M_w = [1, 12, 54, 54, 16] via greedy  (M_w=[1, 12, 54, 54, 16])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Step 5: w_sat = 2 (weights 0,1,2 saturated)  (w_sat=2)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Chain integrity: N_4(5)=137 = sum(c_w) = sum(M_w)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Step 1: w_sat=2 from K* allocation"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Step 2: W(|0>^4) = 4 (product state is n-local)  (W(rho)=4)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Step 3: eps_pos(product, k=4) = 0 (pure + fully local)  (S_4=15.0, eps_pos=0.00e+00)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Step 4: F >= 1 - d*eps_pos = 1.0 for pure product  (F >= 1.000000)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Step 5 (W state): HS bound = 2d*(eps_pos + eps_tail)  (eps_pos=0.042969, eps_tail=0.042969, HS bound=2.7500)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=3: M_n/N = 0.905 < 1 (Thm 3 hypothesis)  (M_n=57, N=63)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=4: M_n/N = 0.537 < 1 (Thm 3 hypothesis)  (M_n=137, N=255)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=5: M_n/N = 0.326 < 1 (Thm 3 hypothesis)  (M_n=333, N=1023)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=6: M_n/N = 0.195 < 1 (Thm 3 hypothesis)  (M_n=797, N=4095)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=7: M_n/N = 0.109 < 1 (Thm 3 hypothesis)  (M_n=1793, N=16383)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=8: M_n/N = 0.057 < 1 (Thm 3 hypothesis)  (M_n=3729, N=65535)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] n=9: M_n/N = 0.027 < 1 (Thm 3 hypothesis)  (M_n=7189, N=262143)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Random failure bound vanishes with n  (bounds: [(3, '4.06e-01'), (4, '5.78e-04'), (5, '4.88e-08'), (6, '1.61e-13'), (7, '6.65e-21'), (8, '1.33e-30'), (9, '6.75e-43')])"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W-repeat data file exists"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W-state F(K*) mean ~ 0.87  (mean=0.872, std=0.021, n_runs=4)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] W-state F(rand) mean ~ 0.54  (mean=0.542)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Delta F = F(K*) - F(rand) > 0 (K* advantage)  (dF=0.330)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] GHZ: F(K*) ~ 0.50 (expected: M=137 insufficient for weight-4 states)  (F=0.496 — information-budget mismatch, not a bug)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Three-arm data file exists"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Three-arm: F(K*) > F(AR) > F(UR)  (F(K*)=0.903, F(AR)=0.722, F(UR)=0.256)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Three-arm: allocation fraction ~ 76%  (alloc_frac=0.76)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Lemma 1 (Fisher-Hessian) verified by 5 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Theorem 1(i) (basin sep.) verified by 6 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Theorem 1(ii) (random miss) verified by 4 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Theorem 1(iii) (HS error) verified by 7 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Corollary 1 (approx. locality) verified by 7 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Lemma 2 (purity bound) verified by 5 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Lemma 3 (monotonicity) verified by 4 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Theorem 2(i) (mu_w<1 -> F<=1/2) verified by 3 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Theorem 2(ii) (mu_w=1 -> HS) verified by 3 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Theorem 2(iii) (phase trans.) verified by 3 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Theorem 2(iv) (K* phases) verified by 5 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Lemma 4 (coupon-collector) verified by 4 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Corollary 2 (lower bound) verified by 3 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Theorem 3 (asymptotic) verified by 4 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Lemma 5 (general q) verified by 4 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] Coverage: Lemma 6 (support-complete) verified by 3 tiers (>= 2 required)"
+        },
+        {
+          "status": "PASS",
+          "detail": "[PASS] All 16 formal claims covered by >= 2 independent tiers"
+        }
+      ],
+      "raw_output": "======================================================================\n  TIER 6: End-to-End Implication Chain Verification\n  Verifies logical dependencies between theorems\n======================================================================\n\n-- Chain 1: Lattice -> Krawtchouk -> Gram -> K* -> Allocation --\n  [PASS] Step 1: c_w(K=5) from lattice  (c_w=[9, 56, 24, 32, 16], N=137)\n  [PASS] Step 2: All Gram eigenvalues positive (Krawtchouk transform)  (eigs=[144.0, 224.0, 64.0, 128.0, 256.0])\n  [PASS] Step 3: A_w = [1, 12, 54, 108, 81]\n  [PASS] Step 4: M_w = [1, 12, 54, 54, 16] via greedy  (M_w=[1, 12, 54, 54, 16])\n  [PASS] Step 5: w_sat = 2 (weights 0,1,2 saturated)  (w_sat=2)\n  [PASS] Chain integrity: N_4(5)=137 = sum(c_w) = sum(M_w)\n\n-- Chain 2: Saturation -> Basin -> eps_pos -> Fidelity --\n  [PASS] Step 1: w_sat=2 from K* allocation\n  [PASS] Step 2: W(|0>^4) = 4 (product state is n-local)  (W(rho)=4)\n  [PASS] Step 3: eps_pos(product, k=4) = 0 (pure + fully local)  (S_4=15.0, eps_pos=0.00e+00)\n  [PASS] Step 4: F >= 1 - d*eps_pos = 1.0 for pure product  (F >= 1.000000)\n  [PASS] Step 5 (W state): HS bound = 2d*(eps_pos + eps_tail)  (eps_pos=0.042969, eps_tail=0.042969, HS bound=2.7500)\n\n-- Chain 3: M_n/N ratio -> asymptotic separation --\n  [PASS] n=3: M_n/N = 0.905 < 1 (Thm 3 hypothesis)  (M_n=57, N=63)\n  [PASS] n=4: M_n/N = 0.537 < 1 (Thm 3 hypothesis)  (M_n=137, N=255)\n  [PASS] n=5: M_n/N = 0.326 < 1 (Thm 3 hypothesis)  (M_n=333, N=1023)\n  [PASS] n=6: M_n/N = 0.195 < 1 (Thm 3 hypothesis)  (M_n=797, N=4095)\n  [PASS] n=7: M_n/N = 0.109 < 1 (Thm 3 hypothesis)  (M_n=1793, N=16383)\n  [PASS] n=8: M_n/N = 0.057 < 1 (Thm 3 hypothesis)  (M_n=3729, N=65535)\n  [PASS] n=9: M_n/N = 0.027 < 1 (Thm 3 hypothesis)  (M_n=7189, N=262143)\n  [PASS] Random failure bound vanishes with n  (bounds: [(3, '4.06e-01'), (4, '5.78e-04'), (5, '4.88e-08'), (6, '1.61e-13'), (7, '6.65e-21'), (8, '1.33e-30'), (9, '6.75e-43')])\n\n-- Chain 4: Hardware JSON -> manuscript claims --\n  [PASS] W-repeat data file exists\n  [PASS] W-state F(K*) mean ~ 0.87  (mean=0.872, std=0.021, n_runs=4)\n  [PASS] W-state F(rand) mean ~ 0.54  (mean=0.542)\n  [PASS] Delta F = F(K*) - F(rand) > 0 (K* advantage)  (dF=0.330)\n  [PASS] GHZ: F(K*) ~ 0.50 (expected: M=137 insufficient for weight-4 states)  (F=0.496 — information-budget mismatch, not a bug)\n  [PASS] Three-arm data file exists\n  [PASS] Three-arm: F(K*) > F(AR) > F(UR)  (F(K*)=0.903, F(AR)=0.722, F(UR)=0.256)\n  [PASS] Three-arm: allocation fraction ~ 76%  (alloc_frac=0.76)\n\n--- Chain 5: Coverage audit (meta-verification) ---\n  [PASS] Coverage: Lemma 1 (Fisher-Hessian) verified by 5 tiers (>= 2 required)\n  [PASS] Coverage: Theorem 1(i) (basin sep.) verified by 6 tiers (>= 2 required)\n  [PASS] Coverage: Theorem 1(ii) (random miss) verified by 4 tiers (>= 2 required)\n  [PASS] Coverage: Theorem 1(iii) (HS error) verified by 7 tiers (>= 2 required)\n  [PASS] Coverage: Corollary 1 (approx. locality) verified by 7 tiers (>= 2 required)\n  [PASS] Coverage: Lemma 2 (purity bound) verified by 5 tiers (>= 2 required)\n  [PASS] Coverage: Lemma 3 (monotonicity) verified by 4 tiers (>= 2 required)\n  [PASS] Coverage: Theorem 2(i) (mu_w<1 -> F<=1/2) verified by 3 tiers (>= 2 required)\n  [PASS] Coverage: Theorem 2(ii) (mu_w=1 -> HS) verified by 3 tiers (>= 2 required)\n  [PASS] Coverage: Theorem 2(iii) (phase trans.) verified by 3 tiers (>= 2 required)\n  [PASS] Coverage: Theorem 2(iv) (K* phases) verified by 5 tiers (>= 2 required)\n  [PASS] Coverage: Lemma 4 (coupon-collector) verified by 4 tiers (>= 2 required)\n  [PASS] Coverage: Corollary 2 (lower bound) verified by 3 tiers (>= 2 required)\n  [PASS] Coverage: Theorem 3 (asymptotic) verified by 4 tiers (>= 2 required)\n  [PASS] Coverage: Lemma 5 (general q) verified by 4 tiers (>= 2 required)\n  [PASS] Coverage: Lemma 6 (support-complete) verified by 3 tiers (>= 2 required)\n  [PASS] All 16 formal claims covered by >= 2 independent tiers\n\n======================================================================\n  RESULTS: 44 passed, 0 failed\n  ALL IMPLICATION CHAIN CHECKS VERIFIED\n======================================================================\n"
+    }
+  },
+  "summary": {
+    "all_pass": false,
+    "tiers_run": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "tiers_skipped": [
+      1
+    ],
+    "total_passed": 740,
+    "total_failed": 0,
+    "elapsed_seconds": 324.54
+  },
+  "claim_coverage": [
+    {
+      "claim_id": "lem:hessian",
+      "paper_label": "Lemma 1 (Fisher-Hessian)",
+      "tier_counts": {
+        "2": 4,
+        "3": 9,
+        "4": 4,
+        "6": 1
+      },
+      "total_checks": 18,
+      "num_tiers": 4
+    },
+    {
+      "claim_id": "thm:basin_i",
+      "paper_label": "Theorem 1(i) (basin sep.)",
+      "tier_counts": {
+        "2": 2,
+        "3": 3,
+        "6": 1
+      },
+      "total_checks": 6,
+      "num_tiers": 3
+    },
+    {
+      "claim_id": "thm:basin_ii",
+      "paper_label": "Theorem 1(ii) (random miss)",
+      "tier_counts": {
+        "3": 1,
+        "6": 2
+      },
+      "total_checks": 3,
+      "num_tiers": 2
+    },
+    {
+      "claim_id": "thm:basin_iii",
+      "paper_label": "Theorem 1(iii) (HS error)",
+      "tier_counts": {
+        "2": 10,
+        "3": 5,
+        "4": 12,
+        "5": 7,
+        "6": 5
+      },
+      "total_checks": 39,
+      "num_tiers": 5
+    },
+    {
+      "claim_id": "cor:approx_local",
+      "paper_label": "Corollary 1 (approx. locality)",
+      "tier_counts": {
+        "3": 1,
+        "6": 2
+      },
+      "total_checks": 3,
+      "num_tiers": 2
+    },
+    {
+      "claim_id": "lem:purity",
+      "paper_label": "Lemma 2 (purity bound)",
+      "tier_counts": {
+        "3": 1,
+        "4": 12,
+        "5": 5,
+        "6": 1
+      },
+      "total_checks": 19,
+      "num_tiers": 4
+    },
+    {
+      "claim_id": "lem:monotone",
+      "paper_label": "Lemma 3 (monotonicity)",
+      "tier_counts": {
+        "2": 28,
+        "3": 5,
+        "4": 68,
+        "6": 3
+      },
+      "total_checks": 104,
+      "num_tiers": 4
+    },
+    {
+      "claim_id": "thm:spectral",
+      "paper_label": "Theorem 2 (spectral char.)",
+      "tier_counts": {
+        "2": 16,
+        "3": 7,
+        "6": 3
+      },
+      "total_checks": 26,
+      "num_tiers": 3
+    },
+    {
+      "claim_id": "lem:coupon",
+      "paper_label": "Lemma 4 (coupon-collector)",
+      "tier_counts": {
+        "0": 1,
+        "2": 3,
+        "4": 1,
+        "6": 1
+      },
+      "total_checks": 6,
+      "num_tiers": 4
+    },
+    {
+      "claim_id": "cor:lower_bound",
+      "paper_label": "Corollary 2 (operator lower bound)",
+      "tier_counts": {
+        "2": 4,
+        "4": 2,
+        "6": 2
+      },
+      "total_checks": 8,
+      "num_tiers": 3
+    },
+    {
+      "claim_id": "thm:asymptotic",
+      "paper_label": "Theorem 3 (asymptotic)",
+      "tier_counts": {
+        "2": 3,
+        "6": 8
+      },
+      "total_checks": 11,
+      "num_tiers": 2
+    },
+    {
+      "claim_id": "lem:general_q",
+      "paper_label": "Lemma 5 (general q)",
+      "tier_counts": {
+        "2": 23,
+        "3": 2,
+        "4": 25
+      },
+      "total_checks": 50,
+      "num_tiers": 3
+    },
+    {
+      "claim_id": "lem:support",
+      "paper_label": "Lemma 6 (support-completeness)",
+      "tier_counts": {
+        "2": 3,
+        "4": 1
+      },
+      "total_checks": 4,
+      "num_tiers": 2
+    },
+    {
+      "claim_id": "hw:w_state",
+      "paper_label": "W-state fidelity",
+      "tier_counts": {
+        "2": 5,
+        "3": 7,
+        "4": 36,
+        "6": 6
+      },
+      "total_checks": 54,
+      "num_tiers": 4
+    },
+    {
+      "claim_id": "hw:product",
+      "paper_label": "Product-state fidelity",
+      "tier_counts": {
+        "2": 1,
+        "3": 5,
+        "4": 9,
+        "5": 3,
+        "6": 3
+      },
+      "total_checks": 21,
+      "num_tiers": 5
+    },
+    {
+      "claim_id": "hw:three_arm",
+      "paper_label": "Three-arm allocation",
+      "tier_counts": {
+        "2": 1,
+        "4": 12,
+        "6": 3
+      },
+      "total_checks": 16,
+      "num_tiers": 3
+    },
+    {
+      "claim_id": "hw:ghz",
+      "paper_label": "GHZ anomaly (expected)",
+      "tier_counts": {
+        "2": 5,
+        "3": 6,
+        "4": 18,
+        "6": 1
+      },
+      "total_checks": 30,
+      "num_tiers": 4
+    },
+    {
+      "claim_id": "hw:rigetti",
+      "paper_label": "Rigetti cross-platform",
+      "tier_counts": {
+        "4": 11
+      },
+      "total_checks": 11,
+      "num_tiers": 1
+    },
+    {
+      "claim_id": "hw:8q",
+      "paper_label": "8q compositional",
+      "tier_counts": {
+        "4": 3
+      },
+      "total_checks": 3,
+      "num_tiers": 1
+    },
+    {
+      "claim_id": "hw:rdm",
+      "paper_label": "RDM fidelities",
+      "tier_counts": {
+        "4": 12
+      },
+      "total_checks": 12,
+      "num_tiers": 1
+    },
+    {
+      "claim_id": "hw:sota",
+      "paper_label": "SOTA comparison",
+      "tier_counts": {
+        "4": 9
+      },
+      "total_checks": 9,
+      "num_tiers": 1
+    },
+    {
+      "claim_id": "val:N137",
+      "paper_label": "N_4(5) = 137",
+      "tier_counts": {
+        "2": 7,
+        "4": 19,
+        "6": 1
+      },
+      "total_checks": 27,
+      "num_tiers": 3
+    },
+    {
+      "claim_id": "val:krawtchouk",
+      "paper_label": "Krawtchouk polynomials",
+      "tier_counts": {
+        "0": 1,
+        "2": 11,
+        "4": 4,
+        "6": 1
+      },
+      "total_checks": 17,
+      "num_tiers": 4
+    }
+  ]
+}

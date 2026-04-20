@@ -1,0 +1,916 @@
+{
+  "schema_version": "1.3",
+  "generated_at": "2026-04-18T22:36:44Z",
+  "git_sha": "4867f33fe4ea9181f732b64b9d8552fabea9597b",
+  "lean_toolchain": "leanprover/lean4:v4.29.0-rc8",
+  "registry_sha": "e25794c27e7ece422216fbcd119e2ad6a5b33a293e62d92c2c633f76c63ec911",
+  "constants_sha": "a5a230a75a5b62fdc0f9d4b45ba6cdad9459f80f618572eb7eeb6d511845f94d",
+  "tex_sha": {
+    "manuscript.tex": "a8a0515df6680413776b5410aa54a4caa73998d69a6dbd56fe58534c059b7ca1",
+    "supplemental_material.tex": "9a5990b08901cdcef95427428d98cdbcf8e734a16a0fa29c8bd9d22156204aa9"
+  },
+  "tier_pass_counts": {
+    "tier0": 0,
+    "tier1": 0,
+    "tier2": 160,
+    "tier3": 73,
+    "tier4": 418,
+    "tier5": 10,
+    "tier6": 44,
+    "tier7": 285
+  },
+  "lake_build": {
+    "exit_code": 0,
+    "jobs": 1272
+  },
+  "sorry_audit": {
+    "exit_code": 0,
+    "layer1_sorry": 0,
+    "layer23_sorry": 0,
+    "total_sorry": 0
+  },
+  "named_axioms_catalog": {
+    "witness_states_are_valid": "Nielsen & Chuang (Sec. 2.4)",
+    "fidelity_orthogonal_zero": "Uhlmann 1976",
+    "fidelity_witness_traceproj_decomp": "Fuchs & van de Graaf 1999",
+    "fidelity_nonneg": "definition",
+    "weyl_eigenvalue_bound": "Bhatia, Matrix Analysis, Thm III.2.1"
+  },
+  "per_theorem_axioms": {
+    "KstarFormal.QaryGram.bose_mesner_combinatorial_iff": [
+      "propext",
+      "Quot.sound"
+    ],
+    "KstarFormal.WeightSatAllN.weight12_saturation_K5_all_n": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "M_w_K5_sum": [
+      "propext",
+      "M_w_K5_sum._native.native_decide.ax_1_1"
+    ],
+    "bose_mesner_combinatorial_iff": [
+      "propext",
+      "Quot.sound"
+    ],
+    "cor1_approx_locality_stmt": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "cor1_approx_locality_universal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "cor2_operator_lower_bound_n4": [
+      "propext",
+      "kstar_exceeds_lower_bound._native.native_decide.ax_1_1",
+      "operator_lower_bound_eq._native.native_decide.ax_1_1"
+    ],
+    "delsarteDual_K5_all_pos": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound",
+      "delsarteDual_K5_all_pos._native.native_decide.ax_1_1",
+      "delsarteDual_K5_all_pos._native.native_decide.ax_1_2",
+      "delsarteDual_K5_all_pos._native.native_decide.ax_1_3",
+      "delsarteDual_K5_all_pos._native.native_decide.ax_1_4",
+      "delsarteDual_K5_all_pos._native.native_decide.ax_1_5"
+    ],
+    "hradil_R_closed_form": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "kfull_n5": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound",
+      "n5_K4_rank_deficient._native.native_decide.ax_1_1",
+      "n5_K5_full_rank._native.native_decide.ax_1_1",
+      "n5_K5_full_rank._native.native_decide.ax_1_2",
+      "n5_K5_full_rank._native.native_decide.ax_1_3",
+      "n5_K5_full_rank._native.native_decide.ax_1_4",
+      "n5_K5_full_rank._native.native_decide.ax_1_5",
+      "n5_K5_full_rank._native.native_decide.ax_1_6"
+    ],
+    "lem1_hessian_diagonal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "lem1_hessian_universal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "lem2_purity_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "lem2_purity_universal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "lem3_eigenvalue_monotonicity_n4": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound",
+      "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_1",
+      "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_2",
+      "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_3",
+      "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_4",
+      "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_5"
+    ],
+    "lem3_eigenvalue_monotonicity_universal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "lem4_hypergeometric_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "lem5_spectral_decomposition_n4": [
+      "propext",
+      "eigenvalues_K5_eq._native.native_decide.ax_1_1"
+    ],
+    "lem6_support_completeness_n4": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound",
+      "all_c_w_positive._native.native_decide.ax_1_1",
+      "all_c_w_positive._native.native_decide.ax_1_2",
+      "all_c_w_positive._native.native_decide.ax_1_3",
+      "all_c_w_positive._native.native_decide.ax_1_4",
+      "all_c_w_positive._native.native_decide.ax_1_5"
+    ],
+    "physical_kstar_count_n4": [
+      "propext"
+    ],
+    "psd_contraction": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "thm1_basin_separation": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound",
+      "expected_missing_n4._native.native_decide.ax_1_1",
+      "kstar_eq_five._native.native_decide.ax_1_1",
+      "kstar_eq_five._native.native_decide.ax_1_2",
+      "kstar_eq_five._native.native_decide.ax_1_3",
+      "kstar_eq_five._native.native_decide.ax_1_4"
+    ],
+    "thm1_basin_universal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "thm2_spectral_char_universal": [
+      "DensityMatrix",
+      "fidelity_orthogonal_zero",
+      "fidelity_witness_traceproj_decomp",
+      "propext",
+      "qfidelity",
+      "witnessMinus",
+      "witnessPlus",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "thm2_spectral_characterization": [
+      "DensityMatrix",
+      "fidelity_orthogonal_zero",
+      "propext",
+      "qfidelity",
+      "witnessMinus",
+      "witnessPlus",
+      "Classical.choice",
+      "Quot.sound",
+      "kstar_full_eq_four._native.native_decide.ax_1_1",
+      "kstar_full_eq_four._native.native_decide.ax_1_2",
+      "kstar_full_eq_four._native.native_decide.ax_1_3",
+      "kstar_full_eq_four._native.native_decide.ax_1_4",
+      "kstar_full_eq_four._native.native_decide.ax_1_5",
+      "kstar_full_eq_four._native.native_decide.ax_1_6"
+    ],
+    "thm3_asymptotic_separation": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "weight12_saturation_K5_all_n": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "weight_3_not_saturated": [
+      "propext",
+      "weight_3_not_saturated._native.native_decide.ax_1_1"
+    ]
+  },
+  "claim_map": [
+    {
+      "claim_id": "lem:hessian",
+      "label": "Lemma 1 (Fisher-Hessian spectral decomposition)",
+      "lean4_theorem": "lem1_hessian_diagonal",
+      "lean4_theorem_universal": "lem1_hessian_universal",
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      },
+      "lean4_theorem_universal_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_universal_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "thm:basin",
+      "label": "Theorem 1 (Basin separation)",
+      "lean4_theorem": "thm1_basin_separation",
+      "lean4_theorem_universal": "thm1_basin_universal",
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound",
+        "expected_missing_n4._native.native_decide.ax_1_1",
+        "kstar_eq_five._native.native_decide.ax_1_1",
+        "kstar_eq_five._native.native_decide.ax_1_2",
+        "kstar_eq_five._native.native_decide.ax_1_3",
+        "kstar_eq_five._native.native_decide.ax_1_4"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [
+          "expected_missing_n4._native.native_decide.ax_1_1",
+          "kstar_eq_five._native.native_decide.ax_1_1",
+          "kstar_eq_five._native.native_decide.ax_1_2",
+          "kstar_eq_five._native.native_decide.ax_1_3",
+          "kstar_eq_five._native.native_decide.ax_1_4"
+        ],
+        "other_declarations": []
+      },
+      "lean4_theorem_universal_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_universal_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "cor:approx_local",
+      "label": "Corollary 1 (Approximate locality)",
+      "lean4_theorem": "cor1_approx_locality_stmt",
+      "lean4_theorem_universal": "cor1_approx_locality_universal",
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      },
+      "lean4_theorem_universal_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_universal_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "cor:fidelity_lower_bound",
+      "label": "Corollary (Fidelity lower bound under MLE near-purity)",
+      "lean4_theorem": null,
+      "lean4_theorem_universal": null
+    },
+    {
+      "claim_id": "lem:purity_main",
+      "label": "Lemma 2 (Purity bound on positivity excursion)",
+      "lean4_theorem": "lem2_purity_bound",
+      "lean4_theorem_universal": "lem2_purity_universal",
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      },
+      "lean4_theorem_universal_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_universal_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "lem:monotone",
+      "label": "Lemma 3 (Eigenvalue monotonicity)",
+      "lean4_theorem": "lem3_eigenvalue_monotonicity_n4",
+      "lean4_theorem_universal": "lem3_eigenvalue_monotonicity_universal",
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound",
+        "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_1",
+        "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_2",
+        "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_3",
+        "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_4",
+        "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_5"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [
+          "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_1",
+          "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_2",
+          "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_3",
+          "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_4",
+          "eigenvalue_monotone_K4_K5._native.native_decide.ax_1_5"
+        ],
+        "other_declarations": []
+      },
+      "lean4_theorem_universal_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_universal_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "thm:spectral-char",
+      "label": "Theorem 2 (Spectral characterization of basin separation)",
+      "lean4_theorem": "thm2_spectral_characterization",
+      "lean4_theorem_universal": "thm2_spectral_char_universal",
+      "lean4_theorem_axioms": [
+        "DensityMatrix",
+        "fidelity_orthogonal_zero",
+        "propext",
+        "qfidelity",
+        "witnessMinus",
+        "witnessPlus",
+        "Classical.choice",
+        "Quot.sound",
+        "kstar_full_eq_four._native.native_decide.ax_1_1",
+        "kstar_full_eq_four._native.native_decide.ax_1_2",
+        "kstar_full_eq_four._native.native_decide.ax_1_3",
+        "kstar_full_eq_four._native.native_decide.ax_1_4",
+        "kstar_full_eq_four._native.native_decide.ax_1_5",
+        "kstar_full_eq_four._native.native_decide.ax_1_6"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [
+          "fidelity_orthogonal_zero"
+        ],
+        "native_decide_certificates": [
+          "kstar_full_eq_four._native.native_decide.ax_1_1",
+          "kstar_full_eq_four._native.native_decide.ax_1_2",
+          "kstar_full_eq_four._native.native_decide.ax_1_3",
+          "kstar_full_eq_four._native.native_decide.ax_1_4",
+          "kstar_full_eq_four._native.native_decide.ax_1_5",
+          "kstar_full_eq_four._native.native_decide.ax_1_6"
+        ],
+        "other_declarations": [
+          "DensityMatrix",
+          "qfidelity",
+          "witnessMinus",
+          "witnessPlus"
+        ]
+      },
+      "lean4_theorem_universal_axioms": [
+        "DensityMatrix",
+        "fidelity_orthogonal_zero",
+        "fidelity_witness_traceproj_decomp",
+        "propext",
+        "qfidelity",
+        "witnessMinus",
+        "witnessPlus",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_universal_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [
+          "fidelity_orthogonal_zero",
+          "fidelity_witness_traceproj_decomp"
+        ],
+        "native_decide_certificates": [],
+        "other_declarations": [
+          "DensityMatrix",
+          "qfidelity",
+          "witnessMinus",
+          "witnessPlus"
+        ]
+      }
+    },
+    {
+      "claim_id": "lem:coupon",
+      "label": "Lemma 4 (Coupon-collector / hypergeometric threshold)",
+      "lean4_theorem": "lem4_hypergeometric_bound",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "cor:lower_bound",
+      "label": "Corollary 2 (Operator lower bound)",
+      "lean4_theorem": "cor2_operator_lower_bound_n4",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "kstar_exceeds_lower_bound._native.native_decide.ax_1_1",
+        "operator_lower_bound_eq._native.native_decide.ax_1_1"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [
+          "kstar_exceeds_lower_bound._native.native_decide.ax_1_1",
+          "operator_lower_bound_eq._native.native_decide.ax_1_1"
+        ],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "thm:asymptotic",
+      "label": "Theorem 3 (Asymptotic K* separation)",
+      "lean4_theorem": "thm3_asymptotic_separation",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "lem:spectral_q_main",
+      "label": "Lemma 5 (Spectral decomposition, general q)",
+      "lean4_theorem": "lem5_spectral_decomposition_n4",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "eigenvalues_K5_eq._native.native_decide.ax_1_1"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [
+          "eigenvalues_K5_eq._native.native_decide.ax_1_1"
+        ],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "lem:completeness",
+      "label": "Lemma 6 (Support-completeness criterion)",
+      "lean4_theorem": "lem6_support_completeness_n4",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound",
+        "all_c_w_positive._native.native_decide.ax_1_1",
+        "all_c_w_positive._native.native_decide.ax_1_2",
+        "all_c_w_positive._native.native_decide.ax_1_3",
+        "all_c_w_positive._native.native_decide.ax_1_4",
+        "all_c_w_positive._native.native_decide.ax_1_5"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [
+          "all_c_w_positive._native.native_decide.ax_1_1",
+          "all_c_w_positive._native.native_decide.ax_1_2",
+          "all_c_w_positive._native.native_decide.ax_1_3",
+          "all_c_w_positive._native.native_decide.ax_1_4",
+          "all_c_w_positive._native.native_decide.ax_1_5"
+        ],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "prop:spectral_q",
+      "label": "SM Proposition 1 (Spectral decomposition)",
+      "lean4_theorem": "bose_mesner_combinatorial_iff",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "cor:support",
+      "label": "SM Corollary 1 (Support-completeness)",
+      "lean4_theorem": "bose_mesner_combinatorial_iff",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "prop:spec-complete",
+      "label": "SM Proposition 2 (Spectral completeness threshold)",
+      "lean4_theorem": "lem6_support_completeness_n4",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound",
+        "all_c_w_positive._native.native_decide.ax_1_1",
+        "all_c_w_positive._native.native_decide.ax_1_2",
+        "all_c_w_positive._native.native_decide.ax_1_3",
+        "all_c_w_positive._native.native_decide.ax_1_4",
+        "all_c_w_positive._native.native_decide.ax_1_5"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [
+          "all_c_w_positive._native.native_decide.ax_1_1",
+          "all_c_w_positive._native.native_decide.ax_1_2",
+          "all_c_w_positive._native.native_decide.ax_1_3",
+          "all_c_w_positive._native.native_decide.ax_1_4",
+          "all_c_w_positive._native.native_decide.ax_1_5"
+        ],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "prop:mass-threshold",
+      "label": "SM Proposition 3 (Spectral mass threshold)",
+      "lean4_theorem": "weight12_saturation_K5_all_n",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "prop:psd_contraction",
+      "label": "SM Proposition 4 (PSD contraction)",
+      "lean4_theorem": "psd_contraction",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "fact:kstar_count",
+      "label": "K* operator count decomposition (1+12+54+54+16=137)",
+      "lean4_theorem": "M_w_K5_sum",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "M_w_K5_sum._native.native_decide.ax_1_1"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [
+          "M_w_K5_sum._native.native_decide.ax_1_1"
+        ],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "fact:ghz_kstar_gap",
+      "label": "GHZ stabilizer non-coverage by K*(4)",
+      "lean4_theorem": null,
+      "lean4_theorem_universal": null
+    },
+    {
+      "claim_id": "fact:kstar_python_lean_bridge",
+      "label": "K* selector Python<->Lean bridge (n=4, q=2)",
+      "lean4_theorem": "physical_kstar_count_n4",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "fact:delsarte_dual_K5",
+      "label": "Delsarte LP dual feasibility certificate at K*=5",
+      "lean4_theorem": "delsarteDual_K5_all_pos",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound",
+        "delsarteDual_K5_all_pos._native.native_decide.ax_1_1",
+        "delsarteDual_K5_all_pos._native.native_decide.ax_1_2",
+        "delsarteDual_K5_all_pos._native.native_decide.ax_1_3",
+        "delsarteDual_K5_all_pos._native.native_decide.ax_1_4",
+        "delsarteDual_K5_all_pos._native.native_decide.ax_1_5"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [
+          "delsarteDual_K5_all_pos._native.native_decide.ax_1_1",
+          "delsarteDual_K5_all_pos._native.native_decide.ax_1_2",
+          "delsarteDual_K5_all_pos._native.native_decide.ax_1_3",
+          "delsarteDual_K5_all_pos._native.native_decide.ax_1_4",
+          "delsarteDual_K5_all_pos._native.native_decide.ax_1_5"
+        ],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "fact:kfull_scaling",
+      "label": "K_full(n) = n for n = 4..8",
+      "lean4_theorem": "kfull_n5",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound",
+        "n5_K4_rank_deficient._native.native_decide.ax_1_1",
+        "n5_K5_full_rank._native.native_decide.ax_1_1",
+        "n5_K5_full_rank._native.native_decide.ax_1_2",
+        "n5_K5_full_rank._native.native_decide.ax_1_3",
+        "n5_K5_full_rank._native.native_decide.ax_1_4",
+        "n5_K5_full_rank._native.native_decide.ax_1_5",
+        "n5_K5_full_rank._native.native_decide.ax_1_6"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [
+          "n5_K4_rank_deficient._native.native_decide.ax_1_1",
+          "n5_K5_full_rank._native.native_decide.ax_1_1",
+          "n5_K5_full_rank._native.native_decide.ax_1_2",
+          "n5_K5_full_rank._native.native_decide.ax_1_3",
+          "n5_K5_full_rank._native.native_decide.ax_1_4",
+          "n5_K5_full_rank._native.native_decide.ax_1_5",
+          "n5_K5_full_rank._native.native_decide.ax_1_6"
+        ],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "prop:hradil_R_operator",
+      "label": "Hradil R-operator closed form and fixed-point characterization",
+      "lean4_theorem": "hradil_R_closed_form",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "fact:eigenvalue_table_n4_q2",
+      "label": "Krawtchouk eigenvalue table at n=4, q=2 for K = 0, 1, 2, 3, 4, 5",
+      "lean4_theorem": null,
+      "lean4_theorem_universal": null
+    },
+    {
+      "claim_id": "fact:weight3_undersaturation_K5",
+      "label": "Weight-3 strict undersaturation by K=5 (closed-form deficit 19 C(n,3))",
+      "lean4_theorem": "weight_3_not_saturated",
+      "lean4_theorem_universal": null,
+      "lean4_theorem_axioms": [
+        "propext",
+        "weight_3_not_saturated._native.native_decide.ax_1_1"
+      ],
+      "lean4_theorem_classification": {
+        "core": [
+          "propext"
+        ],
+        "named_propositional": [],
+        "native_decide_certificates": [
+          "weight_3_not_saturated._native.native_decide.ax_1_1"
+        ],
+        "other_declarations": []
+      }
+    },
+    {
+      "claim_id": "fact:basis_cover_optimality_n4",
+      "label": "Tensor-product basis cover of K* at n=4 has optimum chi-bar = 29",
+      "lean4_theorem": null,
+      "lean4_theorem_universal": null
+    },
+    {
+      "claim_id": "eq:hoeffding",
+      "label": "Hoeffding's inequality applied to Pauli-expectation estimators",
+      "lean4_theorem": null,
+      "lean4_theorem_universal": null
+    },
+    {
+      "claim_id": "eq:kappa",
+      "label": "Condition number of Gram matrix G(K*)",
+      "lean4_theorem": null,
+      "lean4_theorem_universal": null
+    }
+  ],
+  "summary": {
+    "total_claims": 28,
+    "claims_lean_core_only": 13,
+    "claims_with_named_axioms": 1,
+    "claims_with_native_decide": 8,
+    "claims_with_opaque_decls_only": 0,
+    "claims_without_lean_theorem": 6,
+    "claims_classified": 22
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "description": "Bootstrap-regularity diagnostics for rigetti C18 entries",
+  "source": "derived from rigetti_bootstrap_results.json",
+  "half_split_relative_shift_kstar": 0.0016498610600369505,
+  "subsample_q2_5_relative_std": 0.002364493476956366,
+  "ks_statistic_vs_normal_kstar": 0.025873951949388185,
+  "n_bootstrap": 1000
+}

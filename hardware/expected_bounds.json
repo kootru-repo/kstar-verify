@@ -1,0 +1,16 @@
+{
+  "description": "Acceptance bounds for live-QPU replication of the flagship 4-qubit W-state K* result.  A run that meets all three bounds is considered consistent with the shipped reference at data/w_repeat_results.json (F(K*)=0.872+/-0.021, dF=+0.330+/-0.071 across 4 runs on ibm_fez).  The bounds are set approximately 3 sigma below the reference means so a single calibration excursion does not cause a false negative.",
+  "reference_file": "data/w_repeat_results.json",
+  "reference_backend": "ibm_fez",
+  "reference_n_qubits": 4,
+  "f_kstar_min": 0.80,
+  "delta_f_min": 0.10,
+  "n_positive_runs_min": 2,
+  "notes": [
+    "Bounds assume the shipped 137-operator K* set (data/kstar_operators_n4.json) and the W-state preparation in hardware/circuits.py.",
+    "Different backends, qubit sub-selections, or calibration epochs will produce different absolute numbers; a FAIL here means only that the run does not reproduce the flagship-quality regime, not that the protocol is broken.",
+    "To replicate the flagship reference statistics, use --backend ibm_fez --n-runs 4 --shots 1000.",
+    "f_kstar_min set ~3.4 sigma below the reference mean (0.872 - 3.4*0.021 = 0.80).",
+    "delta_f_min set conservatively at +0.10 so any decent K* advantage still passes; the reference mean is +0.33.  A failure at this level usually indicates a calibration drop or a different qubit sub-selection."
+  ]
+}

@@ -1,0 +1,19 @@
+# Extra dependencies for live-QPU replication.
+# Install into the same venv that already has the top-level requirements.txt.
+#
+#   pip install -r requirements.txt            # already in repo root
+#   pip install -r hardware/requirements.txt   # adds qiskit-ibm-runtime
+#
+# Pin range tested via hardware/tests/test_smoke_simulator.py against
+# qiskit 2.3.0 / qiskit-ibm-runtime 0.45.1 / qiskit-aer 0.17.2 -- the
+# simulator smoke test exercises the exact SamplerV2(mode=backend) +
+# generate_preset_pass_manager code path the runner uses on real QPUs.
+
+qiskit>=1.2,<3.0
+qiskit-ibm-runtime>=0.25,<2.0
+qiskit-aer>=0.14,<1.0
+
+# tqdm is a soft dependency: the runner falls back to a no-op progress
+# bar if it's absent, so --dry-run / --recover still work without it.
+# Install it to get real progress bars in the terminal and notebook.
+tqdm>=4.60,<5

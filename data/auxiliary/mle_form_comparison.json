@@ -1,0 +1,114 @@
+{
+  "description": "Systematic ratio-form vs full-Hradil MLE comparison",
+  "parameters": {
+    "hedge": 0.05,
+    "damping": 0.5
+  },
+  "n_datasets": 7,
+  "n_flagged": 5,
+  "results": [
+    {
+      "dataset": "hardware_results_ibm_fez_20260307_214441.json",
+      "state": "Product",
+      "n_qubits": 4,
+      "n_shots": 1000,
+      "n_runs": 1,
+      "f_ratio": 0.995992,
+      "f_hradil": 0.926315,
+      "delta": -0.069677,
+      "flagged": true
+    },
+    {
+      "dataset": "hardware_results_ibm_fez_20260307_214922.json",
+      "state": "GHZ",
+      "n_qubits": 4,
+      "n_shots": 1000,
+      "n_runs": 1,
+      "f_ratio": 0.495579,
+      "f_hradil": 0.887454,
+      "delta": 0.391876,
+      "flagged": true
+    },
+    {
+      "dataset": "hardware_results_ibm_fez_20260307_220545.json",
+      "state": "Bell",
+      "n_qubits": 2,
+      "n_shots": 1000,
+      "n_runs": 1,
+      "f_ratio": 0.517722,
+      "f_hradil": 0.95386,
+      "delta": 0.436138,
+      "flagged": true
+    },
+    {
+      "dataset": "hardware_results_ibm_fez_20260307_220810.json",
+      "state": "W_4 single",
+      "n_qubits": 4,
+      "n_shots": 1000,
+      "n_runs": 1,
+      "f_ratio": 0.890726,
+      "f_hradil": 0.84443,
+      "delta": -0.046296,
+      "flagged": false
+    },
+    {
+      "dataset": "w_repeat_results_enriched.json",
+      "state": "W_4 repeat",
+      "n_qubits": 4,
+      "n_shots": 1000,
+      "n_runs": 4,
+      "f_ratio": 0.871855,
+      "f_ratio_std": 0.02141,
+      "f_hradil": 0.759975,
+      "f_hradil_std": 0.035122,
+      "delta": -0.11188,
+      "flagged": true,
+      "per_run_ratio": [
+        0.876993,
+        0.892955,
+        0.875459,
+        0.842014
+      ],
+      "per_run_hradil": [
+        0.760385,
+        0.793389,
+        0.774781,
+        0.711346
+      ]
+    },
+    {
+      "dataset": "three_arm_hardware_ibm_fez_20260311_142656_enriched.json",
+      "state": "W_4 three-arm",
+      "n_qubits": 4,
+      "n_shots": 1000,
+      "n_runs": 3,
+      "f_ratio": 0.902749,
+      "f_ratio_std": 0.015624,
+      "f_hradil": 0.871844,
+      "f_hradil_std": 0.010406,
+      "delta": -0.030904,
+      "flagged": false,
+      "per_run_ratio": [
+        0.886037,
+        0.91699,
+        0.905218
+      ],
+      "per_run_hradil": [
+        0.878208,
+        0.877489,
+        0.859835
+      ]
+    },
+    {
+      "dataset": "oq_grouped_results_20260316.json",
+      "state": "Rigetti W_4",
+      "n_qubits": 4,
+      "n_shots": 1000,
+      "n_runs": 1,
+      "f_ratio": 0.815482,
+      "f_hradil": 0.680759,
+      "delta": -0.134723,
+      "flagged": true
+    }
+  ]
+}

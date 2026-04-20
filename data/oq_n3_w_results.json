@@ -1,0 +1,16 @@
+{
+  "experiment": "n3_w_state",
+  "backend": "ankaa-3",
+  "n_qubits": 3,
+  "n_shots": 1000,
+  "n_kstar_operators": 26,
+  "n_rand_operators": 26,
+  "f_kstar": 0.3895,
+  "f_rand": 0.101,
+  "delta_f": 0.2885,
+  "reconstruction": "robust_mle (Hradil)",
+  "source_files": [
+    "oq_checkpoint_n3_kstar.json",
+    "oq_checkpoint_n3_rand.json"
+  ]
+}

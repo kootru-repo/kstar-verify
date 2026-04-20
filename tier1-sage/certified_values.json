@@ -1,0 +1,337 @@
+{
+  "M_w_K4_n4": {
+    "timestamp": "2026-04-09T13:18:25",
+    "type": "exact_list",
+    "value": "[1, 12, 28, 32, 16]"
+  },
+  "M_w_K5_n4": {
+    "timestamp": "2026-04-09T13:18:25",
+    "type": "exact_list",
+    "value": "[1, 12, 54, 54, 16]"
+  },
+  "N4_K5": {
+    "timestamp": "2026-04-09T13:18:26",
+    "type": "exact",
+    "value": "137"
+  },
+  "N4_cross_verified": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact",
+    "value": "True"
+  },
+  "N4_values": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact",
+    "value": "{1: 9, 2: 33, 3: 65, 4: 89, 5: 137}"
+  },
+  "W_high_weight_ops": {
+    "timestamp": "2026-04-09T13:18:35",
+    "type": "exact",
+    "value": "41"
+  },
+  "approx_local_W_k2": {
+    "timestamp": "2026-04-09T13:18:36",
+    "type": "exact",
+    "value": "{'hs_dist_sq': '11/16', 'bound': '11/4'}"
+  },
+  "c_w_K4_n4": {
+    "timestamp": "2026-04-09T13:18:25",
+    "type": "exact_list",
+    "value": "[9, 8, 24, 32, 16]"
+  },
+  "c_w_K5_n4": {
+    "timestamp": "2026-04-09T13:18:25",
+    "type": "exact_list",
+    "value": "[9, 56, 24, 32, 16]"
+  },
+  "completeness_Kn_n2": {
+    "timestamp": "2026-04-09T13:18:27",
+    "type": "exact",
+    "value": "{'c_w': [1, 4, 4], 'eigs': ['4', '8', '16']}"
+  },
+  "completeness_Kn_n3": {
+    "timestamp": "2026-04-09T13:18:27",
+    "type": "exact",
+    "value": "{'c_w': [1, 6, 12, 8], 'eigs': ['8', '16', '32', '64']}"
+  },
+  "completeness_Kn_n4": {
+    "timestamp": "2026-04-09T13:18:27",
+    "type": "exact",
+    "value": "{'c_w': [9, 8, 24, 32, 16], 'eigs': ['144', '32', '64', '128', '256']}"
+  },
+  "delsarte_certificate_n4": {
+    "timestamp": "2026-04-09T13:18:27",
+    "type": "exact",
+    "value": "{'K3_zero_eig_weights': [4], 'K3_rank': 15, 'K4_rank': 16}"
+  },
+  "density_matrix_validity": {
+    "timestamp": "2026-04-09T13:18:37",
+    "type": "exact",
+    "value": "{'n_range': [2, 4], 'states': ['product', 'W', 'GHZ']}"
+  },
+  "dimensional_rigidity": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact",
+    "value": "{'equation': '2d = 2^{d-1}', 'unique_solution': 4}"
+  },
+  "distance_values_n4_K5": {
+    "timestamp": "2026-04-09T13:18:28",
+    "type": "exact",
+    "value": "{0: 137, 1: 5, 2: 17, 3: -19, 4: -39}"
+  },
+  "eigenvalue_monotone_n4": {
+    "timestamp": "2026-04-09T13:18:24",
+    "type": "exact",
+    "value": "{'verified': True, 'K_range': [1, 6]}"
+  },
+  "eigenvalue_table_n4_q2_all_K": {
+    "timestamp": "2026-04-09T13:18:24",
+    "type": "exact",
+    "value": "{0: [16, 0, 0, 0, 0], 1: [16, 32, 0, 0, 0], 2: [16, 32, 64, 0, 0], 3: [16, 32, 64, 128, 0], 4: [144, 32, 64, 128, 256], 5: [144, 224, 64, 128, 256]}"
+  },
+  "eigenvalues_n4_K5": {
+    "timestamp": "2026-04-09T13:18:24",
+    "type": "exact",
+    "value": "[144, 224, 64, 128, 256]"
+  },
+  "eps_pos_GHZ_k2": {
+    "timestamp": "2026-04-09T13:18:45",
+    "type": "exact",
+    "value": "9/256"
+  },
+  "eps_pos_W_k2": {
+    "timestamp": "2026-04-09T13:18:45",
+    "type": "exact",
+    "value": "11/256"
+  },
+  "eps_pos_depol_bound_exact": {
+    "timestamp": "2026-04-09T13:18:38",
+    "type": "exact_rational",
+    "value": "9/2560"
+  },
+  "eps_pos_depol_n4_p003": {
+    "timestamp": "2026-04-09T13:18:38",
+    "type": "float_approx",
+    "value": "0.003515625"
+  },
+  "eps_pos_product_k2": {
+    "timestamp": "2026-04-09T13:18:45",
+    "type": "exact",
+    "value": "5/256"
+  },
+  "eps_tail_GHZ_k2": {
+    "timestamp": "2026-04-09T13:18:39",
+    "type": "exact",
+    "value": "9/256"
+  },
+  "eps_tail_product_k2": {
+    "timestamp": "2026-04-09T13:18:39",
+    "type": "exact",
+    "value": "5/256"
+  },
+  "formula_vs_matrix_eigs": {
+    "timestamp": "2026-04-09T13:18:25",
+    "type": "exact",
+    "value": "{'n_range': [2, 4], 'K_tested': 'n and n+1'}"
+  },
+  "ghz_kstar_gap": {
+    "timestamp": "2026-04-09T13:18:39",
+    "type": "exact",
+    "value": "{'missing': ['XXYY', 'XYYX', 'YXXY', 'YYXX', 'ZZZZ'], 'present': ['XXXX', 'XYXY', 'YXYX', 'YYYY'], 'kstar_count': 137}"
+  },
+  "hamming_constancy": {
+    "timestamp": "2026-04-09T13:18:28",
+    "type": "exact",
+    "value": "{'n_range': [2, 4], 'K_tested': 'n and n+1'}"
+  },
+  "hessian_diagonal_verified": {
+    "timestamp": "2026-04-09T13:18:39",
+    "type": "exact",
+    "value": "True"
+  },
+  "hradil_R_fixed_point": {
+    "timestamp": "2026-04-09T13:18:40",
+    "type": "exact",
+    "value": "{'alpha_fp': 1, 'beta_fp': 0, 'identity_coeff_normalized': '1/2'}"
+  },
+  "hypergeometric_bound_w1": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "float_approx",
+    "value": "0.0005783152446726706"
+  },
+  "hypergeometric_bound_w1_exact": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact_rational",
+    "value": "43716643078717303412870881/75593101654204447168212890625"
+  },
+  "hypergeometric_mean_verified": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact",
+    "value": "{'small_case': 'N=7,M=4,A=3', 'formula': 'A*M/N'}"
+  },
+  "hypergeometric_product_all_weights": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact",
+    "value": "{'w1': {'exact': 0.00045810446042387446, 'bound': 0.0005783152446726706, 'A': 12}, 'w2': {'exact': 6.010533218714175e-18, 'bound': 2.6899294084954593e-15, 'A': 54}, 'w3': {'exact': 2.922458402643389e-45, 'bound': 7.235720222688731e-30, 'A': 108}, 'w4': {'exact': 1.3519672014950783e-29, 'bound': 1.3951192285484325e-22, 'A': 81}}"
+  },
+  "hypergeometric_w1_n4": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact_rational",
+    "value": "14891128416/32505966875375"
+  },
+  "hypergeometric_w1_n4_float": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "float_approx",
+    "value": "0.00045810446042387446"
+  },
+  "informative_W_count": {
+    "timestamp": "2026-04-09T13:18:37",
+    "type": "exact",
+    "value": "56"
+  },
+  "jacobi_four_square": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact",
+    "value": "{'verified_range': [0, 10]}"
+  },
+  "kappa_G_K5_n4": {
+    "timestamp": "2026-04-09T13:18:25",
+    "type": "exact",
+    "value": "4"
+  },
+  "kappa_W_n4": {
+    "timestamp": "2026-04-09T13:18:37",
+    "type": "exact",
+    "value": "1"
+  },
+  "krawtchouk_duality": {
+    "timestamp": "2026-04-09T13:18:25",
+    "type": "exact",
+    "value": "{'n_range': [2, 5], 'q_values': [2, 3]}"
+  },
+  "krawtchouk_orthogonality": {
+    "timestamp": "2026-04-09T13:18:25",
+    "type": "exact",
+    "value": "{'n_range': [2, 5], 'q_values': [2, 3]}"
+  },
+  "kstar_full_rank_cross": {
+    "timestamp": "2026-04-09T13:18:25",
+    "type": "exact",
+    "value": "{'n_range': [2, 4], 'methods': ['formula', 'matrix_rank']}"
+  },
+  "kstar_lean_canonical_sha256": {
+    "timestamp": "2026-04-09T13:18:40",
+    "type": "exact",
+    "value": "b15895073ed4edfedc30b47308838613f0092db0e1b5805b3a731c5ce50b72b4"
+  },
+  "kstar_lean_weight_distribution": {
+    "timestamp": "2026-04-09T13:18:40",
+    "type": "exact",
+    "value": "[1, 12, 54, 54, 16]"
+  },
+  "kstar_n4_minimality": {
+    "timestamp": "2026-04-09T13:18:25",
+    "type": "exact",
+    "value": "{'K_star_full': 4, 'K_star_paper': 5, 'N4_4': 89, 'N4_5': 137}"
+  },
+  "kstar_values": {
+    "timestamp": "2026-04-09T13:18:25",
+    "type": "exact",
+    "value": "{2: {'K_star': 2, 'N': 9}, 3: {'K_star': 3, 'N': 27}, 4: {'K_star': 4, 'N': 89}, 5: {'K_star': 5, 'N': 333}}"
+  },
+  "lattice_count_cross_domain": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact",
+    "value": "{'n_range': [2, 4], 'verified': True}"
+  },
+  "lower_bound_n4_k2": {
+    "timestamp": "2026-04-09T13:18:26",
+    "type": "exact",
+    "value": "66"
+  },
+  "mn_over_n_ratio": {
+    "timestamp": "2026-04-09T13:18:26",
+    "type": "exact",
+    "value": "{3: {'M_n': 57, 'N': 63, 'ratio': 0.9047619047619048}, 4: {'M_n': 137, 'N': 255, 'ratio': 0.5372549019607843}, 5: {'M_n': 333, 'N': 1023, 'ratio': 0.3255131964809384}, 6: {'M_n': 797, 'N': 4095, 'ratio': 0.19462759462759463}}"
+  },
+  "parity_weight_cross_check": {
+    "timestamp": "2026-04-09T13:18:28",
+    "type": "exact",
+    "value": "{'n_range': [2, 4], 'verified': True}"
+  },
+  "parity_weight_q3_n2": {
+    "timestamp": "2026-04-09T13:18:26",
+    "type": "exact",
+    "value": "{'c_w_K1': [1, 4, 0], 'c_w_K2': [1, 4, 4]}"
+  },
+  "phase2_M_w": {
+    "timestamp": "2026-04-09T13:18:26",
+    "type": "exact_list",
+    "value": "[1, 12, 28, 32, 16]"
+  },
+  "phase2_c_w": {
+    "timestamp": "2026-04-09T13:18:26",
+    "type": "exact_list",
+    "value": "[9, 8, 24, 32, 16]"
+  },
+  "phase3_M_w": {
+    "timestamp": "2026-04-09T13:18:26",
+    "type": "exact_list",
+    "value": "[1, 12, 54, 54, 16]"
+  },
+  "pure_state_completeness": {
+    "timestamp": "2026-04-09T13:18:43",
+    "type": "exact",
+    "value": "{'n_range': [2, 4], 'states': ['product', 'W', 'GHZ']}"
+  },
+  "random_vanishing_n4": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact",
+    "value": "{'M_over_N': '137/255', 'bound_A12': 0.0005783152446726706, 'bound_A54': 2.6899294084954593e-15}"
+  },
+  "rank_full_n2": {
+    "timestamp": "2026-04-09T13:18:28",
+    "type": "exact",
+    "value": "{'K_star': 2, 'rank': 4}"
+  },
+  "rank_full_n3": {
+    "timestamp": "2026-04-09T13:18:28",
+    "type": "exact",
+    "value": "{'K_star': 3, 'rank': 8}"
+  },
+  "rank_full_n4": {
+    "timestamp": "2026-04-09T13:18:28",
+    "type": "exact",
+    "value": "{'K_star': 4, 'rank': 16}"
+  },
+  "rank_full_n5": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact",
+    "value": "{'K_star': 5, 'rank': 32}"
+  },
+  "shell_r4": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact",
+    "value": "[1, 8, 24, 32, 24, 48]"
+  },
+  "spectral_decomp_verified": {
+    "timestamp": "2026-04-09T13:18:34",
+    "type": "exact",
+    "value": "{'q': 2, 'n_range': [2, 4]}"
+  },
+  "spectral_hs_leading_W": {
+    "timestamp": "2026-04-09T13:18:46",
+    "type": "exact",
+    "value": "11/16"
+  },
+  "spectral_mass_threshold": {
+    "timestamp": "2026-04-09T13:18:26",
+    "type": "exact",
+    "value": "{'q2_verified': True, 'q3_verified': True}"
+  },
+  "weight3_undersaturation_K5_closed_form": {
+    "timestamp": "2026-04-09T13:18:27",
+    "type": "exact",
+    "value": "{3: {'c3': 8, 'A3': 27, 'deficit': 19}, 4: {'c3': 32, 'A3': 108, 'deficit': 76}, 5: {'c3': 80, 'A3': 270, 'deficit': 190}, 6: {'c3': 160, 'A3': 540, 'deficit': 380}, 7: {'c3': 280, 'A3': 945, 'deficit': 665}}"
+  }
+}

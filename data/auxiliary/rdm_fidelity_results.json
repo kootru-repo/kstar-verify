@@ -1,0 +1,41 @@
+{
+  "description": "RDM fidelities from 4 hardware W-state runs on ibm_fez",
+  "reconstruction_method": "lstsq reconstruction with eigenvalue clipping (linear inversion)",
+  "source": "manuscript Appendix, Table tab:rdm",
+  "note": "Random-arm values are volatile across random draws; the manuscript table reports values from the original analysis random draw, which differ from the recomputed values using the w_repeat_results random arm (seed=42). K* values are deterministic and agree.",
+  "full_state": {
+    "kstar": {
+      "mean": 0.362,
+      "std": 0.005
+    },
+    "rand": {
+      "mean": 0.332,
+      "std": 0.020
+    }
+  },
+  "1_rdm": {
+    "kstar": {
+      "mean": 0.985,
+      "std": 0.004
+    },
+    "rand": {
+      "mean": 0.969,
+      "std": 0.022
+    }
+  },
+  "2_rdm": {
+    "kstar": {
+      "mean": 0.771,
+      "std": 0.031
+    },
+    "rand": {
+      "mean": 0.675,
+      "std": 0.045
+    }
+  },
+  "recomputed_from_w_repeat_seed42": {
+    "full_state_rand": {"mean": 0.4264, "std": 0.0701},
+    "1_rdm_rand": {"mean": 0.9761, "std": 0.0209},
+    "2_rdm_rand": {"mean": 0.7281, "std": 0.0616}
+  }
+}

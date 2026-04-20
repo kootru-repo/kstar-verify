@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Reviewer verification onramp
+    url: https://github.com/kootru-repo/kstar-verify/blob/main/VERIFICATION.md
+    about: Tiered 30s / 2min / 10min / 30min guide to verifying the submission.
+  - name: companion manuscript
+    url: https://github.com/kootru-repo/kstar-verify
+    about: See README.md for the full overview.

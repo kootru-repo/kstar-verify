@@ -1,0 +1,18 @@
+{
+  "physical_qubits": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "shuffle_seed": 2026,
+  "timestamp": "20260321_191330",
+  "platform": "Open Quantum",
+  "backend": "Rigetti Ankaa-3",
+  "backend_class_id": "86910513-074f-405f-8edf-74350020b19a",
+  "note": "Calibration data not available via OQ API; select qubits from latest Ankaa-3 calibration report"
+}

@@ -1,0 +1,227 @@
+\documentclass[12pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\makeatletter
+\newcommand{\paragraph}[1]{\medskip\noindent\textbf{#1}\enspace}
+\makeatother
+
+\signature{Andrew Craton\\
+Research Director, Kootru Labs\\
+Burlington, Wisconsin, USA\\
+acraton@kootru.com\\
+ORCID: 0009-0001-2269-8599}
+
+\address{Andrew Craton\\
+Kootru Labs\\
+Burlington, Wisconsin, USA}
+
+\begin{document}
+
+\begin{letter}{Editorial Board\\
+PRX Quantum\\
+American Physical Society}
+
+\opening{Dear Editors,}
+
+I submit for your consideration the manuscript entitled
+\textbf{``Provable measurement design for quantum state tomography
+from Hamming-scheme spectral theory,''}
+which establishes the first non-adaptive measurement
+design for quantum state tomography with provable
+reconstruction guarantees, derived from a new
+correspondence with Hamming association schemes.
+The manuscript is submitted for publication in PRX Quantum
+(Article format, 16 pages of main text plus appendices).
+
+\paragraph{Summary.}
+Quantum state tomography in the underdetermined regime requires
+choosing which Pauli operators to measure from an exponentially
+large set.
+Random sampling, the dominant approach, ignores operator weight
+and wastes circuit budget on weight classes with little
+reconstruction value.
+This manuscript establishes a correspondence, new to both
+combinatorics and quantum information, between Hamming
+association schemes and quantum measurement design.
+
+Krawtchouk polynomials on $H(n,2)$ decompose the Pauli operator
+space into weight-class eigenspaces and fix a parameter-free
+allocation: a single integer $K^* = 5$ determines the full
+measurement set (137~operators at $n = 4$, compiling into
+29~tensor-product circuits) with no optimization and no
+target-state input.
+In the reverse direction, the basin separation theorem
+(Theorem~2) proves that \emph{weight saturation}, a
+Hamming-scheme property, is sufficient for MLE basin separation:
+every maximizer of the log-likelihood agrees on all informative
+Pauli coordinates.
+The spectral decomposition holds if and only if $q \le 3$
+(a characterization new to both fields); the
+weight-block-diagonal structure that drives basin separation
+extends to all~$q$ (verified through $q = 7$).
+
+On superconducting hardware, structured selection improves
+reconstruction fidelity by $\Delta F = +0.33 \pm 0.07$ over
+random sampling (IBM \texttt{ibm\_fez}, four independent runs;
+corroborated at $+0.25$ on Rigetti Ankaa-3), growing to
+$+0.53 \pm 0.06$ at eight~qubits under a compositional
+architecture that uses $\le 116$~circuits for any linear chain length.
+Across 23~test states (product, entangled, Haar-random, mixed),
+$K^*$ ranks first among seven non-adaptive strategies including
+D-optimal experimental design and derandomized classical shadows
+at matched budget.
+Applied to a Floquet discrete time crystal on IBM hardware,
+$K^*$ recovers nearest-neighbor XY correlators consistent with
+noiseless simulation ($r = 0.94$, 8/9 sign agreement) that are
+structurally inaccessible to Z-basis-only protocols.
+
+To our knowledge, this provides the first non-adaptive measurement
+design for quantum state tomography with provable MLE
+identifiability guarantees, replacing heuristic operator
+selection with an allocation derived from algebraic first
+principles.
+
+\paragraph{Why PRX Quantum.}
+This work addresses PRX Quantum's criterion for
+\emph{exceptional connection} between quantum science and a
+neighboring discipline:
+
+\begin{itemize}
+\item \emph{Forward (combinatorics $\to$ quantum).}
+  Krawtchouk spectral analysis has established applications in
+  quantum error correction and state transfer but has not
+  previously been applied to measurement allocation.
+  Here it produces the first non-variational operator-selection
+  principle for underdetermined tomography that carries a provable
+  reconstruction guarantee (Theorem~2).
+
+\item \emph{Reverse (quantum $\to$ combinatorics).}
+  The basin separation theorem gives weight saturation of
+  Hamming-scheme subsets a reconstruction-theoretic rigidity not
+  visible from classical distance properties, connecting
+  association-scheme combinatorics to nonlinear estimation
+  landscapes for the first time.
+  This result appears new to coding theory independently of
+  its quantum application.
+
+\item \emph{Universal and operationally significant.}
+  The allocation mechanism (eigenvalue masses determining
+  per-weight budget; weight saturation determining reconstruction
+  guarantee) extends to qudits of any local dimension~$q$ via the
+  weight-block-diagonal structure, with full Krawtchouk
+  diagonalization available for $q \le 3$.
+  A compositional architecture delivers constant-circuit scaling
+  ($\le 116$~circuits for any linear-chain length), and the
+  advantage grows with system size ($+0.33$ at $n = 4$ to $+0.53$
+  at $n = 8$) because random selection dilutes as $4^{-n}$ per
+  weight class while the structured allocation is size-independent.
+  As processors scale beyond 100~qubits, local tomography of
+  subsystem density matrices becomes the primary characterization
+  task; the deterministic, constant-cost $K^*$ protocol provides
+  full local states, making it a natural measurement infrastructure
+  for routine device diagnostics.
+
+\item \emph{Timely application to many-body quantum phases.}
+  Discrete time crystal experiments rely on Z-basis magnetization
+  to certify period doubling (Mi et al., Nature \textbf{601}, 531,
+  2022), but this observable cannot distinguish quantum from
+  classical DTCs.
+  $K^*$'s Hamming-weight allocation naturally resolves the conserved
+  sectors of the XXZ interaction, providing access to off-diagonal
+  correlators ($\ell_1$ coherence, partial-transpose negativity,
+  XY terms) that encode the quantum character of time-crystalline
+  order.
+  A proof-of-principle run on IBM \texttt{ibm\_kingston} recovers
+  nearest-neighbor XY correlators of a 4-qubit Floquet DTC that
+  match noiseless predictions ($r = 0.94$).
+\end{itemize}
+
+Recent PRX Quantum publications have established similarly
+productive cross-disciplinary bridges: chi-boundedness from graph
+theory applied to quantum measurement (King et al., 2025),
+algebraic graph theory applied to noise learnability
+(Chen \& Flammia, 2026), and measurement frame theory applied
+to shadow tomography (Innocenti et al., 2023).
+The present work bridges a comparable gap between Hamming
+association schemes and quantum tomography.
+It differs from a one-directional import in that the basin
+separation theorem exports a new result \emph{to} combinatorics,
+and the correspondence is validated on multi-vendor hardware.
+
+\paragraph{Durability beyond the present noise floor.}
+As gate fidelities improve, the raw-fidelity advantage over random
+sampling will narrow on generic states.
+Three structural properties persist regardless of noise floor:
+certifiable worst-case bounds via the basin separation theorem,
+direct single-shot access to off-diagonal correlators, and a
+compositional architecture whose circuit budget is constant per
+patch.
+In the fault-tolerant regime, single-patch reconstruction
+($n = 4$--$9$) remains the core characterization primitive for
+code-block verification, exactly the regime $K^*$ was
+constructed for.
+
+\paragraph{Validation and scope.}
+The theory makes a testable prediction: GHZ states should yield
+$F \approx 0.50$ due to weight-class mismatch.
+Hardware confirms this exactly, and a weight-class fingerprint
+classifier detects the condition automatically, recovering
+$F = 0.887$ from the same data at zero additional circuit cost.
+This predict-then-confirm cycle illustrates the explanatory
+power of the spectral framework beyond raw fidelity improvement.
+
+Experimental scope spans two superconducting vendors (IBM,
+Rigetti), four state families, and qubit counts $n = 2$--$8$.
+Simulation compares 23~states across seven non-adaptive
+strategies at matched budget.
+All raw data, reconstruction code, and the complete
+137-operator measurement set are provided as Supplemental
+Material, together with a verification pipeline spanning four
+independent backends and Lean~4 formal proofs with
+zero \texttt{sorry} obligations.
+
+\paragraph{Suggested reviewers.}
+Given the cross-disciplinary scope, I suggest one reviewer in algebraic
+combinatorics or association schemes (Hamming schemes, Krawtchouk
+polynomials, Delsarte theory) and one in quantum state tomography
+or measurement design (classical shadows, optimal experimental
+design, MLE reconstruction).
+
+\paragraph{AI disclosure.}
+Per APS policy: I formulated all conjectures, chose all high-level
+proof strategies, made all substantive mathematical decisions, and
+verified every proof with deterministic scripts (SymPy, NumPy);
+no AI tools were used in the verification pipeline.
+Claude (Anthropic, Opus~4.6) was used as a proof-formalization
+tool: drafting LaTeX proofs from my specified conjectures and
+strategies, and for copyediting manuscript prose.  Claude
+occasionally selected specific algebraic techniques to execute
+the strategies I specified.
+All 11 formal statements were subsequently machine-verified in
+Lean~4 (Mathlib, v4.29.0-rc8) with zero \texttt{sorry} obligations;
+a CI pipeline enforces sorry-freeness on every commit
+(Appendix, ``Lean\,4 formal verification status'').
+Full details are in the ``Verification and AI disclosure'' section.
+
+I confirm that no AI tools were used as co-authors, and I take
+full responsibility for all content.  The manuscript has not been
+submitted elsewhere.
+
+\paragraph{Competing interests.}
+The author declares no competing financial or non-financial interests.
+
+\paragraph{Verification resources.}
+Every numerical claim in the manuscript is reproduced
+end-to-end by a 3-minute Jupyter notebook at\\
+\url{https://github.com/kootru-repo/kstar-verify}\\
+(\texttt{notebook/k\_star\_demo.ipynb}, runnable in-browser
+via Binder with no local install); the tiered onramp in
+\texttt{VERIFICATION.md} ranges from a 30-second manifest
+peek through a 30-minute Lean rebuild from scratch.
+
+\closing{Sincerely,}
+
+\end{letter}
+\end{document}

@@ -1,0 +1,7 @@
+.lake/
+build/
+lake-packages/
+# Scratch directory used by scripts/dump_axioms.py for PID-qualified
+# temporary Lean files.  Auto-cleaned by the finally-block; this
+# .gitignore line covers crash recovery.
+_scratch/

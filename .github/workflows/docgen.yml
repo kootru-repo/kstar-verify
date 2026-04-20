@@ -1,0 +1,86 @@
+name: doc-gen4 HTML deploy
+
+# Generates doc-gen4 HTML docs for the KstarFormal Lean library
+# and publishes them to GitHub Pages so reviewers can browse proofs
+# without installing anything. Overlays a substantive referee-facing
+# landing page via lean4/scripts/gen_docs_index.py.
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  docgen:
+    name: Build doc-gen4 HTML
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install elan
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+
+      - name: Cache Mathlib
+        uses: actions/cache@v5
+        with:
+          path: lean4/.lake
+          key: lean4-lake-${{ hashFiles('lean4/lean-toolchain', 'lean4/lake-manifest.json') }}
+
+      - name: Update manifest (pull doc-gen4)
+        working-directory: lean4
+        run: lake update doc-gen4
+
+      - name: Build library
+        working-directory: lean4
+        run: lake build
+
+      - name: Build doc-gen4 HTML
+        working-directory: lean4
+        run: lake build KstarFormal:docs
+
+      - name: Collect HTML output
+        working-directory: lean4
+        run: |
+          mkdir -p _site
+          if [ -d .lake/build/doc ] && [ -n "$(ls -A .lake/build/doc 2>/dev/null)" ]; then
+            cp -r .lake/build/doc/* _site/
+          else
+            echo "::error::doc-gen4 produced no output; .lake/build/doc is missing or empty"
+            exit 1
+          fi
+
+      - name: Overlay referee-facing landing page
+        # Overwrites the doc-gen4 default root Index.html with a
+        # substantive, registry-driven landing page.
+        run: |
+          python3 -m pip install pyyaml
+          python3 lean4/scripts/gen_docs_index.py
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: lean4/_site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: docgen
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

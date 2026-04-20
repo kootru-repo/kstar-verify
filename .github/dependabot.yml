@@ -1,0 +1,27 @@
+version: 2
+
+# Weekly dependency scans.  Open PRs when a fix is available; we review
+# on the usual verify.yml gate before merging.
+
+updates:
+  # Python dependencies (requirements.txt) used by all Python tiers
+  # (run_all.py, tier2-sympy, tier3-numpy, tier4-independent, tier5,
+  # tier6-chains, tier7-claims, and the notebook).
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+
+  # GitHub Actions used in .github/workflows/*.yml
+  # (actions/checkout, actions/setup-python, actions/cache, etc.)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "ci"

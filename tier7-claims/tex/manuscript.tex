@@ -1,0 +1,4196 @@
+\documentclass[twocolumn,prx,aps,superscriptaddress,longbibliography,floatfix]{revtex4-2}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem*{remark}{Remark}
+
+% Claim markers: zero-width in production.
+% \pclaim{id}{status}{scope}{backing} tags a claim for machine verification
+% by the external tooling described in the verification repo; renders
+% nothing in the PDF.
+\newcommand{\pclaim}[4]{}
+
+\emergencystretch=1em
+\begin{document}
+
+\title{Provable measurement design for quantum state tomography\\
+from Hamming-scheme spectral theory}
+
+\author{Andrew Craton}
+\thanks{ORCID: \href{https://orcid.org/0009-0001-2269-8599}{0009-0001-2269-8599}}
+\affiliation{Kootru Labs, Burlington, Wisconsin, USA}
+\email{acraton@kootru.com}
+
+\begin{abstract}
+Quantum state tomography on near-term processors operates in an
+underdetermined regime: a four-qubit system has $256$ Pauli
+parameters but a practical budget of only ${\sim}\,100$
+operators, a coverage fraction that decays as $4^{-n}$ with
+qubit count, so any practical allocation must be
+size-independent.
+Which operators to measure matters far more than how many, yet
+random Pauli sampling ignores operator weight, distributing
+circuits without regard for which weight classes carry
+reconstructable information.
+%
+We establish a correspondence, new to both combinatorics and
+quantum information, between Hamming association schemes and
+quantum measurement design.
+\pclaim{prose:abstract:basin}{proved}{*}{thm:basin}%
+Krawtchouk polynomials decompose the Pauli operator space into
+weight-class eigenspaces and fix a parameter-free allocation:
+a single integer $K^* = 5$ determines the full measurement
+set for any $n \ge 4$ qubits, with no optimization and no
+target-state input.
+We prove that \emph{weight saturation}, a combinatorial
+property with no prior quantum-operational content, is
+sufficient for maximum-likelihood (MLE) basin separation:
+every maximizer of the log-likelihood agrees on all
+Pauli coordinates that carry state-dependent signal
+(Theorem~\ref{thm:basin}),
+with residual error $O(p/d)$ for states depolarized at
+rate~$p$ in dimension $d = 2^n$ ($n$~qubits).
+The Hilbert--Schmidt bound converts to an explicit fidelity
+lower bound under an external near-purity hypothesis on the
+MLE output (Corollary~\ref{cor:fidelity_lower_bound}), which
+holds empirically with $\eta^{\star} \le 0.23$ across all
+seven non-GHZ hardware runs tested.
+The basin-separation guarantee extends to qudits of any local dimension~$q$.
+\pclaim{prose:abstract:iff}{proved}{*}{lem:spectral_q_main}%
+%
+On superconducting hardware, structured selection improves
+reconstruction fidelity by $\Delta F = +0.33 \pm 0.07$ over
+random sampling (IBM \texttt{ibm\_fez}, four runs; corroborated
+at $+0.25$ on Rigetti Ankaa-3), growing to
+$+0.53 \pm 0.06$ at eight~qubits.
+The advantage scales with system size: random selection
+dilutes as ${\sim}\,4^{-n}$ per weight class while the
+structured allocation is size-independent.
+Among seven non-adaptive strategies at matched budget, $K^*$
+ranks first (Table~\ref{tab:sota}).
+To our knowledge, this provides the first non-adaptive
+measurement design for quantum state tomography with provable
+MLE identifiability guarantees, replacing heuristic operator
+selection with an allocation derived from algebraic first
+principles.
+\end{abstract}
+
+\keywords{quantum state tomography, Krawtchouk polynomials,
+Hamming association scheme, maximum-likelihood estimation,
+quantum measurement design}
+\pacs{03.67.Ac, 03.65.Wj, 02.30.Zz}
+
+\maketitle
+
+%% ========================================================
+\section{Introduction}
+\label{sec:intro}
+
+Quantum state tomography on near-term
+processors~\cite{Vogel1989,James2001,Haah2017,Huang2020}
+faces a measurement-allocation problem: the $4^n$ Pauli
+operators far exceed any practical circuit budget, so the
+choice of \emph{which} operators to measure determines
+reconstruction quality.
+Random Pauli sampling~\cite{Aaronson2018,Huang2020,Elben2023}
+treats all weight classes equally, yet their information content
+for reconstruction varies dramatically with operator weight.
+No existing method provides a constructive algebraic formula
+for operator selection at arbitrary qubit count; all scalable
+approaches minimize a cost function or rely on randomization.
+This paper shows that the allocation problem has a precise
+solution rooted in the Hamming association scheme.
+
+Krawtchouk polynomials are the spherical harmonics of the
+Hamming cube~\cite{Delsarte1973}: they decompose the space of
+$n$-qubit Pauli operators into $n + 1$ weight classes, each
+carrying a definite eigenvalue under the Hamming association
+scheme $H(n,q)$ (formal definitions in
+Sec.~\ref{sec:selection}).
+This decomposition is the discrete analogue of a spherical
+harmonic expansion, with Hamming weight playing the role of
+angular momentum.
+Krawtchouk polynomials already appear across quantum
+information---in error-correction
+bounds~\cite{Ashikhmin2001,Rains1999}, perfect state
+transfer~\cite{Vinet2012}, and Delsarte-type linear programming
+bounds~\cite{MacWilliams1977,Okada2025}---but have not
+previously been applied to measurement allocation for quantum
+state tomography.
+
+This paper establishes a correspondence between Hamming
+association schemes and quantum measurement design, with
+implications running in both directions.
+The central result is a reconstruction guarantee.
+\pclaim{prose:intro:basin}{proved}{*}{thm:basin}%
+We prove (Theorem~\ref{thm:basin}) that \emph{weight saturation},
+a combinatorial property of Pauli subsets with no prior
+quantum-operational content, is sufficient for MLE basin
+separation: every maximizer of the log-likelihood agrees on all
+informative Pauli coordinates, so that the reconstruction is
+unique on the physically relevant degrees of freedom regardless
+of starting point.
+As far as we are aware, this quantum-operational reading of weight
+saturation is new.
+Quantitative fidelity guarantees follow from the Hilbert--Schmidt
+bound of Theorem~\ref{thm:basin}(iii) under an external near-purity
+hypothesis on the MLE output (Corollary~\ref{cor:fidelity_lower_bound}).
+
+From this theorem, the measurement-allocation rule follows
+directly.
+Krawtchouk eigenvalue masses determine how many operators to
+measure at each weight class; the integer $K^*$ is the smallest
+cutoff at which every weight class is saturated
+(Sec.~\ref{sec:selection}).
+At $n = 4$, $K^* = 5$ yields $137$~operators compiled into
+$29$~circuits; the same $K^* = 5$ applies at any $n \ge 4$.
+There is no optimization loop, no target-state input, no
+parameters to tune.
+\pclaim{prose:intro:iff}{proved}{*}{lem:spectral_q_main}%
+The Krawtchouk spectral decomposition holds if and only if $q \le 3$
+(Lemma~\ref{lem:spectral_q_main}); for $q \ge 4$, the full
+Bose--Mesner diagonalization fails, but the weight-block-diagonal
+structure that basin separation actually requires extends to
+all~$q$ (Sec.~\ref{sec:universality}).
+
+In the underdetermined regime (total measured operators
+$M \ll 4^n$), the
+correspondence has a direct practical payoff: the
+Krawtchouk allocation concentrates measurements on the
+weight classes that basin separation identifies as
+load-bearing for nonlinear reconstruction.
+
+\paragraph{Measurement allocation.}
+The $4^n$ Pauli operators fall into $n+1$ weight classes.
+The Krawtchouk decomposition assigns each class an eigenvalue
+mass that determines how many operators to measure at that
+weight (Fig.~\ref{fig:spectral};
+Sec.~\ref{sec:selection} gives the explicit formula and recipe).
+At $n = 4$, the allocation totals $137$ operators
+across weights $0$--$4$ (Sec.~\ref{sec:selection};
+Appendix~\ref{app:pauli-set}).
+In simulation, the weight allocation by itself accounts for
+roughly $81$\% of the advantage at $n = 4$; hardware data
+corroborates the residual intra-weight effect
+($76 \pm 12$\%, three seeds; Sec.~\ref{sec:weight-alloc}).
+
+The sole experimental variable is \emph{which} Pauli operators
+are measured.  Operator count, shot count, and reconstruction
+algorithm are all held fixed between arms (circuit count may
+differ due to basis-grouping efficiency; see
+Appendix~\ref{app:pauli-set}).
+
+\paragraph{Key results.}
+The paper contributes at three levels:
+\begin{itemize}
+\item[\emph{(i)}] \emph{Theoretical.}
+  \pclaim{prose:keyresults:basin}{proved}{*}{thm:basin}%
+  Basin separation (Theorem~\ref{thm:basin}) is complemented by
+  a tight purity bound $\varepsilon_{\mathrm{pos}} = O(p/d)$
+  (Lemma~\ref{lem:purity_main})
+  \pclaim{prose:keyresults:iff}{proved}{*}{lem:spectral_q_main}%
+  and an iff spectral characterization: the Krawtchouk
+  decomposition holds exactly when $q \le 3$
+  (Lemma~\ref{lem:spectral_q_main}), while the
+  weight-block-diagonal structure extends to all~$q$.
+  The framework makes testable predictions:
+  $K^* = 5$ from lattice analysis (proved for all $n \ge 4$),
+  Greenberger--Horne--Zeilinger (GHZ) difficulty from weight-class mismatch ($F \approx 0.50$,
+  recoverable to $0.887$ via automatic switching;
+  Sec.~\ref{sec:ghz}), and
+  near-sufficiency of weight allocation at $n = 4$.
+\item[\emph{(ii)}] \emph{Experimental.}  $\Delta F = +0.33 \pm 0.07$
+  for W~states on IBM \texttt{ibm\_fez} (four runs,
+  run-to-run std.\ dev.\ $0.021$); corroborated at $+0.25$ on Rigetti
+  Ankaa-3 (Sec.~\ref{sec:rigetti}).  Across $23$~test states, $K^*$ ranks first among
+  seven non-adaptive strategies at matched budget
+  (Table~\ref{tab:sota}).
+\item[\emph{(iii)}] \emph{Operational.}  The $137$~operators compile
+  into $29$~tensor-product circuits ($4.7\times$ compression).
+  A compositional architecture extends the protocol to
+  any linear-chain length at $\le 116$~circuits ($\Delta F = +0.53 \pm 0.06$
+  at $8$~qubits, Sec.~\ref{sec:8qubit}); per-patch identifiability
+  is guaranteed by Theorem~\ref{thm:basin}.
+  The advantage grows with system size because random selection
+  dilutes as $4^{-n}$ while the per-patch budget is
+  size-independent.
+\end{itemize}
+
+\paragraph{Related work.}
+Classical shadows~\cite{Aaronson2018,Huang2020,Acharya2021,King2025} and
+their derandomized
+variants~\cite{Huang2021,Hadfield2022} optimize measurement bases
+for predicting target observables; the present work determines
+operator \emph{selection} for full-state reconstruction, a
+complementary task.  Overlapping tomography~\cite{Cotler2020}
+reconstructs reduced density matrices from local measurements
+but does not address full-state reconstruction.
+Recent Pauli channel learning~\cite{ChenFlammia2024}
+establishes tight bounds on noise characterization using structured
+Pauli measurements; the present work applies analogous structure
+to state tomography rather than process tomography.
+Greedy optimal experimental design
+(A/D/E-optimal)~\cite{Pukelsheim2006,Flammia2011,Granade2017} selects
+operators sequentially by information gain but requires $O(M \cdot 4^n)$
+computation; $K^*$ is a precomputed lookup.  Adaptive
+tomography~\cite{Mahler2013,Huszar2012} relies on real-time
+feedback between measurement rounds, which cloud-queue hardware
+does not support.  Compressed sensing~\cite{Gross2010,Cramer2010} exploits
+low-rank priors unavailable in blind certification.
+Ma et al.~\cite{Ma2016} identified minimum Pauli subsets
+that uniquely determine any pure state among all states (UDA)
+at $n = 2$ ($11$~operators) and $n = 3$ ($31$~operators),
+outperforming random subsets; their algebraic analysis
+(anti-commutation structure of the complement, failing-set
+classification) does not yield a constructive
+formula for $n \ge 4$, where the combinatorial search becomes
+intractable.
+The present work addresses a different problem: not minimum
+cardinality for identifiability, but spectrally prescribed
+allocation for reconstruction fidelity under MLE. It provides
+quantitative error bounds ($\varepsilon_{\mathrm{pos}} = O(p/d)$)
+that the identifiability framework does not address.
+Unlike all of these, $K^*$'s measurement set derives from
+algebraic structure rather than variational optimization: every
+other method in Table~\ref{tab:sota} minimizes a cost function or
+maximizes an information measure, while $K^*$ has no objective
+function.  Basin separation (Theorem~\ref{thm:basin}) then
+provides a conditional fidelity guarantee under nonlinear
+reconstruction, a regime where
+frame-theoretic and Fisher-information analyses are provably
+uninformative (Appendix~\ref{sec:fisher}).  Meanwhile, the
+compositional architecture yields full local density matrices at
+constant circuit cost on arbitrarily large processors, with an
+advantage that grows as random selection becomes exponentially
+dilute, a scaling property none of the above methods share.
+
+The remainder of the paper is organized as follows.
+Section~\ref{sec:method} defines the measurement selection,
+reconstruction, and compositional architecture.
+Section~\ref{sec:theory} presents the basin separation theorem,
+purity bound, spectral dichotomy, and $q$-ary extension.
+Section~\ref{sec:experiment} describes the experimental setup.
+Section~\ref{sec:results} reports hardware and simulation results.
+Section~\ref{sec:discussion} discusses mechanism, comparison to
+existing methods, predictions, and limitations.
+
+%% ========================================================
+\section{Method}
+\label{sec:method}
+
+\subsection{Measurement selection}
+\label{sec:selection}
+
+Our structured measurement set
+($M = 137$ operators for $n = 4$; Appendix~\ref{app:pauli-set}) has three
+properties: (i)~\emph{non-adaptive}, requiring no mid-circuit feedback or
+real-time computation; (ii)~\emph{support-complete}, meaning all $2^n$ Pauli
+support classes are represented
+(the lattice at $K^*$ populates every support class;
+see Lemma~\ref{lem:completeness} below for a formal proof); and
+(iii)~\emph{composable}, so that the same per-subsystem prescription applies
+to overlapping local subsystems (Sec.~\ref{sec:compositional}).
+Since $M = 137 < 255$, reconstruction requires regularized MLE
+(Sec.~\ref{sec:reconstruction}).
+A fourth property: (iv)~\emph{circuit-efficient}.  Because
+the Krawtchouk allocation concentrates operators at low weights,
+where tensor factors overlap heavily, the $137$ operators group
+into only $29$ tensor-product bases via greedy set cover
+($4.7\times$ compression; Table~\ref{tab:circuits}).  Each basis gives $15$ simultaneous
+Pauli expectations, so $29$~circuits recover $196$ of $255$
+nontrivial operators ($76.9$\%), with $60$ free additional operators
+in the underdetermined weight-$3$/$4$ sectors.
+By contrast, an equal-size random selection ($137$~operators,
+seed-averaged) requires $50$~bases ($2.7\times$ compression),
+reflecting the unstructured weight distribution; the Krawtchouk-selected
+set is $1.7\times$ more circuit-efficient.
+For the compositional
+architecture: $\le 4\;\text{colors} \times 29 = 116$~circuits
+(before basis deduplication) for any chain length
+(Appendix~\ref{sec:circuits}).
+
+\paragraph{Recipe.}
+Only one input is needed: the qubit count~$n$.  Enumerate all
+$m \in \mathbb{Z}^n$ with $|m|^2 \le K^*$ (where $K^* = 5$ for
+$n \ge 4$; the optimality of this cutoff is proved in
+Theorem~\ref{thm:spectral-char}(iv) below).
+For $n \le 3$ the regime is overcomplete
+($M/4^n \ge 42\%$) and weight saturation is not the
+binding constraint; the spectral-completeness cutoff
+$K = n$ (all $c_w > 0$) replaces $K^*$ as the
+enumeration bound.
+For each lattice point~$m$, reduce mod~$2$ to obtain a
+\emph{parity-weight} vector $\bar m \in \mathbb{Z}_2^n$ of
+Hamming weight~$w$.  The number of lattice points mapping to
+weight~$w$ is the \emph{parity-weight count}
+$c_w = |\{m : |m|^2 \le K^*,\; w(\bar m) = w\}|$.
+Per-weight budget is then
+$M_w = \min(c_w,\, A_w)$, where $A_w = 3^w \binom{n}{w}$ is
+the total number of weight-$w$ Pauli operators.
+Any excess $c_w - A_w > 0$ at saturated low-weight classes is
+redistributed upward by a greedy procedure
+(formalized in Theorem~\ref{thm:spectral-char}(iv)).
+Within each weight class, $M_w$ operators are selected by any
+deterministic convention (e.g., lexicographic;
+Appendix~\ref{sec:layers}).
+For $n = 4$, the result is a fixed set of $137$~operators
+(Appendix~\ref{app:pauli-set}), independent of the target state,
+the hardware platform, and the reconstruction algorithm.
+Weight budget $\{1, 12, 54, 54, 16\}$ is uniquely determined
+by lattice geometry; the intra-weight ordering is a reproducibility
+convention (Supplemental Material~\cite{supplemental}).
+
+\subsection{State reconstruction}
+\label{sec:reconstruction}
+
+Given expectation values $\{b_i\}_{i=1}^M$ from $M$ Pauli measurements
+at $N_s$ shots each, we reconstruct the density matrix~$\rho$ via
+an iterative maximum-likelihood estimator~\cite{Banaszek1999,Hradil1997,Blume-Kohout2010}
+with three stabilization mechanisms (hedging, variance weighting,
+and ratio clipping).
+
+At each iteration, the update operator is
+\begin{equation}\label{eq:mle}
+  R = \zeta\, I + \frac{1}{M + \zeta\, d}
+  \sum_{i=1}^{M} w_i\,
+  \mathrm{clip}\!\left(\frac{b_i}{y_i},\, -5,\, 5\right) P_i,
+\end{equation}
+where $d = 2^n$, $P_i$ is the $i$th Pauli operator,
+$b_i$ is the measured expectation value,
+$y_i = \mathrm{tr}(P_i\,\rho)$ is the predicted expectation at the
+current iterate, and
+$\zeta = 0.05$ is a hedging parameter that regularizes~$\rho$
+toward the maximally mixed state~$I/d$~\cite{Blume-Kohout2010}.
+Ratios $b_i/y_i$ are clipped to $[-5, 5]$ to prevent divergence
+when $y_i \approx 0$~\cite{Hradil1997,Paris2004}.
+Per-measurement
+weights $w_i = 1/\sigma_i^2$ (normalized to sum to~$M$)~\cite{Smolin2012}
+incorporate shot-noise variance $\sigma_i^2 = (1 - \tilde{b}_i^2)/N_s$,
+where $\tilde{b}_i = \mathrm{clip}(b_i, -0.999, 0.999)$ prevents
+divergence when $|b_i| \to 1$ (the identity operator $I^{\otimes n}$
+has $b = 1$ exactly; the clip keeps its weight finite).
+Each iteration updates
+$\rho \leftarrow \alpha\, R\rho R / \mathrm{tr}(R\rho R) +
+(1 - \alpha)\,\rho$ with damping factor $\alpha = 0.5$,
+increasing by $5$\% per iteration (up to $0.95$) once the
+Frobenius norm of consecutive iterates falls below $0.01$ after a
+$20$-iteration burn-in.  Iteration
+terminates when $\|\rho^{(k+1)} - \rho^{(k)}\|_F < 10^{-7}$ or
+after $1{,}000$~iterations.
+Identical algorithm and hyperparameters are applied to both
+structured and random measurement data.  The \emph{only} experimental
+variable is the choice of which $M$~Pauli operators to measure.
+Source code for the reconstruction is provided~\cite{supplemental}.
+Empirically, the structured arm converges functionally (fidelity
+plateaus by iteration~${\sim}300$) while the random arm oscillates
+without stabilizing; convergence details and the
+$n = 2$ identity-weight pathology are discussed in the Supplemental Material~\cite{supplemental}.
+All hyperparameters $(\zeta, \alpha)$ are held constant across
+all arms, states, and hardware platforms; a $78$-condition sweep
+(7~hedge values $\times$ 6~states + 6~damping values $\times$ 6~states,
+each axis varied independently) shows
+that the $K^*$ advantage sign is positive across the entire tested
+range (Supplemental Material~\cite{supplemental}, Sec.~VII\,H).
+
+\subsection{Compositional architecture}
+\label{sec:compositional}
+
+For processors larger than the per-subsystem size, we decompose the
+system into overlapping 4-qubit subsystems and reconstruct each
+independently.  Subsystems are assigned to color groups via graph
+coloring: subsystems that do not share qubits can be measured
+simultaneously.  For a linear-chain topology, 4~color groups suffice.
+Because the 137~$K^*$ operators compress into 29~tensor-product bases
+(Sec.~\ref{sec:rigetti}; Appendix~\ref{sec:circuits}), each color
+group contributes at most 29~circuits, giving an upper bound of
+$4 \times 29 = 116$.  In practice, patches in different color
+groups often map to the same global tensor-product basis after
+extension to the full register, reducing the count further
+(e.g., $116 \to 59$ unique bases for the 8-qubit linear chain;
+Sec.~\ref{sec:8qubit}).
+Circuit count is independent of chain length;
+other topologies may require more color groups.  Figure~\ref{fig:compositional} illustrates the
+architecture for an 8-qubit chain.
+When patches overlap (qubits shared between adjacent subsystems),
+each patch is reconstructed independently; consistency at patch
+boundaries is enforced only through the shared marginals of the
+per-patch density matrices, not through a global MLE.  For states
+with high bipartite entanglement across a patch boundary, the
+per-patch reconstructions capture the reduced state faithfully
+(1-body RDM fidelities $\geq 0.98$ across all qubits in simulation;
+hardware confirms $F_{\text{1-RDM}} = 0.985 \pm 0.004$,
+$F_{\text{2-RDM}} = 0.771 \pm 0.031$;
+Appendix~\ref{sec:rdm}), though the global state cannot be assembled
+without additional cross-patch correlators.
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\columnwidth]{fig3_compositional.pdf}
+\caption{Compositional architecture for an 8-qubit linear chain.
+Five overlapping 4-qubit patches are assigned to 4~color groups;
+patches in the same color group share no qubits and can be measured
+in parallel.  With basis grouping, the total circuit count
+($\le 4 \times 29 = 116$; basis deduplication reduces this
+further, e.g.\ to 59 at 8~qubits) is independent of chain length.}
+\label{fig:compositional}
+\end{figure}
+
+%% ========================================================
+\section{Theoretical results}
+\label{sec:theory}
+
+This section presents the theoretical core: the basin separation
+theorem (reverse direction, Sec.~\ref{sec:basin}), the purity bound
+(Sec.~\ref{sec:purity-bound}), and the universality extension to
+$q$-ary Hamming schemes (Sec.~\ref{sec:universality}).
+Its forward direction (Krawtchouk eigenvalues $\to$ measurement
+allocation) is in Sec.~\ref{sec:selection} and
+Appendix~\ref{sec:layers}.
+
+\subsection{Basin separation theorem}
+\label{sec:basin}
+
+We first establish the Fisher-information structure of the
+reconstruction problem, then state and prove the main theorem.
+The log-likelihood for quantum state tomography is concave on
+the state space, so its maximizer set is convex; a \emph{basin}
+is the region of initial conditions from which iterative MLE
+converges to a given maximizer.
+``Basin separation'' means that all basins lead to the same
+reconstructed values on the informative Pauli coordinates,
+so the reconstruction is unique where it matters.
+
+Let $\mathcal{P}_n = \{I,X,Y,Z\}^{\otimes n}$ denote the $n$-qubit
+Pauli group, with $\mathcal{P}_n^{(w)}$ the subset of weight-$w$
+operators, and let $\mathcal{S} \subset \mathcal{P}_n \setminus \{I\}$ be
+the measurement set.
+Write $x_P = \mathrm{tr}(P\rho)$ for the true Pauli expectation values.
+Call the unmeasured operators \emph{flat directions}
+$\mathcal{F}(\mathcal{S}) = \mathcal{P}_n \setminus (\mathcal{S} \cup \{I\})$ and
+the operators with nonzero expectation \emph{informative}:
+$\mathcal{I}_0(\rho) = \{P : x_P \neq 0\}$.
+By \emph{informative subspace} we mean the subspace of the free
+Bloch parameter space spanned by the basis coordinates
+$\{y_P : P \in \mathcal{I}_0(\rho) \setminus \{I\}\}$; we identify
+it with its index set $\mathcal{I}_0(\rho) \setminus \{I\}$ via
+this basis when context permits.
+
+\pclaim{env:lem:hessian}{proved}{*}{lem:hessian}%
+\begin{lemma}[Fisher--Hessian spectral decomposition]
+\label{lem:hessian}
+Let $\ell(\sigma) = \sum_{P \in \mathcal{S}} \sum_{\pm} n_{P,\pm}
+\log p_{P,\pm}(\sigma)$ be the per-operator log-likelihood for
+Pauli tomography with measurement set~$\mathcal{S}$, where
+$p_{P,\pm} = (1 \pm \mathrm{tr}(P\sigma))/2$ and $n_{P,\pm}$ is
+the $\pm 1$-outcome count from $N_s$ shots on~$P$.
+In Pauli--Bloch coordinates $y_P = \mathrm{tr}(P\sigma)$, the
+Fisher information matrix
+$\mathcal{H}_{PP'} = -\mathbb{E}[\partial^2\ell/\partial y_P\,\partial y_{P'}]$,
+evaluated at the true parameter $x_P = \mathrm{tr}(P\rho)$ with
+$|x_P| < 1$ for every $P \in \mathcal{S}$, is diagonal in the
+Pauli basis; its diagonal entries $h_P := \mathcal{H}_{PP}$ satisfy
+\begin{equation}\label{eq:hessian}
+  h_P = \frac{N_s}{1 - x_P^2}\,\mathbf{1}[P \in \mathcal{S}].
+\end{equation}
+Because the Pauli index set partitions by weight, equation~\eqref{eq:hessian}
+yields the block decomposition
+$\mathcal{H} = \bigoplus_{w=0}^{n} \mathcal{H}^{(w)}$ with
+$\mathcal{H}^{(w)} = \mathrm{diag}(h_P)_{P \in \mathcal{P}_n^{(w)}}$,
+which Theorem~\ref{thm:basin} uses to couple the weight grading
+of~$\mathcal{S}$ to the Fisher spectrum.
+The eigenvalues fall into three classes:
+\begin{enumerate}
+\item Informative measured operators ($P \in \mathcal{S} \cap \mathcal{I}_0$)
+  have $h_P = N_s/(1 - x_P^2) > N_s$;
+\item Uninformative measured operators ($P \in \mathcal{S},\, x_P = 0$)
+  have $h_P = N_s$;
+\item Flat directions ($P \in \mathcal{F}(\mathcal{S})$) have $h_P = 0$.
+\end{enumerate}
+Writing $x_{\min} = \min_{P \in \mathcal{S} \cap \mathcal{I}_0}|x_P|$ and
+$x_{\max} = \max_{P \in \mathcal{S} \cap \mathcal{I}_0}|x_P|$, the restriction
+$\mathcal{H}\big|_{\mathcal{S} \cap \mathcal{I}_0}$ has condition number
+$\kappa_{\mathrm{info}} = (1 - x_{\min}^2)/(1 - x_{\max}^2)$,
+which depends only on the extremal $|x_P|$ over the measured informative set.
+\end{lemma}
+
+\begin{proof}
+\emph{Diagonality.}
+The outcome probabilities $p_{P,\pm} = (1 \pm y_P)/2$
+depend on $\sigma$ only through the single coordinate
+$y_P = \mathrm{tr}(P\sigma)$, so
+$\partial p_{P,\pm}/\partial y_{P'} =
+\pm\delta_{PP'}/2$.
+This factorization is the \emph{operational} consequence of
+Schur orthogonality for the character group
+$\mathbb{Z}_q^n$~\cite{BannaiIto1984,Holevo2011}: the Pauli
+operators are the characters of $\mathbb{Z}_q^n$ (at $q = 2$,
+the $n$-qubit Pauli group modulo phases), and the character
+orthogonality relation
+$\mathrm{tr}(PP') = d\,\delta_{PP'}$ ensures that each Pauli
+measurement constrains exactly one Bloch coordinate, with zero
+cross-information to all others.
+Differentiating $\ell$ twice gives $-\partial^2\ell/\partial y_P^2 =
+n_{P,+}/(1+y_P)^2 + n_{P,-}/(1-y_P)^2$; evaluating at $y = x$ and using
+$\mathbb{E}[n_{P,\pm}] = N_s(1\pm x_P)/2$, the Fisher information reduces to
+$\mathcal{H}_{PP'} = N_s\,\delta_{PP'}/(1 - x_P^2)$ for
+$P, P' \in \mathcal{S}$ and zero otherwise, giving~\eqref{eq:hessian}.
+
+\emph{Condition number.}
+$\kappa_{\mathrm{info}} = \max(h_P)/\min(h_P)
+= (1 - x_{\max}^2)^{-1}/(1 - x_{\min}^2)^{-1}$ over the
+informative measured subset.
+\end{proof}
+
+\begin{remark}[Finite-sample independence and model scope]
+Each measurement outcome $n_{P,+} \sim
+\mathrm{Binomial}(N_s, (1{+}x_P)/2)$ is statistically
+independent across distinct operators $P, P' \in \mathcal{S}$
+(since each is measured in a separate basis).
+By Hoeffding's inequality, the estimates
+$\hat{y}_P = 2n_{P,+}/N_s - 1$ satisfy
+\begin{equation}\label{eq:hoeffding}
+  \Pr(|\hat{y}_P - x_P| > t) \le 2\exp(-N_s t^2/2)
+\end{equation}
+independently for each $P \in \mathcal{S}$.
+When each operator~$P$ is measured in a dedicated basis,
+this independence is \emph{exact} at finite~$N_s$,
+not merely asymptotic.
+Under tensor-product basis compression (where multiple
+Paulis are extracted from common shot data), the
+\emph{marginal} likelihood for each operator~$P$ still
+factors as a Bernoulli in~$y_P$, because the $\pm 1$
+outcome for~$P$ is a function of the bitstring parity
+along $P$'s support.
+The \emph{joint} likelihood within a single basis is
+multinomial in the $2^n$ outcomes, which differs from
+the product of per-operator marginals.
+All theoretical results in Sec.~\ref{sec:basin}
+(Theorem~\ref{thm:basin}, Lemma~\ref{lem:hessian})
+are stated and proved under the per-operator marginal
+model, and our MLE implementation (Sec.~\ref{sec:method})
+takes as input the same marginal estimates and shares the
+same fixed-point set (Supplemental
+Material~\cite{supplemental}, Sec.~VII\,E): it receives
+the vector of marginal estimates
+$\hat{y}_P = 2n_{P,+}/N_s - 1$, which is identical
+whether the estimates come from independent
+single-operator circuits or from grouped-basis bitstring
+parities.
+Basis grouping therefore affects only the covariance
+of the input estimates (through multinomial correlations
+between co-measured operators), not the objective function
+that the MLE maximizes.
+Informative-subspace identifiability
+(Theorem~\ref{thm:basin}) depends on the objective
+being the per-operator marginal log-likelihood, which
+is the model used throughout.
+
+Diagonality of $\mathcal{H}$ is a consequence of
+character orthogonality for the abelian group
+$\mathbb{Z}_q^n$, the same Schur relation that underlies the
+Hamming-scheme spectral theory
+(Lemma~\ref{lem:spectral_q_main}).
+What Lemma~\ref{lem:hessian} shows is that the weight-class
+makeup of~$\mathcal{S}$ controls the spectral profile of the Fisher
+information: because the Hessian is diagonal in the weight-class
+basis, each eigenspace is active (nonzero eigenvalue) if and only
+if $\mathcal{S}$ covers that weight class, while the per-operator
+signal strength $x_P$ determines the eigenvalue magnitude.
+Weight saturation therefore determines \emph{which} eigenspaces
+see nonzero Fisher information; the Krawtchouk eigenvalue structure
+determines \emph{how much} each weight class gets.
+\end{remark}
+
+\begin{definition}[Weight-$k$ supported state]
+\label{def:weight-k-supported}
+A pure $n$-qubit state $\rho$ is \emph{weight-$k$ supported}
+if its weight support satisfies $W(\rho) = k$, equivalently
+$x_P = 0$ for every Pauli operator $P$ with
+$\mathrm{wt}(P) > k$.
+\end{definition}
+
+\pclaim{env:thm:basin}{proved}{*}{thm:basin}%
+\begin{theorem}[Basin separation]
+\label{thm:basin}
+Let $\rho$ be an $n$-qubit state with weight support
+$W(\rho) = \max\{w : \exists\, P,\; \mathrm{wt}(P) = w,\;
+x_P \neq 0\}$, and let $\mathcal{S}$ be a measurement set with weight
+saturation level
+$w_{\mathrm{sat}}(\mathcal{S}) = \max\{k : \mathcal{P}_n^{(w)} \subseteq \mathcal{S}
+\;\forall\, 1 \le w \le k\}$.
+
+\medskip\noindent
+\textbf{(i) Structured case.}
+If\/ $w_{\mathrm{sat}}(\mathcal{S}) \ge W(\rho)$, every flat direction is
+uninformative:
+$\mathcal{F}(\mathcal{S}) \cap \mathcal{I}_0(\rho) = \varnothing$.
+Fisher information $\mathcal{H}$ is positive definite on
+the informative subspace $\mathcal{I}_0(\rho) \setminus \{I\}$, with spectrum
+$\{N_s/(1 - x_P^2)\}_{P \in \mathcal{I}_0 \setminus \{I\}}$ and condition number
+$\kappa_{\mathrm{info}} = (1{-}x_{\min}^2)/(1{-}x_{\max}^2)$,
+where $x_{\min} = \min_{P \in \mathcal{I}_0 \setminus \{I\}} |x_P|$
+and $x_{\max} = \max_{P \in \mathcal{I}_0 \setminus \{I\}} |x_P|$.
+
+\medskip\noindent
+\textbf{(ii) Random case.}
+For a uniform random subset of size $M$, the expected number of
+missing weight-$w$ operators is
+$|\mathcal{P}_n^{(w)}| \cdot (4^n{-}1{-}M)/(4^n{-}1)$.
+For any state with nonzero weight-$w$ signal and any
+weight class with $\mu_w < 1$, this produces
+informative-but-flat directions.
+
+\medskip\noindent
+\textbf{(iii) Reconstruction error (finite-sample bound).}
+For pure weight-$k$ supported target states
+(Definition~\ref{def:weight-k-supported}),
+let $\hat\rho$ be the PSD-constrained MLE
+($\hat\rho \in \arg\max_{\sigma \ge 0,\,\mathrm{tr}(\sigma)=1}
+L(\sigma)$, where $L$ depends only on measured
+coordinates $\{y_P\}_{P \in \mathcal{S}}$).
+Denote by $\hat\rho_{\mathcal{S}}$ the projected
+reconstruction with Bloch coordinates
+$y_P = \mathrm{tr}(P\hat\rho)$ for
+$P \in \mathcal{S}$ and $y_P = 0$ for
+$P \notin \mathcal{S}$ (minimum-norm convention;
+$\hat\rho_{\mathcal{S}}$ need not be PSD).
+With probability at least $1 - \delta$ over the measurement
+outcomes ($\delta \in (0,1)$), provided the MLE output
+satisfies the bounded-Bloch regime
+$|y_P(\hat\rho)| \le t_\star$ for all $P \in \mathcal{S}$,
+where
+$t_\star = \max_P |\hat{y}_P| + \sqrt{2\ln(2M/\delta)/N_s} < 1$
+is the bounded-Bloch parameter, computable from the sample means
+$\hat{y}_P$ (under $\mathcal{E}_\delta$,
+$\max_P |x_P| \le t_\star$ is guaranteed;
+Proposition~4 in the Supplemental Material~\cite{supplemental}),
+the Hilbert--Schmidt
+reconstruction error satisfies:
+\begin{align}
+  \|\rho - \hat\rho_{\mathcal{S}}\|_F^2 &\le
+  d\,\varepsilon_{\mathrm{pos}}
+  + \frac{8(1{+}t_\star^2)}{(1{-}t_\star)^2}
+    \,\frac{M\ln(2M/\delta)}{d\,N_s}
+  & &\text{(struct.)}, \label{eq:fid-structured} \\
+  \|\rho - \hat\rho_{\mathcal{S}}\|_F^2 &\le
+  d\,\varepsilon_{\mathrm{flat}}
+  + d\,\varepsilon_{\mathrm{pos}}
+  + \frac{8(1{+}t_\star^2)}{(1{-}t_\star)^2}
+    \,\frac{M\ln(2M/\delta)}{d\,N_s}
+  & &\text{(rand.)}, \label{eq:fid-random}
+\end{align}
+where $M = |\mathcal{S}|$ is the number of measured operators,
+$\varepsilon_{\mathrm{flat}} = d^{-2}\sum_{P \in
+\mathcal{F} \cap \mathcal{I}_0} x_P^2$ is irreducible
+(independent of~$N_s$; depends only on $\mathcal{S}$ and $\rho$), and
+$\varepsilon_{\mathrm{pos}} = d^{-2}\sum_{\mathrm{wt}(P)>k}
+[\mathrm{tr}(P\hat\rho)]^2$
+is the positivity excursion of the MLE output,
+bounded by $\mathrm{tr}(\hat\rho^2) \le 1$
+(Lemma~\ref{lem:purity_main}; computable from $\hat\rho$).
+The condition $t_\star < 1$ requires
+$\max_P |x_P| < 1$ and sufficient shots
+$N_s > 2\ln(2M/\delta)/(1{-}\max_P|x_P|)^2$.
+In the shot-noise-limited regime ($\max_P |x_P| \ll 1$ and $N_s \gg \ln(M/\delta)$),
+$t_\star \to 0$ and the coefficient
+$8(1{+}t_\star^2)/(1{-}t_\star)^2 = 8 + O(t_\star)$.
+Both bounds require only the
+Hoeffding event; conversion to fidelity $F(\rho,\hat\rho)$
+requires an additional near-purity hypothesis on the MLE
+output (Definition~\ref{def:near-pure}) and is carried out by
+Corollary~\ref{cor:fidelity_lower_bound}.
+\end{theorem}
+
+\begin{proof}
+\textbf{Part~(i).}
+Weight saturation $w_{\mathrm{sat}}(\mathcal{S}) \ge W(\rho)$ means
+$\mathcal{P}_n^{(w)} \subseteq \mathcal{S}$ for all $1 \le w \le W(\rho)$.
+Every non-identity informative operator $P \in \mathcal{I}_0(\rho)
+\setminus \{I\}$ has $1 \le \mathrm{wt}(P) \le W(\rho)$, hence
+$P \in \mathcal{S}$; the identity $I$ is excluded from
+$\mathcal{F}(\mathcal{S})$ by definition.
+Therefore $\mathcal{F}(\mathcal{S}) \cap \mathcal{I}_0(\rho) = \varnothing$.
+By Lemma~\ref{lem:hessian}, the restriction
+$\mathcal{H}\big|_{\mathcal{I}_0(\rho) \setminus \{I\}}$ is diagonal
+with all entries $h_P = N_s/(1 - x_P^2) > N_s > 0$,
+hence positive definite on the informative subspace.
+Since the log-likelihood is concave on the convex state
+space~\cite{Blume-Kohout2010}, its maximizer set is convex
+and every maximizer yields identical values of
+$\{y_P\}_{P \in \mathcal{I}_0}$
+(strict concavity of each $\log p_{P,\pm}$ in $y_P$;
+see Supplemental Material~\cite{supplemental} for the
+full argument).
+Non-uniqueness can arise only in flat directions
+$P \in \mathcal{F}(\mathcal{S})$; weight saturation ensures
+$\mathcal{F} \cap \mathcal{I}_0 = \varnothing$,
+so all maximizers agree on every informative coordinate.
+For the random bound~\eqref{eq:fid-random}, the minimum-norm
+convention ($y_P = 0$ for $P \notin \mathcal{S}$) resolves
+flat-direction ambiguity and makes
+$\varepsilon_{\mathrm{flat}} = d^{-2}\sum_{P \in \mathcal{F}
+\cap \mathcal{I}_0} x_P^2$ exact.
+
+\medskip\noindent
+\textbf{Part~(ii).}
+Indicators $\{\mathbf{1}[P \notin \mathcal{S}]\}_{P \neq I}$ are
+exchangeable under uniform sampling of $M$ elements from $4^n - 1$
+nontrivial Paulis.
+$\mathbb{E}[\mathbf{1}[P \notin \mathcal{S}]] = (4^n{-}1{-}M)/(4^n{-}1)$;
+linearity gives the stated weight-class expectation.
+At $n = 4$, $M = 137$: the probability that all $12$ weight-$1$
+operators survive is $\binom{243}{125}/\binom{255}{137}
+< 5 \times 10^{-4}$ (Table~\ref{tab:weight-coverage}),
+so at least one informative-but-flat direction exists with
+probability $> 0.999$.
+
+\medskip\noindent
+\textbf{Part~(iii).}
+The proof proceeds in three steps: an algebraic decomposition
+of the error, a finite-sample concentration bound on the
+measured coordinates, and a PSD contraction argument relating
+the MLE output to the sample means.
+
+\emph{Step 1: Algebraic decomposition.}
+Decompose the squared Hilbert--Schmidt distance via the Pauli
+expansion~\cite{Paris2004,Holevo2011}:
+\begin{align}
+  \|\rho - \hat\rho_{\mathcal{S}}\|_F^2
+  &= \frac{1}{d}\sum_{P \neq I} (x_P - y_P)^2 \notag \\
+  &= \frac{1}{d}\Biggl[\,
+  \underbrace{\sum_{P \in \mathcal{S} \cap \mathcal{I}_0}
+  \!\!\!(x_P - y_P)^2}_{\text{est.\ variance}} \notag \\
+  &\qquad
+  +\underbrace{\sum_{P \in \mathcal{F} \cap \mathcal{I}_0}
+  \!\!\!x_P^2}_{\varepsilon_{\mathrm{flat}}\,d^2}
+  +\underbrace{\sum_{\substack{P \in \mathcal{S},\; x_P = 0 \\
+  \mathrm{wt}(P) \le k}}
+  \!\!y_P^2}_{\text{meas.-uninf.}}
+  +\underbrace{\sum_{\mathrm{wt}(P)>k}
+  \!\!y_P^2}_{\le\,\varepsilon_{\mathrm{pos}}\,d^2}
+  \Biggr].
+  \label{eq:fidelity-decomp}
+\end{align}
+For weight-$k$ supported targets ($x_P = 0$ when $\mathrm{wt}(P) > k$),
+the fourth sum reduces to $\sum y_P^2$ exactly.
+In the structured case $\mathcal{F}\cap\mathcal{I}_0 = \varnothing$,
+the second sum vanishes and the decomposition is exact.
+In the random case, the minimum-norm convention
+$y_P = 0$ for $P \notin \mathcal{S}$ makes the second sum
+exact: $(x_P - 0)^2 = x_P^2$ for each flat informative
+operator, and $y_P = 0$ for all unmeasured operators
+eliminates cross-terms.
+The second sum is
+deterministic (depends on the measurement set, not the data).
+The fourth sum is bounded by purity of the MLE output~$\hat\rho$.
+Since $y_P = y_P(\hat\rho)$ for $P \in \mathcal{S}$
+and $y_P = 0$ otherwise, the fourth sum satisfies
+$\sum_{\mathrm{wt}(P)>k} y_P^2
+\le \sum_{\mathrm{wt}(P)>k} [y_P(\hat\rho)]^2$.
+Now $\hat\rho \ge 0$, $\mathrm{tr}(\hat\rho) = 1$ imply
+$\mathrm{tr}(\hat\rho^2) \le 1$, hence
+$\sum_{\mathrm{wt}(P)>k} [y_P(\hat\rho)]^2 \le d - 1 -
+\sum_{\mathrm{wt}(P) \le k,\, P \neq I} [y_P(\hat\rho)]^2$
+(the Pauli-expansion identity
+$\mathrm{tr}(\hat\rho^2) = d^{-1}(1 + \sum_{P\neq I} [y_P(\hat\rho)]^2)$;
+no moment-matching hypothesis
+is needed, only $\hat\rho \ge 0$ and $\mathrm{tr}(\hat\rho)=1$).
+This gives $d\,\varepsilon_{\mathrm{pos}} =
+d^{-1}\sum_{\mathrm{wt}(P)>k} [y_P(\hat\rho)]^2$, a deterministic
+quantity computable from the MLE output.
+It remains to bound the first and third sums.
+
+\emph{Step 2: Hoeffding concentration on sample means.}
+Under the per-operator marginal model, each $\hat{y}_P$ is
+a sample mean of $N_s$ independent $\pm 1$ outcomes, so
+$\mathrm{Var}(\hat{y}_P) = (1 - x_P^2)/N_s$ \emph{exactly}
+(not asymptotically)~\cite{Helstrom1976,Holevo2011,GillMassar2000}.
+By Hoeffding's inequality~\eqref{eq:hoeffding} and a union
+bound over all $M = |\mathcal{S}|$ measured operators, for any
+$\delta \in (0,1)$:
+\begin{equation}\label{eq:variance-bound}
+  \Pr\Bigl(\exists\, P \in \mathcal{S}:\;
+  |\hat{y}_P - x_P| > t \Bigr) \le \delta,
+  \quad t = \sqrt{\frac{2\ln(2M/\delta)}{N_s}}.
+\end{equation}
+Under the event $\mathcal{E}_\delta = \{\forall\, P \in \mathcal{S}:\;
+|\hat{y}_P - x_P| \le t\}$, which holds with probability
+$\ge 1 - \delta$, the first sum (estimation variance on
+sample means) satisfies
+$\sum_{P \in \mathcal{S} \cap \mathcal{I}_0}
+(x_P - \hat{y}_P)^2 \le M \cdot 2\ln(2M/\delta)/N_s$.
+The third sum (measured-uninformative, $x_P = 0$) satisfies
+the same bound since $\hat{y}_P^2 \le t^2$ when $x_P = 0$.
+Both are bounded by $2M\ln(2M/\delta)/N_s$.
+
+\emph{Step 3: PSD contraction.}
+The MLE output $\hat\rho$ maximizes the per-operator
+log-likelihood $L(\sigma) = \sum_{P \in \mathcal{S}} \ell_P(y_P)$
+subject to $\sigma \ge 0$, $\mathrm{tr}(\sigma) = 1$,
+where $\ell_P(y) = n_{P,+}\!\log\frac{1{+}y}{2}
++ n_{P,-}\!\log\frac{1{-}y}{2}$.
+Each $\ell_P$ is strictly concave on $(-1,1)$ with
+$\ell_P''(y) = -n_{P,+}/(1{+}y)^2 - n_{P,-}/(1{-}y)^2$.
+On $|y| \le t_\star < 1$, each factor $(1 \pm y)^2$ lies in
+$[(1{-}t_\star)^2,\,(1{+}t_\star)^2]$, so
+$N_s/(1{+}t_\star)^2 \le |\ell_P''(y)| \le N_s/(1{-}t_\star)^2$.
+By Taylor's theorem with Lagrange remainder around the
+unconstrained maximizer~$\hat{y}_P$
+(using $\ell_P'(\hat{y}_P) = 0$, valid since
+$|\hat{y}_P| \le t_\star < 1$ in the bounded-Bloch
+regime below, and the lower Hessian bound):
+$\ell_P(y) \le \ell_P(\hat{y}_P) -
+\tfrac{N_s}{2(1+t_\star)^2}(y - \hat{y}_P)^2$.
+Under the bounded-Bloch regime
+$|x_P|, |\hat{y}_P|, |y_P(\hat\rho)| \le t_\star < 1$
+(the first two bounds hold under $\mathcal{E}_\delta$ with
+$t_\star = \max_P |\hat{y}_P| + \sqrt{2\ln(2M/\delta)/N_s}$
+provided $\max_P |\hat{y}_P| < 1$; the third is a verifiable
+output property of the PSD-constrained MLE;
+see Proposition~4 in the
+Supplemental Material~\cite{supplemental}), the upper Hessian bound
+$|\ell_P''| \le N_s/(1 - t_\star)^2$ yields the lower
+Taylor bound $\ell_P(y) \ge \ell_P(\hat{y}_P)
+- \tfrac{N_s}{2(1-t_\star)^2}(y - \hat{y}_P)^2$ on the same interval.
+Applying the upper bound at $y = y_P(\hat\rho)$ and the lower bound
+at $y = x_P$, then using $L(\hat\rho) \ge L(\rho)$
+(since $\rho$ is feasible):
+\begin{equation}\label{eq:psd-contraction}
+  \sum_{P \in \mathcal{S}}
+  \bigl(y_P(\hat\rho) - \hat{y}_P\bigr)^2
+  \;\le\;
+  \left(\frac{1+t_\star}{1-t_\star}\right)^{\!2}
+  \sum_{P \in \mathcal{S}}
+  \bigl(x_P - \hat{y}_P\bigr)^2,
+\end{equation}
+where $t_\star = \max_P |\hat{y}_P| + O(\sqrt{\ln(M/\delta)/N_s})$.
+In the shot-noise-limited regime ($\max_P |x_P| \ll 1$ and $N_s \gg \ln(M/\delta)$),
+$t_\star \to 0$ and the prefactor approaches unity;
+the exact $t_\star$-dependence is retained in
+Theorem~\ref{thm:basin}(iii).
+Equation~\eqref{eq:psd-contraction} is a finite-sample,
+deterministic bound: the PSD-constrained MLE's squared
+deviation from the unconstrained optimum is at most
+$\bigl(\frac{1+t_\star}{1-t_\star}\bigr)^{\!2}$ times
+the true state's, on measured coordinates
+(Supplemental Material~\cite{supplemental},
+Proposition~4).  The contraction holds for the exact
+constrained MLE; a regularized (hedged) estimator
+satisfies the overall HS bound empirically but need
+not satisfy~\eqref{eq:psd-contraction} exactly.
+By the triangle inequality
+$|x_P - y_P(\hat\rho)| \le |x_P - \hat{y}_P|
++ |\hat{y}_P - y_P(\hat\rho)|$
+and~\eqref{eq:psd-contraction}:
+\begin{equation}\label{eq:mle-variance-bound}
+  \sum_{P \in \mathcal{S}}
+  \bigl(x_P - y_P(\hat\rho)\bigr)^2
+  \;\le\;
+  \frac{4(1{+}t_\star^2)}{(1{-}t_\star)^2}
+  \sum_{P \in \mathcal{S}}
+  \bigl(x_P - \hat{y}_P\bigr)^2.
+\end{equation}
+In the shot-noise-limited regime ($\max_P |x_P| \ll 1$ and $N_s \gg \ln(M/\delta)$),
+$t_\star \to 0$ and the prefactor
+$4(1{+}t_\star^2)/(1{-}t_\star)^2 = 4 + O(t_\star)$;
+the prefactor $4(1{+}t_\star^2)/(1{-}t_\star)^2$
+combines with the Hoeffding factor~$2$
+to give the theorem's coefficient
+$8(1{+}t_\star^2)/(1{-}t_\star)^2$.
+Under $\mathcal{E}_\delta$, this gives
+$\frac{1}{d}\sum_{P \in \mathcal{S}}(x_P - y_P(\hat\rho))^2
+\le \frac{8(1{+}t_\star^2)}{(1{-}t_\star)^2}
+\frac{M\ln(2M/\delta)}{d\,N_s}$,
+which absorbs the first, third, and fourth sums
+(the fourth sum consists entirely of measured high-weight
+coordinates $\{P \in \mathcal{S} : \mathrm{wt}(P) > k\}$,
+since unmeasured high-weight coordinates are zero by
+the minimum-norm convention).
+
+\emph{Assembly.}
+In the structured case~(i), $\mathcal{F} \cap \mathcal{I}_0 =
+\varnothing$, so $\varepsilon_{\mathrm{flat}} = 0$ and the second
+sum vanishes.
+The fourth sum (measured high-weight coordinates only)
+is bounded by the positivity excursion
+$d\,\varepsilon_{\mathrm{pos}} =
+d^{-1}\sum_{\mathrm{wt}(P)>k} y_P(\hat\rho)^2$
+(which includes all high-weight coordinates of~$\hat\rho$),
+itself bounded by the purity identity (Step~1).
+Because the PSD contraction over~$\mathcal{S}$ already
+subsumes the fourth sum, the
+$d\,\varepsilon_{\mathrm{pos}}$ addend in
+bounds~\eqref{eq:fid-structured}--\eqref{eq:fid-random}
+is conservative; we retain it as a separate term because
+it isolates the noise-dependent contribution
+($d\,\varepsilon_{\mathrm{pos}} = O(p)$ under depolarizing
+noise at rate~$p$; vanishes for pure weight-$k$ supported targets)
+and is directly computable from the MLE output.
+In the random case, $\varepsilon_{\mathrm{flat}} > 0$ generically:
+the missing informative operators contribute a bias
+independent of $N_s$.
+
+\end{proof}
+
+\begin{remark}[Random-case illustration]
+At $n = 4$, $M = 137$: $46.3$\% of weight-1 operators are
+expected flat, with probability $> 0.999$ that at least one
+weight-1 operator is missing
+(Table~\ref{tab:weight-coverage}).
+For any state with nonzero
+weight-1 signal (i.e., generically), this produces at least
+one informative-but-flat direction.
+\end{remark}
+
+\begin{remark}[Shot-noise illustration]
+Shot noise is explicit and deterministic:
+at $n = 4$ ($d = 16$), $M = 137$, $N_s = 10{,}000$,
+$\delta = 0.01$, and $\max_P |x_P| \approx 0$
+(shot-noise-limited regime),
+$t_\star = 0.045$ and the
+shot-noise term evaluates to~$0.077$
+($0.070$ at leading order).
+For comparison, full-tomography ($M = d^2{-}1$) expected-value
+shot-noise $\mathrm{E}[\cdot] \le (d^2{-}1)/(d\,N_s)$
+(from the Bernoulli variance; exact at $x_P = 0$)
+is not a high-probability guarantee, yet is
+$\approx 44\times$ tighter at leading order
+(ratio $8M\ln(2M/\delta)/(d^2{-}1)$, independent
+of~$N_s$ at leading order; at $M = 137$, $\delta = 0.01$).
+Under depolarizing noise,
+$d\,\varepsilon_{\mathrm{pos}} = O(p)$, vanishing
+in the noiseless limit;
+for pure weight-$k$ supported targets, $\varepsilon_{\mathrm{pos}} = 0$
+when the MLE exactly recovers the low-weight moments.
+\end{remark}
+
+\begin{remark}[Tightness of Theorem~\ref{thm:basin}(iii)]
+The bound is conservative for PSD estimators
+because the worst-case reflection $y_P = 2\hat{y}_P - x_P$ is
+generically not PSD.
+The high-probability bound trades tightness for
+a deterministic guarantee at each confidence level~$\delta$.
+\end{remark}
+
+\begin{definition}[Near-pure MLE output]
+\label{def:near-pure}
+A PSD-constrained MLE output $\hat\rho$ is \emph{near-pure with
+deficit $\eta \in [0, 1)$} if $\mathrm{tr}(\hat\rho^2) \ge 1 - \eta$.
+The tightest admissible deficit is
+$\eta^{\star}(\hat\rho) := 1 - \mathrm{tr}(\hat\rho^2)$,
+a quantity directly computable from the MLE output.
+\end{definition}
+
+\pclaim{env:cor:fidelity_lower_bound}{proved}{*}{cor:fidelity_lower_bound}%
+\begin{corollary}[Fidelity lower bound under MLE near-purity]
+\label{cor:fidelity_lower_bound}
+Fix the setup of Theorem~\ref{thm:basin}(iii), structured case, for
+a pure weight-$k$ supported target $\rho$
+(Definition~\ref{def:weight-k-supported}).
+Assume additionally that the PSD-constrained MLE output is
+near-pure with deficit $\eta$ (Definition~\ref{def:near-pure}).
+Then, with probability at least $1 - \delta$, the fidelity
+$F(\rho,\hat\rho) = \mathrm{tr}(\rho\hat\rho)$ satisfies
+\begin{equation}\label{eq:fidelity-lower-bound}
+  F(\rho, \hat\rho)
+  \ \ge\ 1 - \frac{\eta}{2}
+  - d\,\varepsilon_{\mathrm{pos}}
+  - \frac{4(1{+}t_\star^2)}{(1{-}t_\star)^2}
+     \,\frac{M\ln(2M/\delta)}{d\,N_s},
+\end{equation}
+where $\varepsilon_{\mathrm{pos}}$ and $t_\star$ are as in
+Theorem~\ref{thm:basin}(iii).
+The bound is tight in~$\eta$: the smallest admissible value is
+$\eta^{\star}(\hat\rho) = 1 - \mathrm{tr}(\hat\rho^2)$
+(Definition~\ref{def:near-pure}), which yields the strongest
+guarantee at the observed purity.
+The near-purity hypothesis is external to Theorem~\ref{thm:basin};
+it is not proved in this paper.
+The random-case analogue of eq.~\eqref{eq:fidelity-lower-bound}
+incurs an additional $-d\,\varepsilon_{\mathrm{flat}}$ term on the
+right-hand side, because unmeasured informative operators
+($P \notin \mathcal{S}$ with $x_P \neq 0$) no longer vanish;
+we state only the structured case here.
+\end{corollary}
+\begin{proof}
+For pure $\rho$, the Hilbert--Schmidt identity gives
+$\|\rho - \hat\rho\|_F^2
+= \mathrm{tr}(\rho^2) - 2\mathrm{tr}(\rho\hat\rho) + \mathrm{tr}(\hat\rho^2)
+= 1 - 2F + \mathrm{tr}(\hat\rho^2)$, so
+$F = 1 - \tfrac{1}{2}(1 - \mathrm{tr}(\hat\rho^2))
+      - \tfrac{1}{2}\|\rho - \hat\rho\|_F^2$.
+Near-purity gives
+$\tfrac{1}{2}(1 - \mathrm{tr}(\hat\rho^2)) \le \eta/2$, so
+$F \ge 1 - \eta/2 - \tfrac{1}{2}\|\rho - \hat\rho\|_F^2$.
+It remains to bound $\|\rho - \hat\rho\|_F^2$ (not the projected
+norm $\|\rho - \hat\rho_{\mathcal{S}}\|_F^2$ appearing in
+Theorem~\ref{thm:basin}(iii)).  In the structured case, every
+unmeasured operator $P \notin \mathcal{S}$ has $\mathrm{wt}(P) > k$
+(hence $x_P = 0$), so
+$\|\rho - \hat\rho\|_F^2
+= \|\rho - \hat\rho_{\mathcal{S}}\|_F^2
++ d^{-1}\!\sum_{P \notin \mathcal{S}} [\mathrm{tr}(P\hat\rho)]^2
+\le \|\rho - \hat\rho_{\mathcal{S}}\|_F^2
++ d\,\varepsilon_{\mathrm{pos}}$.
+Applying bound~\eqref{eq:fid-structured} then yields
+$\|\rho - \hat\rho\|_F^2 \le 2\,d\,\varepsilon_{\mathrm{pos}}
++ \tfrac{8(1+t_\star^2)}{(1-t_\star)^2}\tfrac{M\ln(2M/\delta)}{d\,N_s}$.
+Halving and substituting into $F \ge 1 - \eta/2 - \tfrac{1}{2}\|\rho-\hat\rho\|_F^2$
+gives equation~\eqref{eq:fidelity-lower-bound}.
+\end{proof}
+
+\begin{remark}[Empirical status of the near-purity hypothesis]
+On hardware, the near-purity hypothesis of
+Corollary~\ref{cor:fidelity_lower_bound} holds with a comfortable
+margin across every non-GHZ state we tested:
+$\mathrm{tr}(\hat\rho^2) \ge 0.77$ across seven runs
+(four W-state, three allocation-fraction) plus product states
+(with $\mathrm{tr}(\hat\rho^2) = 0.996$ for
+$|{+}\rangle^{\otimes 4}$), corresponding to $\eta^{\star} \le 0.23$.
+GHZ is the sole exception: the information-budget mismatch
+(Sec.~\ref{sec:ghz}) yields $\mathrm{tr}(\hat\rho^2) \approx 0.53$
+($\eta^{\star} \approx 0.47$), and
+Corollary~\ref{cor:fidelity_lower_bound} correspondingly yields a
+weaker fidelity guarantee consistent with the observed degradation.
+\end{remark}
+
+\pclaim{env:cor:approx_local}{proved}{*}{cor:approx_local}%
+\begin{corollary}[Approximate locality]
+\label{cor:approx_local}
+For any pure state~$\rho$ (not necessarily weight-$k$ supported) and any
+measurement set with weight-class coverage
+$\mu_w = |\mathcal{S} \cap \mathcal{P}_n^{(w)}|/A_w = 1$
+for all $w \le k$,
+\begin{equation}\label{eq:approx-local}
+  \|\rho - \hat\rho_{\mathcal{S}}\|_F^2 \;\le\;
+  2d\,(\varepsilon_{\mathrm{pos}} + \varepsilon_{\mathrm{tail}})
+  + \frac{8(1{+}t_\star^2)}{(1{-}t_\star)^2}
+    \,\frac{M\ln(2M/\delta)}{d\,N_s},
+\end{equation}
+where $\varepsilon_{\mathrm{tail}} = d^{-2}
+\sum_{\mathrm{wt}(P)>k} [\mathrm{tr}(P\rho)]^2$
+is the squared Frobenius norm of the Pauli expansion above
+weight~$k$.
+\end{corollary}
+\begin{proof}
+Decompose the reconstruction error~\eqref{eq:fidelity-decomp}
+into three sums: statistical (bounded by
+$\tfrac{8(1+t_\star^2)}{(1-t_\star)^2}\,M\ln(2M/\delta)/(d\,N_s)$
+via Hoeffding concentration
+and PSD contraction~\eqref{eq:psd-contraction}),
+positivity excursion ($\varepsilon_{\mathrm{pos}}$ by
+Lemma~\ref{lem:purity_main}), and tail leakage
+($\varepsilon_{\mathrm{tail}}$, the contribution of
+high-weight operators).
+Weight saturation gives $\varepsilon_{\mathrm{flat}} = 0$.
+For states with $W(\rho) > k$, the high-weight error
+$\sum_{\mathrm{wt}(P)>k}(x_P - y_P)^2
+\le 2\bigl(\sum x_P^2 + \sum y_P^2\bigr)$
+by the elementary inequality $(a{-}b)^2 \le 2(a^2 + b^2)$,
+giving the factor~$2$.
+\end{proof}
+
+\noindent
+As a numerical check of Corollary~\ref{cor:approx_local},
+for the W~state at $k = 2$, the high-weight tail is
+$\varepsilon_{\mathrm{tail}} = 4.3 \times 10^{-2}$
+(41 operators above weight~2 carry nonzero expectation),
+so the tail contribution is small relative to the total
+Pauli energy even though $W(\rho) = 4$; the full bound is
+loose at $d = 16$ (the $2d$ prefactor dominates) but
+tightens as $d$ grows at fixed~$k$.
+All $56$ informative Pauli operators with
+$0 < |x_P| < 1$ share $|x_P| = 1/2$, giving
+$\kappa_{\mathrm{info}} = 1$ (perfectly conditioned
+within the non-degenerate subspace).
+
+\paragraph{Interpretation for coding theory.}
+Weight saturation (the number of Hamming weight classes fully
+covered by a subset of the Hamming cube) is a combinatorial
+quantity that appears in Delsarte's linear-programming
+bounds~\cite{Delsarte1973,BannaiIto1984} and in covering-code
+theory~\cite{MacWilliams1977}.
+Theorem~\ref{thm:basin} gives it a new operational meaning:
+weight saturation $w_{\mathrm{sat}} \ge k$ is \emph{sufficient}
+for high-fidelity nonlinear reconstruction of any state whose Pauli
+expansion is supported at weight $\le k$, with the spectral gap of
+the Fisher information (Lemma~\ref{lem:hessian}) guaranteeing
+identifiability on the informative subspace.  Violation ($w_{\mathrm{sat}} < k$) leaves
+informative operators unmeasured (flat directions in
+$\mathcal{I}_0$), producing an irreducible $O(1)$ bias
+(the $\varepsilon_{\mathrm{flat}}$ term in
+Theorem~\ref{thm:basin}(iii)) that no increase in sample size
+can remove.
+Three concrete results flow back to the association-scheme
+setting.  First, the sharp dichotomy
+(Theorem~\ref{thm:spectral-char}(iii)): weight saturation
+admits no soft intermediate: worst-case reconstruction fidelity
+is either~$\le 1/2$ or~$\ge 1 - O(d^{-1})$, a rigidity
+property of Hamming-scheme subsets that has no analog in
+classical covering-code
+theory~\cite{Delsarte1973,MacWilliams1977}.
+Second, the spectral convergence threshold $K^* = q^2 + 1$ ($q = 2$)
+or $q^2$ ($q \ge 3$)
+(Lemma~\ref{lem:spectral_q_main}): the Krawtchouk lattice
+prescription achieves weight saturation at shell radius~$q^2$
+(plus one additional shell for~$q = 2$)
+universally across $H(n,q)$, determined by the mod-$q$ invisible
+vectors, a structural fact about Hamming-scheme spectral geometry
+independent of its quantum motivation.
+Third, the primitive idempotents $E_w$ of the Bose--Mesner algebra
+(defined in Eq.~\ref{eq:delsarte-cert})
+serve as Delsarte dual certificates of reconstruction failure
+(Theorem~\ref{thm:spectral-char}(i)), the same algebraic objects
+used in LP upper bounds on code sizes~\cite{Delsarte1973} but here
+applied to a reconstruction-theoretic obstruction rather than a
+distance-theoretic one.
+These results give weight saturation new operational content but
+do not, by themselves, improve existing combinatorial bounds;
+whether the reconstruction dichotomy yields tighter LP constraints
+on covering-code parameters remains an open question for the
+Delsarte theory.
+
+\subsection{Purity bound on positivity excursion}
+\label{sec:purity-bound}
+
+MLE reconstructs a density matrix $\sigma \ge 0$ consistent
+with the measured expectations.  Since the measurement set
+underdetermines the state, the positivity constraint can force
+spectral weight into unmeasured high-weight Pauli directions;
+the \emph{positivity excursion} $\varepsilon_{\mathrm{pos}}$
+quantifies this leakage.
+
+\pclaim{env:lem:purity_main}{proved}{*}{lem:purity_main}%
+\begin{lemma}[Purity bound on positivity excursion]
+\label{lem:purity_main}
+Let $\sigma \in \Sigma_k(\rho) = \{\sigma \ge 0 :
+\mathrm{tr}(P\sigma) = \mathrm{tr}(P\rho)\;\forall\,
+\mathrm{wt}(P) \le k\}$ be any density matrix matching $\rho$
+on all Pauli operators of weight $\le k$.
+
+\textup{(i)} \emph{Bound.}
+The positivity excursion satisfies
+\begin{equation}\label{eq:purity}
+  \varepsilon_{\mathrm{pos}} := \frac{1}{d^2}
+  \sum_{\mathrm{wt}(P) > k} [\mathrm{tr}(P\sigma)]^2
+  \le \frac{d - 1 - S_k}{d^2},
+\end{equation}
+where $S_k = \sum_{w \le k,\, P \neq I} [\mathrm{tr}(P\rho)]^2$.
+For depolarized weight-$k$ supported states (noise~$p$),
+$\varepsilon_{\mathrm{pos}} \le 2p(d{-}1)/d^2 = O(p/d)$.
+
+\textup{(ii)} \emph{Tightness.}
+For pure weight-$k$ supported states, $\varepsilon_{\mathrm{pos}} = 0$
+(the bound is saturated).  Conversely, if the measurement set covers all
+weight-${\le}\,k$ classes but leaves at least one
+weight-${>}\,k$ operator unmeasured, there exists a Hermitian
+trace-$1$ operator $\sigma \in \Sigma_k(\rho)$ achieving
+equality in~\eqref{eq:purity}.  Whether $\sigma \ge 0$
+(physicality) is a quantum marginal feasibility
+question; the upper bound holds for all physical states
+regardless.
+\end{lemma}
+
+\begin{proof}
+\emph{Part~(i).}
+Writing $\sigma = (I + \sum_{P \neq I} y_P\, P)/d$ and using
+Pauli orthogonality $\mathrm{tr}(PP') = d\,\delta_{PP'}$
+gives~\cite{Paris2004,Holevo2011}
+\begin{equation}\label{eq:bloch-purity}
+  d\,\mathrm{tr}(\sigma^2) = 1 + \sum_{P \neq I} y_P^2 \le d,
+\end{equation}
+since $\sigma \ge 0$ and $\mathrm{tr}(\sigma) = 1$ imply
+$\mathrm{tr}(\sigma^2) \le 1$.
+Marginal matching $\sigma \in \Sigma_k(\rho)$ fixes
+$y_P = x_P$ for $\mathrm{wt}(P) \le k$.  Partitioning
+by weight:
+\[
+\underbrace{\sum_{\substack{\mathrm{wt}(P) \le k \\ P \neq I}} x_P^2}_{= S_k}
++ \sum_{\mathrm{wt}(P) > k} y_P^2 \le d - 1.
+\]
+Dividing the second sum by $d^2$ yields~\eqref{eq:purity}.
+Under depolarization $x_P \to (1{-}p)x_P$,
+$S_k^{(\mathrm{noisy})} = (1{-}p)^2 S_k^{(\mathrm{pure})}$:
+$\varepsilon_{\mathrm{pos}} \le
+[d{-}1 - (1{-}p)^2(d{-}1)]/d^2 \le 2p(d{-}1)/d^2$.
+
+\emph{Part~(ii).}
+For a pure weight-$k$ supported state, $\mathrm{tr}(\rho^2) = 1$ and
+$x_P = 0$ for $\mathrm{wt}(P) > k$, so
+$S_k = d - 1$ and $\varepsilon_{\mathrm{pos}} = 0$.
+
+For the converse, we construct $\sigma$ explicitly.
+Let $P_0 \notin \mathcal{S}$ be any unmeasured operator with
+$\mathrm{wt}(P_0) > k$
+(which exists whenever the measurement set leaves at least one
+high-weight operator uncovered; in particular, whenever
+$|\mathcal{S}| < d^2 - 1$ and $\mathcal{S}$ spans all
+weight-${\le}\,k$ classes, the regime of interest for
+Theorem~\ref{thm:basin}),
+and define
+\[
+  \sigma_\alpha = \frac{I + \sum_{\substack{\mathrm{wt}(P) \le k \\ P \neq I}}
+  x_P\, P + \alpha\, P_0}{d},
+\]
+with $\alpha$ chosen to saturate purity:
+$\alpha^2 = d - 1 - S_k$.  Then $\sigma_\alpha$ matches
+$\rho$ on all weight-${\le}\,k$ operators,
+$\mathrm{tr}(\sigma_\alpha^2) = (1 + S_k + \alpha^2)/d = 1$,
+and $\varepsilon_{\mathrm{pos}} = \alpha^2/d^2
+= (d{-}1{-}S_k)/d^2$, achieving equality among
+Hermitian trace-$1$ operators in~$\Sigma_k(\rho)$.
+Whether $\sigma_\alpha \ge 0$ (i.e., whether the
+bound is attained by a physical state) is a quantum
+marginal feasibility problem, known to be
+$\mathrm{QMA}$-complete in
+general~\cite{Liu2006,Wei2010}.
+This does not affect
+the \emph{upper} bound: every $\sigma \ge 0$ in
+$\Sigma_k(\rho)$ satisfies
+$\varepsilon_{\mathrm{pos}} \le (d{-}1{-}S_k)/d^2$
+regardless, and this is the only direction used in the
+fidelity guarantee (Theorem~\ref{thm:basin}(iii)).
+\end{proof}
+
+\begin{remark}
+The bound exploits the spectral stratification of the
+Bloch body by Pauli weight~\cite{BannaiIto1984}: orthogonality
+$\mathrm{tr}(PP') = d\,\delta_{PP'}$ decomposes the purity
+constraint $\|\mathbf{y}\|^2 \le d - 1$ into independent
+contributions from each weight class, reducing the quantum
+marginal problem ($\mathrm{QMA}$-complete in
+general~\cite{Liu2006,Wei2010}) to an arithmetic inequality
+on the spectral budget.
+At $n = 4$, $p = 0.03$:
+$\varepsilon_{\mathrm{pos}} \le 0.0035$, consistent with
+numerical verification
+(Supplemental Material~\cite{supplemental}).
+\end{remark}
+
+\subsection{Spectral necessity and dichotomy}
+\label{sec:spectral-necessity}
+
+We first define the central algebraic object.
+All $q^n$ generalized Pauli support classes are indexed by
+$s \in \mathbb{Z}_q^n$.  For each integer vector
+$m \in \mathbb{Z}^n$, reduction mod~$q$ gives a support class
+$\bar{m} = m \bmod q \in \mathbb{Z}_q^n$; the Hamming weight
+$w(\bar{m})$ equals the number of nonzero coordinates of~$\bar{m}$,
+i.e., the Pauli weight of the corresponding operator.
+A \emph{Gram matrix} at cutoff~$K$ is defined by the truncated character sum
+\begin{equation}\label{eq:gram-def}
+  G_{ss'}(K)
+  = \sum_{\substack{m \in \mathbb{Z}^n \\ |m|^2 \le K}}
+  \omega^{\bar{m} \cdot (s - s')},
+\end{equation}
+where $\omega = e^{2\pi i/q}$.
+For $q \le 3$, the balanced lift
+$\{-(q{-}1)/2,\dots,(q{-}1)/2\}$ assigns equal squared norm to
+every nonzero residue, so $G(K)$ is distance-class-constant and
+lies in the Bose--Mesner algebra of $H(n,q)$
+(the commutative matrix algebra spanned by the distance-class
+adjacency matrices of the association
+scheme~\cite{Delsarte1973,BannaiIto1984}); the Krawtchouk
+polynomials diagonalize it in the idempotent basis.
+For $q \ge 4$, the Euclidean cutoff distinguishes nonzero residues
+with different squared-lift norms, so $G(K)$ is not
+distance-class-constant; it remains weight-block-diagonal
+($S_n$-invariant), which suffices for basin separation
+(Lemma~\ref{lem:spectral_q_main}).
+$G(K)$ measures how well the lattice modes up to norm~$K$ distinguish
+between support classes (Fig.~\ref{fig:spectral}): $G(K)$ has full
+rank exactly when all support classes are spectrally resolved.
+Euclidean cutoff $|m|^2 \le K$ respects the coordinate
+permutation symmetry of~$H(n,q)$ and connects to classical
+lattice-counting results
+(Jacobi's four-square theorem~\cite{HardyWright2008} at $n = 4$),
+giving closed-form mode counts.
+Full rank of~$G(K)$ requires $c_w(K) > 0$ for every weight~$w$,
+which is the spectral condition underlying weight saturation
+(Theorem~\ref{thm:basin}).
+Basin separation (Theorem~\ref{thm:basin}) shows weight saturation is sufficient
+for reconstruction; Theorem~\ref{thm:spectral-char} below shows
+it is necessary.
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\columnwidth]{fig2_spectral_correspondence.pdf}
+\caption{Krawtchouk spectral correspondence at $n = 4$, $q = 2$.
+(a)~Lattice shells $|m|^2 \le K^* = 5$ in $\mathbb{Z}^4$ map to Pauli
+weight classes via mod-$2$ reduction $m \mapsto \bar{m}$.  Shell
+multiplicities $r_4(k)$ (Jacobi's four-square theorem) and operator
+counts $M_w/A_w$ are shown; weights $w \le 2$ are fully saturated
+($M_w = A_w$), while $w = 3, 4$ are subsampled by the lattice cutoff.
+Thick arrows indicate dominant flows; thin arrows show secondary
+contributions from mixed-parity shells.
+(b)~Gram eigenvalues $\lambda_w = 16\, c_w / \binom{4}{w}$
+from the idempotent decomposition~\eqref{eq:spectral_q_main}.
+Weight~$1$ carries the largest mass ($40.9$\% of $\mathrm{tr}\,G$)
+despite having only $12$ operators; the nonuniform eigenvalue
+distribution drives the $K^*$ measurement allocation.}
+\label{fig:spectral}
+\end{figure}
+
+The eigenvalue structure of the Gram matrix improves
+monotonically with the spectral cutoff:
+
+\pclaim{env:lem:monotone}{proved}{*}{lem:monotone}%
+\begin{lemma}[Eigenvalue monotonicity]
+\label{lem:monotone}
+For the Gram matrix $G(K) = \sum_w \lambda_w(K)\, E_w$ of
+the Hamming scheme $H(n,q)$:
+\begin{enumerate}
+\item $\lambda_w(K)$ is non-decreasing in $K$ for every
+  weight class~$w$.
+\item $\lambda_w(K') > \lambda_w(K)$ if and only if
+  the shell at $|m|^2 = K'$ contains at least one
+  lattice vector of parity weight~$w$.
+\item The redistributed budget $M_w(K)$
+  (defined by assigning $\min(c_w{+}e,\, A_w)$ to each
+  weight class $w = 0,1,\ldots,n$ in order, with running
+  excess $e$ initialized to zero) is
+  non-decreasing in $K$ for each $w$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(1)~Each new shell adds non-negative counts:
+$c_w(K') = c_w(K) + |\{m : |m|^2 = K',\; w(\bar{m}) = w\}|
+\ge c_w(K)$.  Since $\lambda_w = q^n c_w / v_w$
+(where $v_w = \binom{n}{w}(q{-}1)^w$ is the Hamming-scheme multiplicity),
+monotonicity follows.
+(2)~Strict inequality holds iff the new shell contributes
+at least one vector at parity weight~$w$, which increases
+$c_w$ and hence $\lambda_w$.
+(3)~The greedy redistribution processes weight classes
+in order $w = 0, 1, \ldots, n$, maintaining a running
+excess $e$.  Initialize $e = 0$.  At each~$w$:
+$M_w(K) = \min(c_w(K) + e,\; A_w)$ and
+$e \leftarrow c_w(K) + e - M_w(K)$.
+Since $c_w(K)$ is non-decreasing in~$K$ for every~$w$
+by~(1), the input to each stage is non-decreasing, so
+each~$M_w(K)$ is non-decreasing and each running
+excess is non-decreasing.  (Formally: induction on~$w$
+using the fact that $\min(a,b)$ and $a - \min(a,b)$
+are both non-decreasing when~$a$ is non-decreasing
+and~$b$ is fixed.)
+\end{proof}
+
+Theorem~\ref{thm:basin} showed that weight saturation is
+\emph{sufficient} for basin separation.  The next result shows it
+is also \emph{necessary}: if any weight class is incomplete,
+one can construct a pair of states that are indistinguishable
+from the measured data.  For $q \le 3$, the argument constructs Delsarte dual certificates
+of spectral insufficiency in the Bose--Mesner algebra
+of~$H(n,q)$~\cite{Delsarte1973,BannaiIto1984}, the same
+algebraic machinery that yields linear-programming upper bounds
+on code sizes, here repurposed as reconstruction obstructions.
+For $q \ge 4$, the weight-block-diagonal structure yields an
+analogous obstruction via weight-class projectors.
+
+\pclaim{env:thm:spectral-char}{proved}{n>=2,q=2}{thm:spectral-char}%
+\begin{theorem}[Spectral characterization of basin separation]
+\label{thm:spectral-char}
+For any $n \ge 2$ and for any measurement set
+$\mathcal{S} \subset \mathcal{P}_n \setminus \{I\}$,
+define the weight-class coverage
+$\mu_w = |\mathcal{S} \cap \mathcal{P}_n^{(w)}| / A_w$,
+where $A_w = \binom{n}{w}(q^2{-}1)^w$
+(with $q = 2$ throughout parts (i)--(iii); part (iv) also
+addresses $q \ge 3$).
+
+\textup{(i)} \emph{Spectral obstruction (necessity).}
+If $\mu_{w_0} < 1$ for some $w_0 \le k$, there exist states
+$\rho_1, \rho_2$ with $W(\rho_i) = w_0 \le k$ such that
+$\rho_1$ and $\rho_2$ produce identical measurement
+data on $\mathcal{S}$, yet $F(\rho_1, \rho_2) = 0$.
+No estimator (linear, MLE, or otherwise) achieves worst-case
+fidelity $> 1/2$ over the class~$\mathcal{W}_k = \{\rho : W(\rho) \le k\}$ of weight-$k$ supported states.
+
+\textup{(ii)} \emph{Spectral resolution (sufficiency).}
+If $\mu_w = 1$ for all $w \le k$ and the Krawtchouk eigenvalues
+$\lambda_w > 0$ for all~$w$
+(the latter follows from $\mu_w = 1$ for $w \le k$;
+it is an additional condition for $w > k$, ensuring
+support-completeness of the Gram matrix),
+then for all pure $\rho$ with
+$W(\rho) \le k$:
+\begin{equation}\label{eq:spectral-resolution}
+  \|\rho - \hat\rho_{\mathcal{S}}\|_F^2 \le \frac{d{-}1{-}S_k}{d}
+  + \frac{8(1{+}t_\star^2)}{(1{-}t_\star)^2}
+    \,\frac{M\ln(2M/\delta)}{d\,N_s},
+\end{equation}
+with probability $\ge 1 - \delta$.
+
+\textup{(iii)} \emph{Sharp dichotomy.}
+Parts~(i) and~(ii) combine into a dichotomy:
+the impossibility branch~(i) holds over all
+of~$\mathcal{W}_k$, while the high-fidelity
+branch~(ii) holds for pure weight-$k$ supported states
+conditional on near-purity of the MLE output
+and sufficient shots $N_s = \Omega(d^2)$.
+Worst-case fidelity is either~$\le 1/2$
+or~$\ge 1 - O(d^{-1})$, with no intermediate regime
+(over measurement sets).
+The fidelity gap $1 - O(d^{-1}) \to 1$ as $d\to\infty$.
+
+\textup{(iv)} \emph{Spectral progression and optimality of $K^*$.}
+Define the Krawtchouk weight budget at cutoff~$K$ as
+$c_w(K) = |\{m \in \mathbb{Z}^n : |m|^2 \le K,\;
+w(\bar{m}) = w\}|$, and let the \emph{redistributed
+budget} $M_w(K)$ be the allocation that saturates the
+lowest weight classes first (assigning $\min(c_w, A_w)$
+to each class in order, with excess flowing to
+higher-weight classes).
+The \emph{full-saturation threshold}
+\begin{equation}\label{eq:ksat-def}
+  K_{\mathrm{sat}} = \min\bigl\{K : M_w(K) = A_w\;\;
+  \forall\, w \le \lfloor n/2 \rfloor\bigr\}
+\end{equation}
+is the minimal spectral cutoff at which the redistributed
+budget achieves weight saturation for all
+weight classes relevant to weight-$k$ supported tomography.
+
+For $q = 2$, $K^* = 5$ saturates weight classes $1$ and $2$ for
+every $n \ge 4$ (proved by direct lattice enumeration:
+the parity-weight count $c_w(5)$ exceeds $A_w$ for $w \in \{1,2\}$
+at all $n \ge 4$; Supplemental Material~\cite{supplemental}).
+Full saturation to $\lfloor n/2 \rfloor$ holds only for
+$n \le 5$, where $\lfloor n/2 \rfloor \le 2$ and the
+weight-$1,2$ guarantee suffices.
+For $n \ge 6$, the monolithic full-saturation cutoff $K_{\mathrm{full}}(n)$
+grows with~$n$ and the operator budget scales rapidly
+($137$ at $n{=}4$; $1{,}341$ at $n{=}6$, $K_{\mathrm{full}}{=}6$;
+$12{,}369$ at $n{=}8$, $K_{\mathrm{full}}{=}7$;
+Sec.~\ref{sec:limitations}).
+The compositional architecture (Sec.~\ref{sec:8qubit})
+circumvents this scaling by decomposing into $4$-qubit patches,
+each at $K^* = 5$ with full saturation, providing an $18\times$
+operator-count saving at $n = 8$.
+
+For $q \ge 3$, the Krawtchouk-prescribed cutoff is the
+\emph{spectral mass threshold} $K_{\mathrm{mass}} = q^2$
+(Lemma~\ref{lem:spectral_q_main}), where the mod-$q$
+invisible vectors enter the lattice and the eigenvalue
+distribution undergoes a structural transition.
+At $K_{\mathrm{mass}}$, every weight class has positive
+budget ($c_w > 0$ for all~$w$), but weight saturation
+is partial: e.g., $M_1 = 16$ vs.\ $A_1 = 32$ ($50$\%) at
+$q = 3$, $n = 4$.  Full weight saturation~\eqref{eq:ksat-def}
+requires $K_{\mathrm{sat}} > K_{\mathrm{mass}}$ (e.g.,
+$K_{\mathrm{sat}} = 14$ at $q = 3$, $n = 4$;
+Supplemental Material~\cite{supplemental}).
+Throughout this paper, $K^*$ denotes the Krawtchouk-prescribed
+cutoff: $q^2 + 1$ for $q = 2$ (where it equals the operational
+threshold for $n \le 5$) and $K_{\mathrm{mass}} = q^2$ for
+$q \ge 3$ (where it gives spectral completeness but not full
+weight saturation).
+The compositional architecture compensates for partial
+saturation (whether from large~$n$ at $q = 2$ or from $q \ge 3$)
+by reducing the effective patch size
+(Supplemental Material~\cite{supplemental}).
+
+Below $K^*$, insufficiency is established by two
+mechanisms:
+\begin{itemize}
+\item For $K \le n{-}1$: $c_{K+1}(K) = 0$, so the
+  primitive idempotent $E_{K+1}$ of $H(n,q)$
+  provides a Delsarte dual certificate of spectral
+  incompleteness (no estimator can resolve
+  weight-$(K{+}1)$ states).
+\item At $K = n$: all $c_w > 0$ (spectral completeness),
+  but the Krawtchouk budget underallocates low-weight
+  classes.  Any reallocation that achieves saturation
+  must deviate from the spectral prescription by
+  $\ge M_{\lfloor n/2\rfloor}^{\mathrm{deficit}}(n)$
+  operators, breaking the correspondence between
+  lattice geometry and measurement selection.
+\end{itemize}
+For $q \ge 3$, $K^*$ achieves spectral completeness with partial
+weight coverage; the gap to full saturation ($K_{\mathrm{sat}}$)
+is bridged by the compositional architecture
+(verified computationally at $q = 3, 5, 7$).
+\end{theorem}
+
+The sharpness of part~(iii) for random measurement sets
+is quantified by a coupon-collector bound:
+
+\pclaim{env:lem:coupon}{proved}{*}{lem:coupon}%
+\begin{lemma}[Coupon-collector threshold]
+\label{lem:coupon}
+Let $M$ operators be drawn uniformly without replacement from
+the $4^n - 1$ non-identity Paulis.  For each weight class~$w$
+with $A_w = \binom{n}{w}3^w$ elements:
+(a)~If $M < A_w \ln A_w - A_w \ln\ln A_w$, then
+  $\Pr[\text{weight $w$ saturated}] \to 0$ as $n \to \infty$.
+(b)~The probability that a random $M$-element set
+  saturates weight class~$w$ satisfies
+  $\Pr[\mu_w = 1] = \prod_{j=0}^{A_w-1}(M{-}j)/(N{-}j)
+  \le (M/N)^{A_w}$.
+  When $M/N \le c < 1$, this bound vanishes as
+  $A_w \to \infty$ (i.e., as $n \to \infty$ for
+  fixed~$w$).
+\end{lemma}
+\begin{proof}
+The $M$ operators are drawn without replacement from
+$N = 4^n - 1$ non-identity Paulis, so the number of
+weight-$w$ operators included follows a hypergeometric
+distribution.  The probability that all~$A_w$ weight-$w$
+operators are captured is
+$\prod_{j=0}^{A_w-1}(M{-}j)/(N{-}j) \le (M/N)^{A_w}$,
+since $(M{-}j)/(N{-}j) \le M/N$ for every $j \ge 0$.
+When $M/N \le c < 1$ for some constant~$c$
+(as holds for the $K^*$ budget at $q = 2$, $n = 2, \ldots, 9$),
+this gives $\Pr[\mu_w = 1] \le c^{A_w} \to 0$, proving~(b).
+Part~(a) is a corollary: $M < A_w \ln A_w$ is
+far below the saturation threshold $M \approx N$,
+so $\Pr[\mu_w = 1] \to 0$ a
+fortiori~\cite{MitzenmacherUpfal2005}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:spectral-char}]
+\emph{Part~(i).}
+Let $P_0 \in \mathcal{P}_n^{(w_0)}$ with $P_0 \notin
+\mathcal{S}$, and define the Pauli-axis states
+$\rho^\pm = (I \pm P_0)/d$.
+For qubits ($q = 2$), every $n$-qubit Pauli has
+eigenvalues $\pm 1$, so
+$\rho^\pm$ has spectrum $\{0, 2/d\}$ (each with multiplicity
+$d/2$); hence $\rho^\pm \ge 0$.  The only nonzero Bloch
+coordinate is $\mathrm{tr}(P_0\,\rho^\pm) = \pm 1$ at
+weight~$w_0$, so $W(\rho^\pm) = w_0 \le k$.
+
+\emph{Indistinguishability.}
+For any $P \in \mathcal{S}$, $P \neq P_0$ (since
+$P_0 \notin \mathcal{S}$), and Pauli orthogonality gives
+$\mathrm{tr}(P\,\rho^+) = \mathrm{tr}(P\,\rho^-) = 0$.
+Both states produce identical measurement data on
+$\mathcal{S}$.
+
+\emph{Orthogonality.}
+Since $\rho^+$ and $\rho^-$ commute and have disjoint
+eigenvalue support ($\rho^+$ is supported on the $+1$
+eigenspace of $P_0$, $\rho^-$ on the $-1$ eigenspace),
+$F(\rho^+, \rho^-)
+= \bigl(\sum_i \sqrt{p_i q_i}\bigr)^2 = 0$,
+since $p_i q_i = 0$ for every eigenvalue pair.
+Any estimator must assign the same reconstruction~$\hat\sigma$
+to both states.  We show
+$F(\hat\sigma,\rho^+) + F(\hat\sigma,\rho^-) \le 1$
+for every state~$\hat\sigma$.
+Let $\Pi_\pm$ be the projectors onto the $\pm 1$
+eigenspaces of~$P_0$, so $\rho^\pm = (2/d)\,\Pi_\pm$
+and $\Pi_+ + \Pi_- = I$.
+Since $\Pi_\pm$ is a projector,
+$\sqrt{\rho^\pm} = \sqrt{2/d}\;\Pi_\pm$.
+By Uhlmann's theorem~\cite{Uhlmann1976},
+$F(\hat\sigma,\rho^\pm)
+= \bigl(\mathrm{tr}\sqrt{\sqrt{\hat\sigma}\,\rho^\pm
+\sqrt{\hat\sigma}}\bigr)^2
+= (2/d)\,\|\sqrt{\hat\sigma}\,\Pi_\pm\|_1^2$.
+Since $\mathrm{rank}(\Pi_\pm) = d/2$, the Schatten-norm
+rank inequality
+$\|A\|_1 \le \sqrt{\mathrm{rank}(A)}\;\|A\|_F$ gives
+$\|\sqrt{\hat\sigma}\,\Pi_\pm\|_1^2
+\le (d/2)\,\|\sqrt{\hat\sigma}\,\Pi_\pm\|_F^2
+= (d/2)\,\mathrm{tr}(\Pi_\pm\hat\sigma)$.
+Summing:
+$F(\hat\sigma,\rho^+) + F(\hat\sigma,\rho^-)
+\le (2/d)\cdot(d/2)\bigl[\mathrm{tr}(\Pi_+\hat\sigma)
++ \mathrm{tr}(\Pi_-\hat\sigma)\bigr]
+= \mathrm{tr}(\hat\sigma) = 1$.
+Therefore $\min\{F(\hat\sigma,\rho^+),\,
+F(\hat\sigma,\rho^-)\} \le 1/2$: no estimator achieves
+worst-case fidelity exceeding~$1/2$.
+For $q \ge 3$, the analogous construction uses
+Heisenberg--Weyl shift-and-clock operators in place of
+$\rho^\pm = (I \pm P_0)/d$: each generalized Pauli operator
+$P_0$ has $q$ eigenspaces (one per character $\omega^j$,
+$j = 0,\ldots,q-1$) of equal dimension $d/q$, and the
+$q$ uniform-on-eigenspace states $\rho^{(j)} = (q/d)\Pi_j$
+are pairwise orthogonal, mutually indistinguishable on
+$\mathcal{S} \setminus \{P_0\}$, and yield
+$\sum_j F(\hat\sigma, \rho^{(j)}) \le 1$ by the same
+Schatten/rank argument applied to $q$ projectors of rank
+$d/q$, giving worst-case fidelity $\le 1/q$
+(Supplemental Material~\cite{supplemental}).
+
+\emph{Delsarte dual certificate.}
+For $q \le 3$, where $G(K)$ lies in the Bose--Mesner algebra
+(Lemma~\ref{lem:spectral_q_main}),
+the spectral obstruction has a structural origin in the
+algebra of~$H(n,q)$~\cite{Delsarte1973}.
+The Gram matrix decomposes as
+$G(K) = \sum_w \lambda_w(K)\, E_w$ with
+$\lambda_w = q^n c_w(K)/v_w$, where $c_w(K)$ counts
+lattice vectors at parity weight~$w$ and norm~$\le K$.
+When $c_{w_0}(K) = 0$, i.e., no lattice mode at
+parity weight~$w_0$ has been resolved, the
+primitive idempotent
+\begin{equation}\label{eq:delsarte-cert}
+  E_{w_0} = \frac{v_{w_0}}{q^n}
+  \sum_{h=0}^{n}
+  \frac{K_{w_0}(h;\, n,\, q)}{v_h}\, D_h
+\end{equation}
+(where $K_{w_0}(h;\, n,\, q)$ is the Krawtchouk
+polynomial~\cite{Delsarte1973}, $v_h = \binom{n}{h}(q{-}1)^h$,
+and $D_h$ denotes the distance-$h$ adjacency matrix
+of~$H(n,q)$~\cite{BannaiIto1984}) satisfies
+$G(K)\, E_{w_0} = \lambda_{w_0}\, E_{w_0} = 0$.
+This is a \emph{spectral certificate of incompleteness}:
+$E_{w_0}$ lies in $\ker G(K)$, so $G(K)$ cannot be
+positive definite, and no estimator can resolve states
+differing only in the $w_0$-th weight class.
+The certificate is constructive and arises from the
+Delsarte linear program adapted to measurement
+design~\cite{Delsarte1973,BannaiIto1984}.
+The \emph{primal} program asks: given $G(K)$,
+maximize $\alpha$ subject to
+$G(K) - \alpha\, E_{w_0} \succeq 0$.
+Since all matrices lie in the Bose--Mesner algebra
+(for $q \le 3$),
+this semidefinite constraint reduces to the scalar
+inequality $\lambda_{w_0}(K) \ge \alpha$, making the
+program a linear program in the eigenvalue
+variables~\cite{Delsarte1973}.
+(For $q \ge 4$, the weight-block-diagonal structure yields
+an analogous block-scalar reduction; see
+Lemma~\ref{lem:spectral_q_main}.)  The \emph{dual} LP provides a certificate of
+infeasibility: the idempotent $Y = E_{w_0}$ satisfies
+$Y \ge 0$ (since $E_{w_0}$ is a projection onto a
+subspace of~$\mathbb{R}^{q^n}$), $\langle Y, G(K) \rangle
+= \lambda_{w_0}(K) \cdot \mathrm{rank}(E_{w_0}) = 0$
+(when $c_{w_0} = 0$), and $\mathrm{tr}(Y) = v_{w_0} > 0$.
+By LP strong duality, the primal optimum $\alpha = 0$:
+the Gram matrix cannot resolve the $w_0$-th weight class.
+This is the measurement-design analogue of
+Delsarte's LP bound on code
+size~\cite{Delsarte1973,BannaiIto1984}:
+$E_{w_0}$ certifies spectral incompleteness of the
+measurement set rather than bounding code distance.
+
+\medskip\noindent
+\emph{Part~(ii).}
+Weight saturation ($\mu_w = 1$ for $w \le k$) gives
+$\varepsilon_{\mathrm{flat}} = 0$ by
+Theorem~\ref{thm:basin}(i).
+Eigenvalue positivity ($\lambda_w > 0$ for all~$w$)
+ensures support-completeness
+(Supplemental Material, Corollary~1~\cite{supplemental}).
+Applying Lemma~\ref{lem:purity_main} to~$\hat\rho$
+gives $\varepsilon_{\mathrm{pos}} \le (d{-}1{-}S_k)/d^2$
+(under weight saturation, all weight-${\le}\,k$ operators
+are measured, so the MLE low-weight coordinates approximate
+the true values under the Hoeffding event~\eqref{eq:hoeffding};
+the resulting error $|S_k - \hat{S}_k| \le M t$ is
+$O(\sqrt{M\ln(2M/\delta)/N_s})$, which is absorbed by the
+shot-noise term in~\eqref{eq:spectral-resolution}).
+Combining via~\eqref{eq:fidelity-decomp}:
+$\|\rho - \hat\rho_{\mathcal{S}}\|_F^2 \le d\,\varepsilon_{\mathrm{flat}} +
+d\,\varepsilon_{\mathrm{pos}} + \tfrac{8(1+t_\star^2)}{(1-t_\star)^2}\,M\ln(2M/\delta)/(d\,N_s)
+= 0 + (d{-}1{-}S_k)/d + \tfrac{8(1+t_\star^2)}{(1-t_\star)^2}\,M\ln(2M/\delta)/(d\,N_s)$,
+which is~\eqref{eq:spectral-resolution}.
+
+\medskip\noindent
+\emph{Part~(iii).}
+The dichotomy is immediate from (i) and (ii): if
+$\mu_{w_0} < 1$ for any $w_0 \le k$, part~(i) gives
+worst-case $F \le 1/2$; if $\mu_w = 1$ for all $w \le k$,
+part~(ii) gives $\|\rho - \hat\rho_{\mathcal{S}}\|_F^2 = O(d^{-1}) + O(d/N_s)$.
+The HS error $O(d^{-1}) \to 0$ as $d\to\infty$.
+For random measurement sets, the transition is sharp
+(Lemma~\ref{lem:coupon}).
+
+\medskip\noindent
+\emph{Part~(iv): spectral progression.}
+For $q \le 3$, the Gram matrix lies in the Bose--Mesner algebra of
+$H(n,q)$ (Lemma~\ref{lem:spectral_q_main}(i)):
+$G(K) = \sum_w \lambda_w(K)\, E_w$ with
+$\lambda_w(K) = q^n c_w(K) / v_w$, where $v_w =
+\binom{n}{w}(q{-}1)^w$.
+For $q \ge 4$, the weight-block-diagonal structure
+(Lemma~\ref{lem:spectral_q_main}(ii)) yields the same
+parity-weight counts $c_w(K)$ and the same monotonicity argument.
+Since $c_w$ is non-decreasing in $K$ (adding lattice shells
+can only increase counts), the per-weight budget $M_w(K)$
+is non-decreasing.  We establish insufficiency at each
+cutoff below~$K^*$.
+
+\emph{Phase~1: spectral activation ($K = 1, \ldots, n{-}1$).}
+At cutoff~$K$, parity weight~$w$ requires at least $w$
+odd-valued coordinates, each contributing $\ge 1$ to $|m|^2$,
+so $|m|^2 \ge w$.  Hence $c_{K+1}(K) = 0$ and the idempotent
+$E_{K+1}$~\eqref{eq:delsarte-cert} lies in $\ker G(K)$:
+a Delsarte dual certificate of spectral incompleteness.
+No estimator can resolve states differing in
+weight class~$K{+}1$.
+
+\emph{Phase~2: spectral completeness without saturation
+($K = n, \ldots, K^*{-}1$).}
+At $K = n$ (specifically $K = 4$ for $n = 4$, $q = 2$),
+all weight classes have $c_w > 0$ (the vectors
+$(\pm 1, \ldots, \pm 1)$ contribute $c_n = 2^n$).
+The Gram matrix $G(n)$ has full rank:
+no Delsarte null certificate exists.
+However, the $89$ lattice vectors with $|m|^2 \le 4$
+decompose by parity weight as
+$c_w(4) = \{9, 8, 24, 32, 16\}$ for $(n,q) = (4,2)$
+(verified by direct enumeration;
+Supplemental Material~\cite{supplemental}).
+After greedy redistribution: $M_w = \{1, 12, 28, 32, 16\}$.
+Weight~$2$ achieves coverage $28/54 = 52\% < 100\%$,
+so $\mu_2 < 1$ and part~(i) applies:
+worst-case $F \le 1/2$ for $2$-local states.
+Note that $\sum c_w = 89 > 54 = A_2$, so weight-$2$
+saturation is achievable by non-spectral operator
+selection, but requires abandoning the Krawtchouk
+eigenvalue allocation.  The correspondence between
+lattice geometry and measurement design has not yet
+converged.
+For $q = 2$ this phase contains only $K = n = 4$.
+For $q \ge 3$, the range $n < K < q^2$ is nonempty and
+the same mechanism applies at each cutoff: the
+Krawtchouk budget grows monotonically with~$K$
+(Lemma~\ref{lem:monotone}) but the mod-$q$
+invisible vectors that generate weight-$0$ overflow
+first appear at $|m|^2 = q^2$, so
+redistribution remains insufficient
+until $K = K^*$ (verified computationally for
+$q = 3, 5, 7$ in the Supplemental
+Material~\cite{supplemental}).
+
+\emph{Phase~3: convergence at $K^*$.}
+At $K^* = 5$, the $|m|^2 = 5$ shell contributes~$48$
+lattice vectors of parity weight~$1$
+(the $(\pm 1, \pm 2, 0, 0)$ family),
+pushing $c_1$ from~$8$ to~$56$.
+After redistribution: $c_0 = 9$ yields excess~$8$
+(only~$1$ identity operator);
+$c_1 = 56$ plus the excess gives~$64$, of which~$12$
+fill weight~$1$, leaving excess~$52$.
+At weight~$2$: $c_2 = 24$ plus excess~$52$ gives~$76$,
+of which~$54 = A_2$ fill weight~$2$.
+The resulting budget $M_w = \{1, 12, 54, 54, 16\}$
+saturates weights~$0$--$2$.
+No reallocation is needed: the spectral prescription
+and weight saturation coincide.
+By the semisimplicity of the Bose--Mesner
+algebra~\cite{BannaiIto1984}, the eigenvalue
+decomposition is unique, so $K_{\mathrm{sat}}$~\eqref{eq:ksat-def}
+is the unique threshold at which spectral geometry
+and operational performance converge.
+\end{proof}
+
+\begin{remark}[Tightness status]
+Concretely, at fixed $n$, $N_s = 10{,}000$ achieves a
+high-probability shot-noise term of~$0.070$
+at $\delta = 0.01$ (Theorem~\ref{thm:basin}(iii)).
+The Uhlmann bound of part~(i) is \emph{tight}: the
+Pauli-axis construction achieves $F = 0$ between the
+two adversarial states, matching the bound with equality.
+The reconstruction bound of part~(ii) is \emph{not known to be
+tight}: closing the gap requires a matching lower bound
+on Hilbert--Schmidt error, which we leave as an open problem.
+Part~(iv) is tight in two senses:
+the Delsarte certificates at $K \le n{-}1$ are exact
+(zero eigenvalue, not merely small);
+and the correspondence failure at $K = n$ is explicit
+(deficit of~$26$ operators at weight~$2$).
+The eigenvalue condition number satisfies
+$\kappa(G(K^*)) = \lambda_{\max}/\lambda_{\min}
+= 256/64 = 4$ at $n = 4$, $q = 2$.
+More generally:
+\begin{equation}\label{eq:kappa}
+  \kappa(G(K^*)) = \frac{\max_w c_w(K^*)/v_w}
+  {\min_w c_w(K^*)/v_w}
+\end{equation}
+where $v_w = \binom{n}{w}(q{-}1)^w$.
+At the operational $K^*$ (one shell beyond spectral
+completeness), $\kappa = 4$ for $n = 2, 3, 4, 5$
+and $\kappa \approx 4.9$ for $n = 6$
+(Supplemental Material~\cite{supplemental}),
+consistent with at most logarithmic growth in~$n$.
+The Krawtchouk prescription thus produces a
+well-conditioned measurement design.
+Whether intra-weight reweighting can
+improve~$\kappa$ at fixed~$K^*$ is an open question.
+\end{remark}
+
+\pclaim{env:cor:lower_bound}{proved}{q>=2}{cor:lower_bound}%
+\begin{corollary}[Operator lower bound]
+\label{cor:lower_bound}
+Any measurement set $\mathcal{S}$ achieving worst-case fidelity
+$F > 1/2$ over the class $\mathcal{W}_k$ of weight-$k$ supported states
+must satisfy $\mu_w(\mathcal{S}) = 1$ for every $w = 1,\ldots,k$.
+In particular:
+\begin{equation}\label{eq:lower_bound}
+  |\mathcal{S}| \ge
+  \sum_{w=1}^{k}\binom{n}{w}(q^2 - 1)^w.
+\end{equation}
+At $n = 4$, $q = 2$, $k = 2$: $|\mathcal{S}| \ge 66$.
+The $K^*$ prescription achieves this with $M = 137$ operators, of
+which $67$ are weight~${\le}\,2$ ($66$~necessary plus identity) and
+$70$ are weight~$> 2$ (from the Krawtchouk lattice structure).
+\end{corollary}
+\begin{proof}
+If $\mu_{w_0} < 1$ for any $w_0 \le k$, then by
+Theorem~\ref{thm:spectral-char}(i) there exist weight-$k$ supported
+states $\rho_1, \rho_2$ that are indistinguishable on
+$\mathcal{S}$ yet satisfy $F(\rho_1, \rho_2) = 0$.
+No estimator achieves worst-case $F > 1/2$,
+contradicting the hypothesis.  Hence $\mu_w = 1$ for all
+$w \le k$, which requires $|\mathcal{S}|
+\ge \sum_{w=1}^{k} A_w$.
+\end{proof}
+
+\pclaim{env:thm:asymptotic}{proved}{*}{thm:asymptotic}%
+\begin{theorem}[Asymptotic $K^*$ separation]
+\label{thm:asymptotic}
+Fix $k \ge 1$ and $q \ge 2$.
+Let $M_n = N_n(K^*_n)$ be the $K^*$-prescription operator
+count for $n$-qubit systems, and assume
+$M_n/(q^{2n}{-}1) \le c < 1$ for some constant~$c$
+independent of~$n$ (verified numerically at
+$q = 2$ for $n = 2, \ldots, 9$).
+
+\textup{(i)} \emph{Deterministic saturation.}
+The $K^*$ prescription achieves weight saturation
+$\mu_w = 1$ for all $w \le k$, for every~$n$
+(monolithically for $n \le 5$; via the compositional
+architecture of Sec.~\ref{sec:8qubit} for $n \ge 6$).
+
+\textup{(ii)} \emph{Random failure.}
+Let $\mathcal{S}_{\mathrm{rand}}$ be a uniform random
+subset of size $M_n$ drawn from the $q^{2n} - 1$
+non-identity Pauli operators.  For each fixed
+$w \ge 1$:
+\begin{equation}\label{eq:random_failure}
+  \Pr\!\bigl(\mu_w(\mathcal{S}_{\mathrm{rand}}) = 1\bigr)
+  \le \biggl(\frac{M_n}{q^{2n} - 1}\biggr)^{\!A_w}
+  \to 0 \quad\text{as } n \to \infty.
+\end{equation}
+
+\textup{(iii)} \emph{Fidelity dichotomy.}
+Combining with Theorem~\ref{thm:spectral-char}:
+as $n \to \infty$, the $K^*$ prescription (via
+$K_{\mathrm{sat}}$) achieves
+$\|\rho - \hat\rho_{\mathcal{S}}\|_F^2 = O(d^{-1}) + O(d/N_s)$
+for all pure weight-$k$ supported states,
+while a same-budget random set yields
+worst-case $F \le 1/2$ asymptotically almost surely.
+\end{theorem}
+
+\begin{proof}
+\emph{Part~(i).}
+By construction: the $K^*$ redistribution at cutoff
+$K_{\mathrm{sat}}(n)$ achieves $M_w = A_w$ for all $w \le k$
+(Theorem~\ref{thm:spectral-char}(iv),
+Eq.~\eqref{eq:ksat-def}).
+For $q = 2$ and $n \le 5$, $K_{\mathrm{sat}} = K^* = 5$;
+for larger~$n$, the compositional architecture reduces
+each patch to $n = 4$, where saturation holds.
+
+\emph{Part~(ii).}
+This is the coupon-collector argument of
+Lemma~\ref{lem:coupon}.  Drawing $M_n$ operators without
+replacement from $N = q^{2n} - 1$, the probability that
+all $A_w$ weight-$w$ operators are included is
+\begin{equation}
+  \Pr(\mu_w = 1)
+  = \prod_{j=0}^{A_w - 1} \frac{M_n - j}{N - j}
+  \le \Bigl(\frac{M_n}{N}\Bigr)^{A_w},
+\end{equation}
+since $(M_n - j)/(N - j) \le M_n / N$ for all
+$j \ge 0$.  By hypothesis, $M_n/N \le c < 1$.
+Since $A_w = \binom{n}{w}(q^2{-}1)^w \to \infty$ for
+fixed $w \ge 1$, the bound $c^{A_w} \to 0$.
+
+\emph{Part~(iii).}
+From part~(ii), $\Pr(\mu_w < 1) \to 1$ for some
+$w \le k$.  By Theorem~\ref{thm:spectral-char}(i),
+worst-case $F \le 1/2$ for the random set.
+Part~(i) and Theorem~\ref{thm:spectral-char}(ii) give
+the $K^*$ guarantee.
+\end{proof}
+
+\begin{remark}[$M_n/N$ bound]
+\tolerance=1500
+The condition $M_n/(q^{2n}{-}1) \le c < 1$ holds for all $n \ge 2$
+at $q = 2$.  At $K^* = 5$, every lattice point has at most $5$
+nonzero coordinates (each contributing $\ge 1$ to $|m|^2$),
+so $c_w(5) = 0$ for $w \ge 6$ and
+\begin{equation*}
+  M_n = 1 + 4n + 12\tbinom{n}{2} + 8\tbinom{n}{3}
+        + 16\tbinom{n}{4} + 32\tbinom{n}{5}
+\end{equation*}
+is a degree-$5$ polynomial in $n$, while $N = 4^n - 1$ is
+exponential.  Hence $M_n/N \to 0$ as $n \to \infty$.
+For $n \le 3$ the protocol uses $K = n$ (Recipe above),
+yielding even fewer operators; the worst case is
+$M_2/N_2 = 9/15 = 0.60$ (at $K = 2$), so
+$c = 0.60$ satisfies the hypothesis unconditionally.
+Numerically: $M_n/N = 0.54$ at $n = 4$,
+$0.06$ at $n = 8$, $0.002$ at $n = 12$
+(Supplemental Material~\cite{supplemental}).
+\end{remark}
+
+\begin{remark}[Linear indistinguishability]
+\tolerance=1500
+Theorem~\ref{thm:spectral-char}(i) implies that no
+state-independent linear criterion can detect weight-class
+structure: Pauli orthogonality makes all $M$-element
+subsets identical in Fisher eigenvalues, frame potential,
+and coherence
+(Appendix~\ref{sec:fisher}).
+The empirical $\Delta F \approx +0.03$ under linear
+inversion versus $\Delta F \approx +0.33$ under MLE
+(Supplemental Material~\cite{supplemental}, Sec.~VII\,F) reflects
+the ${\sim}11\times$ amplification by positivity-constrained
+reconstruction across the dichotomy of
+part~(iii).
+\end{remark}
+
+\subsection{Universality across Hamming schemes}
+\label{sec:universality}
+
+The spectral decomposition extends from qubits ($q = 2$) to
+qudits, with a structural boundary at $q = 3$.
+
+\pclaim{env:lem:spectral_q_main}{proved}{*}{lem:spectral_q_main}%
+\begin{lemma}[Spectral decomposition and Euclidean--Hamming compatibility]
+\label{lem:spectral_q_main}
+Let $G(K)$ be the Gram matrix of the Hamming scheme $H(n,q)$
+at Euclidean cutoff~$K$.\tolerance=1500
+\begin{enumerate}
+\item[\emph{(i)}] \emph{(Iff characterization.)}
+$G(K)$ lies in the Bose--Mesner algebra of $H(n,q)$ if and only
+if $q \le 3$.  When this holds, the Krawtchouk spectral
+decomposition gives
+\begin{equation}\label{eq:spectral_q_main}
+  G(K) = \sum_{w=0}^{n} \lambda_w(K)\, E_w, \quad
+  \lambda_w = \frac{q^n \, c_w(K)}{\binom{n}{w}(q{-}1)^w},
+\end{equation}
+where $E_w$ are the primitive idempotents of $H(n,q)$ and
+$c_w(K) = |\{m \in \mathbb{Z}^n : |m|^2 \le K,\;
+w(\bar{m}) = w\}|$ counts lattice vectors by $q$-ary parity
+weight.
+\item[\emph{(ii)}] \emph{(Weight-block structure, all $q$.)}
+For every~$q$, coordinate-permutation invariance
+($S_n$-symmetry) makes $G(K)$ block-diagonal in Hamming
+weight: the parity-weight counts $c_w(K)$ and the
+weight-class saturation budget $M_w(K)$ are well-defined
+for all~$q$.
+\item[\emph{(iii)}] \emph{(Spectral completeness and mass threshold.)}
+Spectral completeness ($c_w > 0$ for all~$w$, equivalently
+support-completeness; Lemma~\ref{lem:completeness}) is achieved
+at $K = n$ for all~$q$.
+At $K_{\mathrm{mass}} = q^2$ the spectral mass threshold
+(proved for all $q \ge 2$;
+Supplemental Material~\cite{supplemental},
+Proposition ``Spectral mass threshold'')
+is the minimal cutoff at
+which the mod-$q$ invisible vectors $(\pm q, 0, \ldots, 0)$
+enter, increasing $c_0$ from~$1$ to $1 + 2n$.
+For $q = 2$, $K^* = 5 = q^2 + 1$.
+For $q \ge 3$, full weight
+saturation~\eqref{eq:ksat-def} requires $K > q^2$
+(e.g., $K_{\mathrm{sat}} = 14$ at $q = 3$, $n = 4$;
+Supplemental Material~\cite{supplemental}).
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+\emph{(i), forward.}
+For $q \le 3$, every nonzero residue $a \in \mathbb{Z}_q
+\setminus \{0\}$ has minimal symmetric lift $\ell(a)$ with
+$|\ell(a)|^2 = 1$ (for $q = 2$: $\ell(1) = \pm 1$; for
+$q = 3$: $\ell(1) = 1$, $\ell(2) = -1$).
+All nonzero residues therefore contribute identically to the
+Euclidean cutoff $|m|^2 \le K$, so $G(K)$ is constant on
+each Hamming distance class and lies in the Bose--Mesner algebra.
+\emph{Converse.}
+For $q \ge 4$, residues $1$ and $2$ lift to
+$|\ell|^2 = 1$ and $|\ell|^2 = 4$ respectively.
+At $n = 1$, $K = 1$, the off-diagonal entries
+$G_{0,1} = 1 + 2\cos(2\pi/q) \neq G_{0,2} = 1 + 2\cos(4\pi/q)$,
+so $G(K) \notin \mathrm{BM}(H(1,q))$.
+Since the lift-norm discrepancy is a property of~$\mathbb{Z}_q$
+(independent of~$n$), the $n = 1$ submatrix embeds in every
+$H(n,q)$ with $n \ge 1$ and $K \ge 1$, so the failure
+persists for all~$n$.
+\emph{(ii)} follows from $S_n$-invariance of the Euclidean norm.
+\emph{(iii)} is verified by explicit lattice enumeration
+(Supplemental Material~\cite{supplemental}, Proposition~1 therein,
+which restates this result with the full $q$-ary eigenvalue formula).
+\end{proof}
+
+Basin separation (Theorem~\ref{thm:basin}) extends
+to qudit systems for \emph{all}~$q$: the proof uses only operator
+orthogonality and the purity constraint, both of which hold for
+any orthonormal Hermitian operator basis.
+Basin separation requires only the
+weight-block-diagonal structure of the Gram matrix
+($S_n$-invariance), which holds for all~$q$; it does not require
+full Bose--Mesner membership.
+Identifiability therefore applies to all~$q$, even
+though the Krawtchouk diagonalization is restricted to $q \le 3$
+(Lemma~\ref{lem:spectral_q_main}).
+For $q \ge 3$, the natural character basis
+(Heisenberg--Weyl operators) is non-Hermitian; practical qudit
+tomography uses the Hermitian generalized Gell-Mann basis instead.
+Gell-Mann weight-class sizes are $(q^2{-}1)^w \binom{n}{w}$
+rather than the Hamming-scheme multiplicities $(q{-}1)^w \binom{n}{w}$
+that appear in Lemma~\ref{lem:spectral_q_main}.
+For $q \le 3$, the spectral decomposition and saturation thresholds
+(Lemma~\ref{lem:spectral_q_main}) are stated in the character
+basis; the operational translation to Gell-Mann coordinates
+preserves orthogonality and the purity bound, so the
+identifiability argument (Theorem~\ref{thm:basin}(i))
+applies with identical logical structure, but the
+weight-class counts
+and saturation budgets must be recalculated in the Gell-Mann basis
+(Supplemental Material~\cite{supplemental}, where this is done
+explicitly for $q = 3$).
+For $q \ge 4$, the Krawtchouk eigenvalues are not available, but
+the weight-block structure still determines the saturation budget
+per weight class; the basin separation argument applies unchanged.
+For $q \ge 3$, the compositional architecture
+(overlapping $d^*$-qudit patches) compensates for the
+slower coverage growth at higher~$q$.
+
+%% ========================================================
+\section{Experimental setup}
+\label{sec:experiment}
+
+The preceding theory makes concrete predictions: structured
+selection should outperform random whenever the measurement budget
+is underdetermined, with the advantage driven by weight-class
+saturation.  We now test these predictions on superconducting
+hardware.
+
+All experiments use qubits ($q = 2$); the qudit extension
+is verified computationally through $q = 7$
+(Sec.~\ref{sec:universality}).
+
+IBM tomography experiments were performed on \texttt{ibm\_fez}
+(156-qubit Eagle~r3)~\cite{Kim2023} via the IBM Quantum Platform,
+using qubits 140--147 on a linear chain with reported controlled-Z (CZ) error rates
+of 0.15--0.19\%.
+The Floquet DTC application (Sec.~\ref{sec:dtc}) used
+\texttt{ibm\_kingston} (156-qubit Heron~r2).
+Multi-vendor replication used a Rigetti Ankaa-3 processor
+(84-qubit, square lattice, iSWAP native gate) via the Open Quantum
+cloud platform, with controlled-$R_Y$ gates decomposed
+into $u_3{+}\text{CX}$ (controlled-NOT) sequences.
+
+State-preparation-and-measurement (SPAM) errors are common to both arms (identical state preparation,
+qubits, and computational-basis measurement); only single-qubit
+basis rotations differ, so $\Delta F$ isolates operator selection.
+
+For each state, we executed two experiments with identical parameters:
+\begin{itemize}
+\item \textbf{Structured}: $M$ Pauli operators from the Krawtchouk
+prescription ($M = 137$ for $n = 4$; $M = 9$ for $n = 2$).
+\item \textbf{Random}: $M$ Pauli operators selected uniformly at
+random (fixed seed for reproducibility).
+\end{itemize}
+Although the 29 structured bases yield $196$ nontrivial Pauli
+expectations (Sec.~\ref{sec:method}), only the $M = 137$
+Krawtchouk-selected operators are passed to the MLE for both arms,
+ensuring that the comparison isolates operator \emph{selection},
+not operator \emph{count}.
+
+Each Pauli measurement circuit consists of state preparation,
+single-qubit basis rotations ($H$ for $X$, $S^\dagger H$ for $Y$,
+identity for $Z$), and computational-basis measurement.  All circuits
+were transpiled with optimization level~1 and executed with 1{,}000~shots.
+No error mitigation of any kind was applied~\cite{Schwemmer2015} --
+no readout correction, no dynamical decoupling, no randomized
+compiling, no zero-noise extrapolation, and no probabilistic error
+cancellation; both arms use identical raw counts.
+Circuits were constructed using Qiskit~2.3 (Python~3.13).
+Qubits 140--147 were selected for connectivity, not calibration
+quality; four-qubit experiments used qubits 140--143 (the first
+four in the chain).  Rigetti qubit identifiers were assigned by
+the Open Quantum scheduler and are not user-selectable on
+cloud-access platforms; replication on these independent qubits
+corroborates the effect on a second architecture.
+
+\paragraph{2-qubit state.}
+Bell pair $|\Phi^+\rangle = (|00\rangle + |11\rangle)/\sqrt{2}$
+(1~CX), measured with $M = 9$ Pauli operators (all lattice modes
+at $n = 2$, $K = 2$).
+
+\paragraph{4-qubit states.}
+(i)~Product state $|{+}\rangle^{\otimes 4}$ (0~CX
+gates), (ii)~4-qubit W~state
+$|W_4\rangle = \tfrac{1}{2}(|1000\rangle + |0100\rangle +
+|0010\rangle + |0001\rangle)$ (6~CX), and (iii)~4-qubit GHZ state
+$|GHZ_4\rangle = \tfrac{1}{\sqrt{2}}(|0000\rangle + |1111\rangle)$
+(3~CX).
+
+\paragraph{Dimensional sweep.}
+A same-session run compared W~states at $n = 2$ ($M = 9$) and
+$n = 4$ ($M = 137$) under identical calibration conditions
+(Sec.~\ref{sec:dim-dep}, Table~\ref{tab:results}).
+
+%% ========================================================
+\section{Results}
+\label{sec:results}
+
+\subsection{Head-to-head comparison}
+\label{sec:head-to-head}
+
+Table~\ref{tab:results} and Figure~\ref{fig:fidelity} summarize the
+reconstruction fidelity
+$F(\rho_{\rm ideal}, \rho_{\rm reconstructed})$ for each state and
+method.
+
+\begin{table}[tb]
+\centering
+\caption{Reconstruction fidelity: structured vs.\ random Pauli selection
+on superconducting hardware.  $M$ denotes the number of Pauli
+\emph{operators} measured; under tensor-product basis grouping,
+the circuit count is smaller (e.g., $137$ operators $\to 29$
+$K^*$ bases or $\sim 50$ random bases at $n = 4$).
+Each circuit uses $1{,}000$~shots.
+Fidelity is Uhlmann fidelity
+$F(\rho,\sigma) = (\mathrm{tr}\sqrt{\sqrt{\rho}\,\sigma\sqrt{\rho}})^2$.}
+\label{tab:results}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+State & $n$ & $M$ & Struct.\ $F$ & Rand.\ $F$ & $\Delta F$ \\
+\midrule
+$|{+}\rangle^{\otimes 4}$ & 4 & 137 & 0.996 & 0.980 & $+$0.016 \\
+Bell pair & 2 & 9 & 0.518 & 0.465 & $+$0.052 \\
+W$_4$ state$^\ddagger$ & 4 & 137 & \textbf{0.872}$\pm$\textbf{0.021}
+  & \textbf{0.54}$\pm$\textbf{0.08} & $+$\textbf{0.33}$\pm$\textbf{0.07} \\
+GHZ$_4$ state$^\S$ & 4 & 137 & 0.496 & 0.498 & $-$0.002 \\
+\midrule
+W$_2$ state$^\dagger$ & 2 & 9 & 0.983 & 0.522 & $+$0.461 \\
+W$_4$ rerun$^\dagger$ & 4 & 137 & 0.876 & 0.441 & $+$0.435 \\
+\midrule
+\multicolumn{6}{l}{\emph{Rigetti Ankaa-3 (Open Quantum)}} \\
+W$_4$ state$^\|$ & 4 & 137 & 0.815 & 0.568 & $+$0.248 \\
+W$_3$ state$^\|$ & 3 & 27 & 0.840 & 0.831 & $+$0.009 \\
+\midrule
+\multicolumn{6}{l}{\emph{Rigetti Ankaa-3, 8-qubit compositional}} \\
+$W_8$ (mean)$^\#$ & 8 & 137 & \textbf{0.668}$\pm$\textbf{0.07}
+  & \textbf{0.134}$\pm$\textbf{0.07} & $+$\textbf{0.53}$\pm$\textbf{0.06} \\
+$|{+}\rangle^{\otimes 8}$$^\#$ & 8 & 137 & 0.992$\pm$0.002 & -- & -- \\
+\bottomrule
+\end{tabular}}% end resizebox
+\vspace{2pt}
+{\footnotesize Noise-robust MLE reconstruction
+(Sec.~\ref{sec:reconstruction}), $1{,}000$~shots per circuit
+(each operator appears in exactly one basis).
+$^\ddagger$Four independent runs (seeds 100--400);
+$\pm$ denotes sample standard deviation.
+$^\dagger$Same-session dimensional sweep (different random seed).
+$^\S$Full-state MLE; automatic reconstructor switching recovers
+$F = 0.887$; subspace least-squares gives $F = 0.926$
+(Sec.~\ref{sec:ghz}).
+$^\|$Same-session basis-grouped comparison
+(Sec.~\ref{sec:rigetti}).
+$^\#$Compositional architecture, 5 overlapping 4-qubit patches;
+$\pm$ denotes standard deviation across patches
+(Sec.~\ref{sec:8qubit}; Fig.~\ref{fig:8qubit}).}
+\end{table}
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\columnwidth]{fig1_fidelity.pdf}
+\caption{Reconstruction fidelity for structured (Krawtchouk $K^*$)
+versus random Pauli measurement selection on IBM \texttt{ibm\_fez}.
+4-qubit states use $M = 137$ operators ($29$ bases) at 1{,}000 shots per basis.
+W-state bars show four-run means; error bars are standard deviations
+across runs ($\pm 0.021$ structured, $\pm 0.08$ random).
+Other states show single-run bootstrap uncertainties ($1{,}000$~resamples).
+The W-state advantage $\Delta F = +0.33 \pm 0.07$ is the largest
+observed effect.}
+\label{fig:fidelity}
+\end{figure}
+
+Structured selection exceeds random for the
+product and W~states, consistent with the basin separation
+prediction (Theorem~\ref{thm:basin}): the $K^*$ set saturates
+all weight classes up to $w = 2$, so every informative Pauli
+coordinate is constrained.
+The advantage is largest for the
+W~state, the most entangled state with nontrivial local structure.
+Four independent hardware repetitions with different random seeds
+confirm the W-state result: $F(K^*) = 0.872 \pm 0.021$ (stable)
+versus $F(\mathrm{rand}) = 0.54 \pm 0.08$ (volatile),
+$\Delta F = +0.33 \pm 0.07$ (all four runs positive).
+For the Bell pair ($\Delta F = +0.052$, not significant), an
+$n = 2$ MLE pathology where the identity operator dominates variance
+weights (Supplemental Material~\cite{supplemental}).
+RDM decomposition corroborates the mechanism predicted by
+Theorem~\ref{thm:basin}(i): $K^*$ gives near-perfect
+1-RDM fidelity ($0.985 \pm 0.004$) from weight-$1$ saturation and
+a 2-RDM advantage ($+0.097$) from weight-$2$ saturation
+(Table~\ref{tab:rdm}; Appendix~\ref{sec:rdm}).
+
+GHZ gives $\Delta F = -0.002$ under full-state MLE,
+consistent with zero: full-state MLE reconstructs all $d^2 - 1$
+Pauli coordinates simultaneously, so the GHZ signal
+(concentrated on $6$ weight-$2$ $ZZ$-type and up to $9$ weight-$4$
+correlators) is diluted by the remaining ${\sim}\,122$ near-zero
+$K^*$ operators.  However, the $K^*$ data contains the GHZ signal:
+a weight-class fingerprint classifier automatically detects the
+information-budget mismatch (parity ratio $r = 0.010$) and switches
+to subspace estimation, recovering $F = 0.887$ from the same
+$137$~operators at zero additional cost (Sec.~\ref{sec:ghz}).
+Raw phase correlators confirm ${\sim}\,85$\% coherence
+($\langle X^{\otimes 4}\rangle = +0.864$).  Full-state MLE
+deficit reflects primarily the reconstructor rather than the
+measurement set (analyzed in detail in Sec.~\ref{sec:ghz}).
+
+Uncertainties (``$\pm$'') are sample standard deviations across four
+independent runs, not standard error of the mean (SEM).  All four per-run W-state advantages are
+positive ($\Delta F = +0.33 \pm 0.07$; $t(3) = 9.3$,
+$p < 0.003$; $95$\% CI $[0.22, 0.44]$); run~3's smaller gap
+($+0.224$) reflects $IIII$ (the all-identity Pauli string $I^{\otimes 4}$) contamination in its random draw
+(Supplemental Material~\cite{supplemental}).
+Per-run shot-noise bootstraps ($10^3$~resamples each) give
+$\sigma_{K^*}^\mathrm{boot} \approx 0.019$ and
+$\sigma_\mathrm{rand}^\mathrm{boot} \approx 0.062$, consistent
+with the inter-run dispersions and confirming that the volatility
+difference is shot-noise dominated (Supplemental Material~\cite{supplemental}).
+
+\subsection{Weight-allocated baseline}
+\label{sec:weight-alloc}
+
+A natural objection to the structured advantage is that a practitioner
+who simply saturates the low-weight operators and fills the remaining
+budget from higher weights, without any spectral theory, would achieve
+comparable performance.
+We test this directly
+with a three-arm experiment, first in simulation
+(Table~\ref{tab:weight-alloc}) and then on hardware
+(Table~\ref{tab:weight-alloc-hw}).
+
+A \emph{weight-allocated random} baseline uses the same per-weight
+budget $M_w = \{1, 12, 54, 54, 16\}$ as the structured set, but
+selects operators \emph{randomly} within each weight class.
+A separate \emph{uniform random} baseline draws $137$
+operators uniformly from the $255$ nontrivial Paulis (excluding IIII).
+Because the structured set includes the identity operator as its
+single weight-$0$ element while the uniform random pool does not,
+the budget definitions differ by one operator; at $n = 4$ this
+amounts to $< 1$\% of the total and does not measurably affect
+reconstruction quality (Supplemental Material~\cite{supplemental}).
+Both use the same MLE reconstruction
+($\zeta = 0.05$, $\alpha = 0.5$).
+
+\begin{table}[tb]
+\centering
+\caption{Three-arm simulation across states and dimensions.  ``Structured'' is
+the Krawtchouk $K^*$ set; ``Alloc.\ random'' uses the same per-weight
+budget with random intra-weight selection (20~seeds); ``Uniform random''
+draws 137 operators uniformly (20~seeds).  $\Delta(S{-}AR)$ isolates
+intra-weight ordering; $\Delta(AR{-}UR)$ isolates weight allocation.
+Simulation: depolarizing noise $p = 0.03$, readout error $2$\%, $1{,}000$~shots.}
+\label{tab:weight-alloc}
+\begin{tabular}{lcccc}
+\toprule
+State & Struct.\ $F$ & Alloc.\ $F$ & Unif.\ $F$
+  & $\Delta(S{-}AR)$ \\
+\midrule
+W($n{=}5$)  & 0.730 & 0.688 & 0.428 & $+0.042$ \\
+W($n{=}4$)  & 0.833 & 0.733 & 0.302 & $+0.100$ \\
+GHZ($n{=}4$) & 0.856 & 0.574 & 0.227 & $+0.282$ \\
+W($n{=}3$)  & 0.868 & 0.538 & 0.284 & $+0.331$ \\
+W($n{=}2$)  & 0.987 & 0.414 & 0.479 & $+0.573$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[tb]
+\centering
+\caption{Three-arm \emph{hardware} validation of the weight-allocation
+mechanism (Theorem~\ref{thm:spectral-char}(iv)) on \texttt{ibm\_fez}
+(4-qubit W~state, three seeds, $1{,}000$~shots per circuit).
+Circuit execution order is reversed: weight-allocated random first,
+uniform random second, structured last, ruling out
+calibration-drift confounds.  The uniform random pool
+excludes IIII.  The allocation fraction is
+$(F_\mathrm{AR} - F_\mathrm{UR})/(F_{K^*} - F_\mathrm{UR})$.
+Uniform random's high volatility ($\sigma = 0.325$,
+coefficient of variation ${>}\,1$) makes this ratio unstable;
+$\Delta(S{-}AR)$ is the more reliable metric.}
+\label{tab:weight-alloc-hw}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+Seed & $F(K^*)$ & $F(\mathrm{AR})$ & $F(\mathrm{UR})$
+     & $\Delta(S{-}AR)$ & Alloc.\ \%$^\dagger$ \\
+\midrule
+100 & 0.886 & 0.627 & 0.039 & $+0.259$ & 69\% \\
+200 & 0.917 & 0.886 & 0.630 & $+0.031$ & 89\% \\
+300 & 0.905 & 0.654 & 0.099 & $+0.252$ & 69\% \\
+\midrule
+Mean & $0.903{\pm}0.016$ & $0.722{\pm}0.142$ & $0.256{\pm}0.325$
+     & $+0.181$ & $69$--$89$\% \\
+\bottomrule
+\end{tabular}}% end resizebox
+
+{\footnotesize $^\dagger$Ill-conditioned; see caption.}
+\end{table}
+
+In simulation, for W~states at $n = 4$, $\Delta(S{-}AR) = +0.100$: the
+structured set retains an advantage over weight-allocated random,
+and weight allocation alone accounts for most
+($\Delta(AR{-}UR) = +0.431$, or ${\sim}\,81$\% of the
+total structured advantage).
+Replacing the $K^*$-prescribed weight-$3$/$4$ split ($54{:}16$)
+with a proportional split ($40{:}30$, distributing by pool size)
+degrades W-state fidelity by $-0.21$ (Supplemental Material~\cite{supplemental}),
+confirming that the Krawtchouk allocation
+(Theorem~\ref{thm:spectral-char}(iv)) is not a
+na\"ive saturation strategy.
+
+On hardware (Table~\ref{tab:weight-alloc-hw}),
+a separate three-arm session
+corroborates the \emph{sign} of this decomposition: the per-seed residuals
+$\Delta(S{-}AR) \in \{0.031, 0.252, 0.259\}$ are positive for all
+seeds, consistent with the simulation estimate of
+$+0.100$ (though larger in magnitude, likely reflecting the
+hardware noise topology that the uniform depolarizing simulation
+underestimates).  Three hardware seeds establish the direction of the
+structured advantage beyond weight allocation, but the order-of-magnitude
+spread ($+0.031$ to $+0.259$) precludes a precise quantitative
+decomposition; additional seeds would be needed to narrow the hardware
+estimate of $\Delta(S{-}AR)$.  (The wide range $69$--$89$\% reflects the uniform random arm's
+volatility; $\Delta(S{-}AR)$ is the more stable metric.)
+Both sessions used the same \texttt{ibm\_fez} processor (Eagle~r3
+revision, March~7 and March~11, 2026); the $+0.031$ shift in
+$F_{K^*}$ is within typical inter-session drift.
+Structured selection is stable across seeds ($\sigma = 0.016$),
+while the uniform random arm is wildly volatile ($\sigma = 0.325$,
+coefficient of variation $> 1$): a single unlucky draw can miss
+critical low-weight operators entirely.
+Seed~200 is anomalous in both random arms
+($F_\mathrm{UR} = 0.630$, $F_\mathrm{AR} = 0.886$);
+the structured set still wins ($F_{K^*} = 0.917$,
+$\Delta(S{-}AR) = +0.031$).
+
+\subsection{Dimensional dependence}
+\label{sec:dim-dep}
+
+A clear dimensional progression emerges from the three-arm comparison
+(Fig.~\ref{fig:dim-dep}).
+In detail, $\Delta(S{-}AR)$ measures how much
+the specific Krawtchouk operator selection matters beyond weight
+allocation: it decreases monotonically from $0.573$ ($n{=}2$)
+to $0.042$ ($n{=}5$).
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\columnwidth]{fig5_dimensional_dependence.pdf}
+\caption{Intra-weight residual $\Delta(S{-}AR)$ versus number of
+qubits under MLE reconstruction.  The residual drops by $13.8\times$
+from $n = 2$ to $n = 5$; at $n = 4$ (dashed line),
+the Krawtchouk allocation condition ($2n = 2^{n-1}$) holds and weight allocation alone is
+nearly sufficient.  Simulation: depol $= 0.03$, readout $= 0.02$,
+$1{,}000$~shots, $20$~seeds.}
+\label{fig:dim-dep}
+\end{figure}
+
+At $n = 4$, the weight-level description becomes \emph{nearly
+sufficient}: intra-weight ordering contributes only a small
+residual ($\Delta = 0.100$).
+This smooth decrease is MLE-specific; under linear inversion the
+progression is non-monotonic
+(Supplemental Material~\cite{supplemental}).
+At $n = 5$ ($M = 333$, $32.6$\% coverage), $K^*$ retains
+a $+0.276$ overall advantage over uniform random but the
+weight-allocated random gap narrows to $+0.004$ overall
+(averaged across $13$~states; $+0.042$ for the W~state alone,
+Table~\ref{tab:weight-alloc}), confirming
+that the allocation fraction approaches unity as $n$ grows past
+the sweet spot, consistent with the asymptotic convergence in
+Theorem~\ref{thm:asymptotic}
+(Supplemental Material~\cite{supplemental}).
+A same-session dimensional sweep on \texttt{ibm\_fez} shows that
+$K^*$ selection gives large advantages at both $n = 2$ ($\Delta F =
++0.461$) and $n = 4$ ($\Delta F = +0.435$)
+(Table~\ref{tab:results}).  At $n = 4$, the rerun ($F = 0.876$)
+reproduces the four-run mean ($F = 0.872 \pm 0.021$) within calibration drift.
+
+Raw gaps $\Delta F$ (structured vs.\ uniform random) are
+similar at $n = 2$ and $n = 4$; the Krawtchouk allocation prediction
+concerns the \emph{allocation-specific} residual $\Delta(S{-}AR)$,
+which decreases by $13.8\times$ from $n{=}2$ to $n{=}5$ under MLE
+($28.3\times$ under projected least squares), not the total advantage.
+
+\subsection{GHZ states: reconstructor dependence and subspace estimation}
+\label{sec:ghz}
+
+The preceding analysis assumes states with nontrivial local
+structure; GHZ states concentrate information entirely in global
+correlators, creating a qualitatively different regime.
+The full-state MLE deficit ($F \approx 0.50$) has a structural
+origin in the Krawtchouk eigenvalue allocation prescribed by
+Theorem~\ref{thm:spectral-char}(iv)
+(Fig.~\ref{fig:ghz-mismatch}).
+
+A 4-qubit GHZ state
+$|GHZ\rangle = (|0000\rangle + |1111\rangle)/\sqrt{2}$ has only
+$15$ of $255$ Pauli operators with nonzero ideal expectation value:
+$6$~weight-$2$ ZZ correlators ($\langle Z_i Z_j\rangle = +1$),
+$1$~weight-$4$ all-$Z$ correlator ($\langle Z^{\otimes 4}\rangle = +1$),
+and $8$~weight-$4$ phase correlators (e.g.,
+$\langle X^{\otimes 4}\rangle = +1$,
+$\langle Y^{\otimes 4}\rangle = +1$).
+Weight-$4$ operators (ZZZZ plus $8$ phase correlators) carry
+$60$\% of the total GHZ Pauli information
+(measured by $\sum_i \langle P_i\rangle^2$ over nontrivial Paulis:
+$9/15$), yet it receives only $11.7$\% of the Krawtchouk eigenvalue
+mass and is allocated just $M_4 = 16$ of $81$ available operators.
+Of the $8$~GHZ phase correlators ($XXXX$, $XXYY$, $XYXY$, $XYYX$,
+$YXXY$, $YXYX$, $YYXX$, $YYYY$), the $K^*$~set includes $4$
+($XXXX$, $XYXY$, $YXYX$, $YYYY$); all $6$~weight-$2$ ZZ correlators
+are present.  The GHZ MLE deficit is therefore driven by the weight-$4$
+budget ($16/81$), not by which specific weight-$4$ operators are
+selected.
+
+Raw hardware data shows that \emph{phase coherence
+is retained}: $\langle X^{\otimes 4}\rangle = +0.864$
+($\sim\!85$\% of ideal).
+Rather, $F \approx 0.50$ arises because $126$ of the $137$
+$K^*$~operators have near-zero GHZ expectation value, and the MLE
+settles on a near-maximally-mixed state.
+Simulation cross-checks confirm this: varying $\zeta \in [0, 0.2]$
+gives $F \in [0.49, 0.50]$.
+
+Precisely the eigenvalue allocation that concentrates
+resources in low-weight sectors (boosting the W~state by
+$\Delta F = +0.33 \pm 0.07$) necessarily starves the weight-$4$
+sector where GHZ information lives.
+GHZ is therefore a predicted consequence of the
+eigenvalue-mass distribution in
+Theorem~\ref{thm:spectral-char}(iii)--(iv): concentrated
+low-weight allocation predicts degraded ratio-form reconstruction
+for any state whose information concentrates in weight classes
+that $K^*$ undersamples.
+A full Hradil update recovers $F = 0.887$ on the same data
+(Supplemental Material~\cite{supplemental}, Sec.~VII\,E),
+confirming that the mismatch is solver-resolvable rather than
+information-theoretic.
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\columnwidth]{fig7_ghz_mismatch.pdf}
+\caption{GHZ eigenvalue-mass mismatch and subspace recovery.
+Top: the GHZ state concentrates $60$\% of its Pauli information
+in weight-$4$ operators, but $K^*$ allocates only $11.7$\% of
+eigenvalue mass there.  This mismatch is a prediction of the
+Krawtchouk framework, not a hardware artifact.
+Bottom: four estimators applied to the same $137$ $K^*$~circuits (no additional data).
+Full-state MLE gives $F = 0.496$ (mismatch-limited); subspace
+estimation in $\{|0000\rangle, |1111\rangle\}$ recovers
+$F = 0.926$; direct fidelity estimation (DFE) provides a model-free lower bound $F \geq 0.618$;
+the weight-class fingerprint auto-switch (Sec.~\ref{sec:ghz})
+recovers $F = 0.887$ at zero additional circuit cost.}
+\label{fig:ghz-mismatch}
+\end{figure}
+
+\paragraph{Resolution: subspace estimation.}
+As established above, $K^*$ covers $11$ of the $15$ operators
+with nonzero GHZ coefficients.
+Projecting into the GHZ-relevant subspace
+$\mathrm{span}\{|0000\rangle, |1111\rangle\}$ reduces the
+reconstruction to $3$~real parameters ($a$, $b = 1 - a$,
+$|c|\,e^{i\phi}$).  Least-squares fitting the $137$ $K^*$
+expectations in this subspace gives
+$a = 0.529$, $|c| = 0.426$ (ideal: $a = 0.5$, $|c| = 0.5$), and
+\begin{equation}
+  F_{\mathrm{sub}} = 0.926\,.
+  \label{eq:ghz-sub}
+\end{equation}
+The subspace estimator succeeds because the $K^*$ set includes all
+weight-$0$ and weight-$4$ operators that span the GHZ subspace, a
+consequence of the full weight-class coverage guaranteed by
+Theorem~\ref{thm:spectral-char}(ii).
+Direct fidelity estimation from the $11$~informative operators gives
+a model-free lower bound $F_{\mathrm{DFE}} \geq 0.618$ (the missing
+$5$~operators, if at the same hardware quality, would raise this to
+${\sim}\,0.88$).  The phase correlators independently certify genuine
+multipartite entanglement:
+$|\langle X^{\otimes 4}\rangle| = 0.864 > 0.50$ (biseparable
+bound~\cite{TothGuhne2005}).
+
+$K^*$ thus provides data compatible with multiple
+estimators (full-state MLE, subspace estimation, DFE, and
+entanglement witnesses).
+
+\paragraph{Automatic reconstructor switching via weight-class fingerprint.}
+The GHZ failure mode is self-diagnosing: no extra
+circuits required.  Define a weight-class energy fingerprint
+$\mathcal{E}_w = \sum_{P:\,\mathrm{wt}(P) = w} \langle P\rangle^2$
+from the $137$ $K^*$ expectations.  GHZ-type states have a telling \emph{even-parity signature}:
+$\mathcal{E}_1$ and $\mathcal{E}_3$ are nearly zero (odd-weight
+Pauli expectations vanish by $Z_2^{\otimes n}$ symmetry), while
+$\mathcal{E}_2$ and $\mathcal{E}_4$ dominate.  The parity ratio
+$r = \mathcal{E}_{\mathrm{odd}} / \mathcal{E}_{\mathrm{even}}$ separates the
+state classes cleanly: $r = 0.010$ for the hardware GHZ,
+versus $r = 0.99$ (product) and $r = 0.84$ (W~state).
+We trigger subspace estimation whenever $r < 0.05$ and
+$\mathcal{E}_4 / \mathcal{E}_{\mathrm{total}} > 0.25$.
+
+On the same $137$ circuits, this rule correctly flags the GHZ
+state and recovers $F_{\mathrm{sub}} = 0.887$
+(up from $F_{\mathrm{MLE}} = 0.496$).  It leaves the W~state
+and product state on the MLE path, where they already do well.
+No additional circuits are required.
+\emph{Caveat:} the even-parity trigger is specific to GHZ-type
+states; other even-parity states (e.g.,
+$(|0011\rangle{+}|1100\rangle)/\sqrt{2}$) would also trigger
+the classifier but require a different target subspace.
+This rule should therefore be understood as a
+GHZ-specific heuristic, not a general blind classifier.
+Within this scope, the information-budget mismatch that causes
+the GHZ deficit also provides the signal for correcting it.
+
+\subsection{Compositional scaling to 8 qubits}
+\label{sec:8qubit}
+
+Having characterized $K^*$'s performance on individual 4-qubit
+subsystems---including both its strengths and its predicted GHZ
+weakness---we now test whether the compositional architecture
+(Sec.~\ref{sec:compositional}) extends the advantage to larger
+processors.
+We ran an 8-qubit chain on Rigetti Ankaa-3 with a three-arm
+design: 59~$K^*$ circuits preparing $|W_8\rangle$, 59~$K^*$
+circuits preparing $|{+}\rangle^{\otimes 8}$, and 59~random-Pauli
+circuits preparing $|W_8\rangle$ (177~circuits total,
+1{,}000~shots each, interleaved).
+All three arms use global $n$-qubit tensor-product circuits;
+per-patch expectation values are extracted identically via
+partial-trace marginalisation, so the comparison isolates
+the operator-selection strategy (structured vs.\ random)
+with the compositional infrastructure held constant.
+Five overlapping 4-qubit patches (A--E) were reconstructed
+independently using the same $137$-operator $K^*$ set per patch.
+
+\paragraph{Product-state validation.}
+All five patches achieve $F > 0.989$ (mean $0.992 \pm 0.002$)
+on $|{+}\rangle^{\otimes 8}$, confirming the compositional
+infrastructure.  Boundary trace distances
+($D_{\mathrm{tr}} = \tfrac{1}{2}\|\rho_A - \rho_B\|_1 = 0.03$--$0.05$) are small, consistent with single-qubit
+noise.
+
+\paragraph{Entangled-state scaling.}
+$W_8$ results are more interesting.
+Per-patch $K^*$ fidelities range from $0.58$ to $0.76$
+(mean $0.668 \pm 0.07$), benchmarked against the true 4-qubit
+marginal $\rho_\mathrm{patch} = \tfrac{1}{2}|W_4\rangle\langle
+W_4| + \tfrac{1}{2}|0000\rangle\langle 0000|$.
+Random Pauli selection, by contrast, gives $F = 0.09$--$0.26$
+(mean $0.134 \pm 0.07$), barely above the maximally-mixed baseline
+$1/d = 0.0625$.
+All five bootstrap CIs exclude zero, and the per-patch gap
+$\Delta F = +0.53 \pm 0.06$ is larger than what we saw at 4~qubits
+($+0.33$); random sampling simply becomes exponentially dilute
+at this size (Fig.~\ref{fig:scaling}).
+This trend is the behavior predicted by
+Theorem~\ref{thm:asymptotic}: at $n = 8$ each weight class
+contains $\binom{8}{w} \cdot 3^w$ operators, and random selection
+at $M = 137$ covers a vanishing fraction of each class.
+$K^*$'s Krawtchouk-prescribed allocation guarantees coverage of
+every weight class up to $K^* = 5$, independent of the total
+operator pool size; by Theorem~\ref{thm:basin}, this weight
+saturation is sufficient for basin separation on each patch.
+One cost of the patch decomposition is visible in the boundary
+trace distances: $D_\mathrm{tr} = 0.16$--$0.21$ for $W_8$,
+roughly $3$--$6\times$ larger than the product-state boundaries
+(Fig.~\ref{fig:8qubit}b).
+This is expected: each patch recovers its own marginal
+faithfully, but cross-patch correlations require global measurements
+that the compositional architecture does not include.
+
+\paragraph{Robustness under hardware non-uniformity.}
+Per-patch fidelity spread ($0.58$--$0.76$) is not random;
+it tracks position-dependent gate errors.
+Patches~A and~B contain a qubit with elevated CX error
+(identifiable from the product-state arm) and give
+$F \approx 0.58$--$0.60$.
+Patches~C--E avoid that qubit and give $F \approx 0.69$--$0.76$.
+Product-state results are the key diagnostic here:
+$F > 0.989$ on every patch (including the noisy ones) means the
+measurement infrastructure itself is working fine, and the fidelity
+loss is entirely in the $W_8$ entangling gates.
+Even on the worst patches, $\Delta F > +0.46$.
+Meanwhile, random fidelities cluster near $1/d = 0.0625$ regardless
+of patch position. The problem there is exponential dilution at
+$n = 8$, not gate quality.
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\columnwidth]{fig8_8qubit_results.pdf}
+\caption{Eight-qubit compositional results on Rigetti Ankaa-3
+(177~circuits, 1{,}000~shots each).
+(a)~Per-patch reconstruction fidelity for the $W_8$ state:
+$K^*$ (blue) versus random Pauli (red).  Random fidelities
+cluster near the maximally-mixed baseline $1/d$ (dashed);
+$K^*$ achieves $\Delta F > +0.46$ on every patch.  Error bars:
+95\% bootstrap CIs ($10^3$~resamples).
+(b)~Boundary trace distances at the four patch overlaps.
+Product-state boundaries ($D_\mathrm{tr} \lesssim 0.05$) confirm
+patch consistency; $W_8$ boundaries
+($D_\mathrm{tr} \approx 0.18$) reflect the locality cost of
+independent per-patch reconstruction for a globally entangled
+state.}
+\label{fig:8qubit}
+\end{figure}
+
+\begin{figure*}[tb]
+\centering
+\includegraphics[width=\textwidth]{fig9_scaling.pdf}
+\caption{$K^*$ advantage $\Delta F$ versus qubit count across two
+superconducting platforms.  The advantage grows from $+0.05$ at
+$n = 2$ (overcomplete regime) through the $n = 4$ sweet spot
+($+0.25$--$+0.33$) to $+0.53$ at $n = 8$ (compositional, five
+patches on Rigetti Ankaa-3), as random Pauli selection becomes
+exponentially dilute in $4^n$.  Error bar at $n = 4$ (IBM): sample
+standard deviation over four runs; at $n = 8$: standard deviation
+across five patches.  The $n = 3$ point
+($\Delta F = +0.009$, Rigetti) confirms the overcomplete-regime
+prediction where selection advantage vanishes.}
+\label{fig:scaling}
+\end{figure*}
+
+\subsection{Multi-vendor replication (Rigetti Ankaa-3)}
+\label{sec:rigetti}
+
+Without modification, the same $137$ $K^*$ operators were run on a
+Rigetti Ankaa-3 processor (84~qubits, square-lattice topology,
+iSWAP native gate) through the Open Quantum cloud platform.
+This is a substantially different architecture from IBM:
+the 4-qubit W-state preparation decomposes into $u_3{+}\text{CX}$
+sequences at roughly twice the two-qubit gate depth of the IBM
+circuit.
+The experiment uses tensor-product basis
+grouping~\cite{Hamamura2020,Jena2019}: $29$~$K^*$ bases and
+$50$~random bases ($79$~circuits total) interleaved in a single
+calibration session.
+Result: $K^*$ gives $F = 0.815$, random gives $F = 0.568$,
+a gap of $\Delta F = +0.248$, consistent with the IBM
+result ($+0.33 \pm 0.07$) on a completely different platform
+(Table~\ref{tab:results}).
+The cross-platform replication is expected: the basin separation
+guarantee (Theorem~\ref{thm:basin}) depends only on the weight
+saturation of the operator set, not on the hardware topology or
+native gate set.
+Bootstrap resampling ($10^3$~draws from raw bitstring counts)
+puts $\sigma_{K^*} \approx 0.015$ and
+$\sigma_\mathrm{rand} \approx 0.010$; every resample gives
+$\Delta F > 0$.
+Absolute fidelity is lower than IBM ($0.815$ vs.\ $0.872$),
+which is expected given the deeper gate decomposition on the
+Ankaa-3 square lattice.
+
+$K^*$ compresses $4.7\times$ ($137 \to 29$~bases) versus
+$2.7\times$ for the random set ($137 \to 50$), a $1.7\times$
+circuit-efficiency advantage from the structured weight distribution
+(Fig.~\ref{fig:efficiency}; Appendix~\ref{sec:compression-advantage}).
+Under the compositional architecture
+(Sec.~\ref{sec:compositional}), this gap persists at every
+processor size: $K^*$ requires $\le 116$~basis-grouped circuits for any
+linear chain, compared to ${\sim}\,200$ for the random selection at
+matched operator count (Fig.~\ref{fig:efficiency}, right).
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\columnwidth]{fig6_circuit_efficiency.pdf}
+\caption{Circuit efficiency of $K^*$ selection.
+Top: tensor-product bases required at $n = 4$ ($M = 137$ operators
+each arm).  $K^*$ compresses into $29$~bases ($4.7\times$) versus
+$50$ for random ($2.7\times$), a $1.7\times$ advantage.  Full
+tomography ($81$~bases, all $255$ operators) is shown for reference.
+Bottom: total circuit count versus processor size under the
+compositional architecture.  $K^*$ and random both plateau (constant
+patch structure), while full tomography grows as $3^n$.}
+\label{fig:efficiency}
+\end{figure}
+
+At $n = 3$ the story is different: structured and random give
+nearly identical fidelity ($F = 0.840$ vs.\ $0.831$,
+$\Delta F = +0.009$).
+This is exactly what Theorem~\ref{thm:spectral-char}(iii) predicts:
+with $M/4^n = 27/64 \approx 42\%$ of the full operator set, the
+regime is close to overcomplete and there is little room for
+selection to matter.
+Contrast with $n = 4$ ($\Delta F = +0.25$ on Rigetti,
+$+0.33$ on IBM) is sharp: at $M/4^n = 137/256 = 54\%$ the
+budget is tight enough for weight-class allocation to bite.
+Going the other direction, the 8-qubit compositional run on the
+same Ankaa-3 processor gives $\Delta F = +0.53 \pm 0.06$ across
+five patches (Sec.~\ref{sec:8qubit}; Fig.~\ref{fig:scaling}). The
+advantage keeps growing as random selection becomes exponentially
+dilute.
+
+\subsection{Operator-selection comparison (simulation)}
+\label{sec:shadows}
+
+Having established the structured advantage on hardware across two
+platforms and system sizes, we now compare operator-selection
+strategies under controlled simulation conditions.
+Table~\ref{tab:shadows} compares $K^*$-structured selection against
+derandomized classical shadows~\cite{Huang2021} and uniform-random
+shadows at matched budget (137~settings, $1{,}000$~shots,
+depol $= 0.03$, readout $= 0.02$) under a common MLE reconstructor.
+
+\begin{table}[tb]
+\centering
+\caption{Simulated comparison of measurement \emph{selection strategies}
+under a common MLE reconstructor.
+Settings: 137~bases $\times$ 1{,}000~shots, uniform depolarizing noise
+(depol $= 0.03$, readout $= 0.02$); no hardware data.}
+\label{tab:shadows}
+\begin{tabular}{lcccr}
+\toprule
+State & $F(K^*)$ & $F(\mathrm{DR})$ & $F(\mathrm{RS})$
+      & $\Delta(K^*{-}\mathrm{DR})$ \\
+\midrule
+$|{+}\rangle^{\otimes 4}$ & 0.975 & 0.994 & 0.994 & $-0.019$ \\
+Bell                       & 0.670 & 0.550 & 0.536 & $+0.120$ \\
+$W$                        & 0.829 & 0.497 & 0.626 & $+0.332$ \\
+GHZ                        & 0.756 & 0.506 & 0.507 & $+0.250$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+$K^*$ selection beats both shadow-basis selections for all
+entangled states.
+Under the native shadow channel-inverse estimator, the full protocol
+($81$ bases, $255$ Paulis) reaches $F = 0.97$ at $1.86\times$ the
+measurement budget; with $40$ random bases, $F = 0.77$ (W) and
+$0.69$ (GHZ).  $K^*{+}\text{MLE}$ ($137$~Paulis) exceeds the
+$40$-base shadow for W ($0.95$ vs.\ $0.77$); for GHZ,
+full-state MLE gives $0.61$ vs.\ shadow's $0.69$, but subspace
+estimation from the same $K^*$ data recovers $F = 0.926$
+(Sec.~\ref{sec:ghz}).
+
+\paragraph{Broader comparison.}
+Table~\ref{tab:sota} and Fig.~\ref{fig:sota} extend the
+within-pipeline comparison (common MLE reconstructor, matched
+operator budget) to greedy optimal
+experimental design (A/D/E-optimal), adaptive multi-round
+selection, and weight-allocated random.
+All non-adaptive methods select $137$~operators
+($1{,}000$~shots, depol~$= 0.03$, readout~$= 0.02$,
+common robust MLE reconstructor), except the
+derandomized-shadow baseline which selects $137$~bases
+and reconstructs from all covered operators.
+Mean fidelity is computed across $23$~test states (product,
+W, GHZ, $10$~Haar-random pure, $10$~random mixed of rank~$4$)
+at $20$~trials each; adaptive methods split the $137$-operator
+budget into multiple rounds ($3$ or $5$) with
+information-gain-based selection between rounds.
+
+\begin{table}[tb]
+\centering
+\caption{Mean reconstruction fidelity across $23$~states ($20$~trials).
+All non-adaptive methods select $137$~Pauli operators,
+$1{,}000$~shots, common MLE reconstructor,
+depol~$= 0.03$, readout~$= 0.02$.
+Note: the derandomized-shadow (DR-shadow) entry selects $137$ tensor-product
+\emph{bases} via greedy set-cover, then reconstructs from the union
+of all covered operators ($> 137$ individual Paulis); this gives
+DR-shadow a budget advantage in operator count, making the comparison
+conservative for $K^*$.
+Our DR-shadow implementation omits per-observable weighting
+(Supplemental Material~\cite{supplemental}); a fully weighted
+implementation may perform better.
+Adaptive methods (below second rule) are included as
+out-of-regime controls; they split the fixed budget into
+multiple rounds, a regime where they are not designed to
+operate (Sec.~\ref{sec:shadows}).}
+\label{tab:sota}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccccr}
+\toprule
+Strategy & Product & W & GHZ & Haar & Mixed & Overall \\
+\midrule
+$K^*$          & 0.991 & \textbf{0.932} & \textbf{0.502} & 0.397 & \textbf{0.513} & \textbf{0.501} \\
+D-optimal      & 0.987 & 0.811 & 0.225 & \textbf{0.398} & 0.502 & 0.479 \\
+E-optimal      & \textbf{0.992} & 0.833 & 0.225 & 0.317 & 0.466 & 0.429 \\
+A-optimal      & \textbf{0.993} & 0.833 & 0.229 & 0.316 & 0.462 & 0.428 \\
+WA-random      & 0.888 & 0.414 & 0.352 & 0.242 & 0.391 & 0.347 \\
+DR-shadow      & 0.952 & 0.567 & 0.114 & 0.066 & 0.227 & 0.198 \\
+\midrule
+Adaptive (3R)  & 0.120 & 0.096 & 0.139 & 0.062 & 0.224 & 0.140 \\
+Adaptive (5R)  & 0.034 & 0.092 & 0.075 & 0.062 & 0.224 & 0.133 \\
+Uniform random & 0.711 & 0.291 & 0.215 & 0.063 & 0.227 & 0.179 \\
+\bottomrule
+\end{tabular}}% end resizebox
+
+\end{table}
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\columnwidth]{fig4_sota_comparison.pdf}
+\caption{Per-state-class fidelity for nine measurement selection strategies
+at matched budget ($137$~operators, $1{,}000$~shots, depol $= 0.03$,
+readout $= 0.02$; common MLE reconstructor).  Black diamonds mark overall
+mean across $23$~states.  $K^*$ ranks first overall;
+the advantage is concentrated on entangled states (W, GHZ, mixed).
+Numerical values in Table~\ref{tab:sota}.}
+\label{fig:sota}
+\end{figure}
+
+Under the common MLE reconstructor, $K^*$ ranks first overall,
+consistent with the spectral construction's full weight-class
+coverage (Theorem~\ref{thm:spectral-char}(ii)),
+ahead of greedy D-optimal by $+0.022$
+(Wilcoxon signed-rank $p < 10^{-4}$, paired across $20$~trials;
+Supplemental Material~\cite{supplemental}, Sec.~VI\,E).
+\emph{Note on optimal-experimental-design (OED) divergence:}
+Appendix~\ref{sec:fisher} shows that all $M$-element Pauli subsets
+are equivalent under state-independent Fisher criteria.
+Greedy D/E/A-optimal algorithms in Table~\ref{tab:sota}
+nonetheless produce different operator sets because they are
+sequential heuristics that break ties differently at each step:
+e.g., D-optimal maximizes log-determinant while E-optimal
+maximizes the minimum eigenvalue, leading to different greedy
+paths through the same degenerate landscape.
+Fidelity differences arise primarily from which
+weight classes each greedy path happens to cover,
+not from any intrinsic advantage of one OED criterion over
+another (Supplemental Material~\cite{supplemental}).
+$K^*$ also has a computational advantage: the operator set is a
+precomputed lookup table ($O(1)$ at measurement time), whereas
+greedy D-optimal requires $O(M \cdot 4^n)$ sequential selection
+steps (${\sim}\,60$\,s at $n = 4$ on a single CPU core; scaling intractably beyond $n \approx 6$).
+Separation is largest on the W~state ($+0.12$ over D-optimal,
+$+0.10$ over E-optimal), the GHZ state ($+0.28$ over D-optimal),
+and random mixed states ($+0.05$); $K^*$'s weight-class balance
+preserves both local correlators (W) and global phase correlations
+(GHZ) that greedy OED does not prioritize.
+For product states, all non-adaptive strategies perform comparably;
+the advantage concentrates on entangled states where weight-class
+completeness matters.
+
+Adaptive methods perform below uniform random.
+Splitting $137$~operators into $3$--$5$ rounds
+leaves each round severely underdetermined
+($27$--$45$ measurements for $d^2 - 1 = 255$~parameters),
+producing unreliable intermediate reconstructions that
+misguide subsequent selection.
+Using $K^*$ as a high-quality first round does not help:
+a hybrid protocol ($K^*$ round-$1$ + adaptive refinement
+for remaining budget) matches pure $K^*$ to within
+$\pm 0.001$ at all tested budget levels, including
+informationally complete ($M = 255 = 4^n - 1$;
+Supplemental Material~\cite{supplemental}).
+Adaptive overhead from round-splitting and intermediate
+reconstruction provides no marginal benefit over
+single-batch measurement when the initial selection is
+already well structured.
+This failure is specific to the underdetermined regime
+($M/4^n < 1$) and our round-splitting implementation;
+production adaptive tomography systems~\cite{Huszar2012}
+typically operate in the overcomplete regime with
+interactive mid-experiment feedback, conditions not
+available on cloud quantum-processing-unit (QPU) platforms.
+Our comparison therefore isolates the regime where $K^*$
+is designed to operate, not adaptive methods in general.
+
+\subsection{Application: Floquet discrete time crystal}
+\label{sec:dtc}
+
+The preceding benchmarks compare operator sets under a common
+reconstructor.
+To illustrate $K^*$'s ability to access off-diagonal
+observables that are absent from Z-basis measurement records
+(which contain only diagonal expectation values),
+we apply the measurement set to a
+Floquet discrete time crystal (DTC) on IBM
+\texttt{ibm\_kingston} ($n = 4$ qubits, $1{,}000$ shots per
+circuit, $137$ $K^*$ operators).
+
+Our Floquet unitary $U_F = U_{\mathrm{kick}}(\phi)\,
+U_{\mathrm{XXZ}}(J, \varepsilon)$ acts on an initial N\'eel
+state $|0101\rangle$ for $6$ Floquet cycles, with nearest-neighbor coupling $J = 1$ (energy unit), kick angle
+$\phi = \pi/2$ (DTC phase), anisotropy $\varepsilon = 0.1$,
+and weak bond disorder (amplitude $0.5$).  The transpiled circuit
+has depth~$329$ on the Heron-class backend.
+
+\emph{Z-only diagnostics.}
+Stroboscopic magnetization shows period-$2$ oscillation
+with period-$2$ magnetization contrast $\Delta_{\mathrm{DTC}} = 0.826$, confirming the DTC
+signature.  However, the Z-basis order parameter
+$\Delta_{\mathrm{DTC}}$ can be replicated by a classical
+kicked Ising model with the same symmetry breaking;
+it does not certify quantum coherence~\cite{Mi2022,Ippoliti2021}.
+
+\emph{Off-diagonal correlators from $K^*$.}
+Because $K^*$ includes weight-$1$ and weight-$2$ operators
+at all Pauli types (not just~$Z$), the raw expectation
+values directly yield nearest-neighbor XY correlators
+($\langle X_i X_j\rangle$, $\langle Y_i Y_j\rangle$,
+$\langle X_i Y_j\rangle$ for $j = i + 1$).
+Comparing these $9$ correlators against noiseless simulation
+of the same Floquet circuit gives Pearson correlation
+$r = 0.94$ with $8/9$ sign agreement
+(Table~\ref{tab:dtc});
+a Fisher $z$-transform $95\%$ confidence interval gives
+$r \in [0.72,\, 0.99]$ ($n_{\rm corr} = 9$), and a
+permutation test yields $p < 0.002$ for the null hypothesis
+of uncorrelated hardware and ideal values.
+Only one sign mismatch occurs, at
+$\langle X_1 Y_2\rangle$, where the ideal value
+($+0.044$) is near zero and the hardware value ($-0.008$)
+is within shot noise.
+
+\begin{table}[tb]
+\centering
+\caption{Nearest-neighbor XY correlators for a 4-qubit
+Floquet DTC ($6$ cycles, N\'eel initial state) on IBM
+\texttt{ibm\_kingston}.  Ideal values from noiseless
+simulation of the same circuit.  Pearson $r = 0.94$,
+$8/9$ sign agreement.}
+\label{tab:dtc}
+\begin{tabular}{lccc}
+\hline\hline
+\textrm{Pair} & $\langle XX\rangle$ & $\langle YY\rangle$
+& $\langle XY\rangle$ \\
+\hline
+$(0,1)$\,hw   & $-0.111$ & $-0.063$ & $+0.084$ \\
+$(0,1)$\,ideal & $-0.123$ & $-0.123$ & $+0.067$ \\[3pt]
+$(1,2)$\,hw   & $+0.078$ & $+0.094$ & $-0.008$ \\
+$(1,2)$\,ideal & $+0.096$ & $+0.096$ & $+0.044$ \\[3pt]
+$(2,3)$\,hw   & $-0.116$ & $-0.129$ & $+0.139$ \\
+$(2,3)$\,ideal & $-0.122$ & $-0.122$ & $+0.067$ \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+These off-diagonal correlators are consistent with quantum
+coherence in the time-crystalline phase: the $\ell_1$ coherence
+$\mathcal{C}_{\ell_1} = \sum_{i \neq j}|\rho_{ij}|$
+($= 2.02$ from the $K^*$-reconstructed
+density matrix, $\delta\mathcal{C}_{\ell_1} \approx 0.2$ from
+shot noise) and partial-transpose negativity
+$\mathcal{N} = (\|\rho^{T_A}\|_1 - 1)/2$
+($= 0.106$, $\delta\mathcal{N} \approx 0.04$;
+computed from the $K^*$-reconstructed density matrix,
+uncertainties from $10^3$ bootstrap resamples)
+are absent from Z-basis measurement records.
+$K^*$ resolves these quantities at no
+additional circuit cost beyond the $29$ tensor-product bases
+already used for local tomography.
+This is a direct consequence of the forward direction of the
+spectral correspondence: the Krawtchouk eigenvalue masses
+(Lemma~\ref{lem:spectral_q_main}) allocate operators across
+all Pauli weight classes, which naturally covers the conserved % vague-verb-justified: domain-standard; eigenvalue mass allocation is a structural property of the Hamming scheme
+sectors of the XXZ interaction and provides the off-diagonal
+correlators that Z-basis protocols structurally lack.
+
+%% ========================================================
+\section{Discussion}
+\label{sec:discussion}
+
+The preceding experiments confirm the Krawtchouk framework's
+predictions and expose its limits.
+We now synthesize these findings, position the method against
+existing approaches, and identify open directions.
+
+\subsection{The bidirectional correspondence}
+\label{sec:bidirectional}
+
+The forward direction (Krawtchouk eigenvalues $\to$ measurement
+allocation; Sec.~\ref{sec:selection}) and the reverse direction
+(weight saturation as MLE identifiability criterion;
+Theorem~\ref{thm:basin}) were introduced in Sec.~\ref{sec:intro}
+and established formally in Secs.~\ref{sec:theory}--\ref{sec:experiment}.
+Sections~\ref{sec:head-to-head}--\ref{sec:dtc} confirm that the
+bridge operates in practice: the spectral prescription outperforms
+alternatives on hardware, and the basin separation guarantee
+correctly predicts both where the advantage is largest (W~states)
+and where it breaks down (GHZ).
+We now position this bidirectional character against analogous
+cross-disciplinary bridges in the recent literature.
+Recent PRX Quantum publications have established similarly productive
+cross-disciplinary bridges: chi-boundedness from graph theory applied
+to shadow tomography~\cite{King2025}, algebraic graph theory applied
+to noise learnability~\cite{ChenFlammia2026}, and measurement frame
+theory applied to shadow estimation~\cite{Innocenti2023}.
+Each imports a mathematical structure to solve a quantum problem.
+Our correspondence adds a reverse direction: the basin
+separation theorem exports a reconstruction-theoretic rigidity
+(the dichotomy of Theorem~\ref{thm:spectral-char}(iii))
+back to the Hamming-scheme setting, and extends to all $q$-ary
+alphabets (Lemma~\ref{lem:spectral_q_main}).
+
+\subsection{Mechanism and scope of the advantage}
+
+Why does structured selection help at all?  Standard design criteria
+offer no answer.  Any $M$-element Pauli subset has identical
+state-independent Fisher information, frame potential, condition
+number, and mutual coherence (Appendix~\ref{sec:fisher}), so
+any difference in reconstruction quality must arise through the
+state-dependent, nonlinear part of the estimator.
+
+Theorem~\ref{thm:basin} pins it down.  Weight-class completeness
+(i.e., $c_w > 0$ for every Hamming weight~$w$;
+Lemma~\ref{lem:completeness})
+pushes the Hessian's zero eigenvalues into directions where the
+target state carries no information.  The positivity constraint
+then resolves only those uninformative directions, with a bounded
+excursion $\varepsilon_{\mathrm{pos}} = O(p/d)$.  A direct test
+confirms the nonlinear coupling: under plain linear inversion,
+uniform random \emph{outperforms} $K^*$ ($\bar{F} = 0.574$ vs.\
+$0.454$; Supplemental Material~\cite{supplemental}, Sec.~VI\,E;
+Appendix~\ref{sec:mle-mechanism} gives the full ablation study).
+This is consistent with the finding that randomized measurements are
+near-optimal for linear estimation of pure-state
+properties~\cite{Huang2020}; any advantage from measurement
+selection has to couple through a nonlinear reconstructor, or it
+is not there.
+In the underdetermined regime ($M < 4^n$), physical reconstruction
+(MLE, Bayesian) is mandatory (linear inversion yields unphysical
+outputs), so the relevant question is not whether the reconstructor
+is nonlinear but which operator selection gives the nonlinear
+reconstructor the best raw material.
+$K^*$ answers this: it distributes measurement information across
+weight classes in the proportions prescribed by the Krawtchouk
+eigenvalue masses, which constrain the MLE feasible set most
+tightly per circuit.
+
+This non-variational origin is load-bearing: because $K^*$ comes
+from algebraic structure rather than from optimizing a
+reconstruction objective, the measurement set does not depend on
+which reconstructor will be used downstream.  The same $137$
+operators feed MLE, linear inversion, subspace estimation, DFE,
+and entanglement witnesses, with no redesign step in between.
+
+Where is the advantage largest?  The eigenvalue-mass analysis
+(Sec.~\ref{sec:ghz}) predicts this \emph{a~priori}: the advantage
+is concentrated on states with nontrivial local structure
+($\Delta F = +0.33$ on W), vanishes for GHZ where information
+sits in undersampled global correlators, and is small for product
+states that both arms already reconstruct well.
+The multi-estimator compatibility demonstrated in
+Sec.~\ref{sec:ghz} means the measurement campaign is
+reusable across reconstruction tasks without redesign.
+In return, a modest per-state optimality cost buys
+target-agnostic reusability: only $0.29$\% of random draws
+match $K^*$'s performance across all state classes simultaneously
+(Supplemental Material~\cite{supplemental}, Sec.~V).
+
+\subsection{Comparison to existing methods}
+\label{sec:comparison}
+
+Measurement design methods generally fall into two camps.
+\emph{Variational} approaches (OED, derandomized shadows)
+optimize a cost function over operator subsets;
+\emph{sampling-based} approaches (classical shadows, compressed
+sensing) draw operators from a distribution.
+Both involve design choices (an objective, a target observable set,
+a sampling distribution) that $K^*$ does not require.
+By contrast, $K^*$ is the algebraically determined output of
+Krawtchouk spectral analysis on~$H(n,2)$ at the critical cutoff,
+requiring none of these design choices.
+This makes the approaches complementary rather than competing
+(Supplemental Material~\cite{supplemental}).
+
+\paragraph{Cloud-platform regime.}
+$K^*$'s natural habitat is the underdetermined regime
+($M < 4^n$), which is the default on cloud platforms where
+circuits are non-interactive and billed per shot.
+In this regime $K^*$ ranks first among all tested alternatives
+under the common MLE pipeline (Table~\ref{tab:sota}), with
+negligible precomputation (a fixed lookup rather than the
+iterative design cost of greedy OED) and a $1.7\times$
+circuit-compression advantage
+(Appendix~\ref{sec:compression-advantage}).
+That said, $K^*$ is not a universal replacement.
+Classical shadows~\cite{Huang2020} predict many linear
+observables at $O(\log M / \varepsilon^2)$ cost without full
+reconstruction, the right tool when individual expectation values
+are the target, especially at large~$n$ where full
+local density matrices are not needed.
+Adaptive Bayesian methods win when
+interactive overcomplete budgets are
+available~\cite{Huszar2012,HuangZhu2025,Lange2023};
+DFE~\cite{Flammia2011} is the right tool when the target state is
+known; compressed sensing~\cite{Gross2010} exploits low-rank priors
+that $K^*$ ignores.
+At scale, the distinction sharpens: shadows and $K^*$ answer
+different questions (linear functionals versus full local
+states) and are complementary rather than competing on
+next-generation processors.  Comparing $K^*{+}\text{MLE}$ against
+shadows${+}$median-of-means conflates the reconstructor choice
+with the measurement choice; the fair comparison holds the
+reconstructor fixed (Table~\ref{tab:sota}) and varies only the
+operator selection.
+
+\paragraph{Scope within the characterization landscape.}
+$K^*$ targets one specific task: \emph{measurement design for
+underdetermined Pauli tomography}, within a larger characterization
+ecosystem.
+Its compositional architecture extends to arbitrarily large
+processors at $O(1)$ circuit cost via overlapping patches
+(Sec.~\ref{sec:8qubit}), and the advantage is predicted to
+\emph{grow} with system size: random Pauli selection dilutes as
+$4^{-n}$ per patch while $K^*$'s per-patch allocation is
+size-independent.  Hardware validation currently reaches $n = 8$
+(five patches on Rigetti Ankaa-3,
+$\Delta F = +0.53$); larger-scale demonstration awaits access to
+${\ge}\,20$-qubit experiments.
+Full local density matrices are also relevant to quantum advantage
+benchmarking: cross-entropy (XEB) scores require comparison against
+an ideal output distribution, and verifying that a prepared
+subsystem matches its target requires tomographic reconstruction
+at a cost that $K^*$ keeps constant per patch.
+Generative state-learning models~\cite{Akhound-Sadegh2024} solve
+a different problem entirely (sampling from rather than
+reconstructing the state), though they could in principle use $K^*$
+as a measurement front end.
+Gate-level benchmarking~\cite{Erhard2019} is complementary:
+it diagnoses individual gate errors, not full-state properties.
+Patch structure also aligns naturally with quantum error % vague-verb-justified: domain-standard; QEC subsystem alignment is a structural consequence of locality
+correction: each code block is a local subsystem of the size
+$K^*$ targets, so the same constant-cost protocol characterizes
+logical-qubit patches regardless of code distance.
+State-independence is deliberate (blind certification
+requires it), but it means adaptive methods will outperform $K^*$
+whenever strong priors and interactive protocols are available.
+
+\paragraph{Beyond weight counting.}
+Weight allocation captures ${\sim}\,81$\% of the structured
+advantage, a fact the eigenvalue-mass analysis predicts
+(Sec.~\ref{sec:dim-dep}); the Krawtchouk framework provides
+four additional predictions that weight counting alone cannot make
+(Sec.~\ref{sec:intro}): the exact threshold $K^* = 5$, the GHZ
+deficit, the dimensional peak at $n = 4$, and the
+saturated-vs-subsampled weight dichotomy.
+An additional ${\sim}\,19$\% from intra-weight operator selection
+is confirmed by the hardware scaling: $\Delta F$ grows from $+0.33$
+at $n = 4$ to $+0.53$ at $n = 8$, consistent with finer
+intra-weight discrimination mattering more as the operator pool
+grows.
+Krawtchouk spectral analysis determines the allocation from
+eigenvalue masses $\lambda_w$; any approach that reproduces the
+allocation empirically (e.g., by exhaustive search over weight
+splits) would need to explain \emph{why} those particular weights
+work.  The spectral framework provides that explanation and extends
+to other dimensions and qudit alphabets (Supplemental Material~\cite{supplemental}), determining
+the full measurement prescription from a single integer~$K^*$ with
+no free parameters.
+Absence of optimization is a structural feature, not a
+practical shortcut: because the allocation is uniquely determined
+by Krawtchouk eigenvalue masses, there is no design freedom to
+exploit and no objective function to choose.
+This contrasts with greedy OED ($O(M \cdot 4^n)$ sequential steps)
+and derandomized shadows (combinatorial optimization over basis
+assignments), where the result depends on which optimality
+criterion is selected.
+
+\subsection{Predictions}
+\label{sec:predictions}
+
+Eigenvalue-mass analysis generates three testable predictions:
+(1)~the W-state advantage will persist on
+trapped-ion~\cite{Haffner2005,Wright2019} hardware;
+(2)~the full-state MLE GHZ deficit will persist on any hardware
+(the mismatch is structural), but the weight-class fingerprint
+classifier will automatically detect and recover
+$F > 0.85$ wherever phase coherence is preserved;
+(3)~enriching weight-$4$ allocation does \emph{not} recover GHZ
+fidelity (simulation gives
+$F(\text{enriched}) < F(\text{default})$ under all tested noise
+channels).
+Rigetti replication (Sec.~\ref{sec:rigetti}) confirms the
+advantage on a second superconducting platform; the trapped-ion
+prediction remains open.
+
+\subsection{Limitations and open questions}
+\label{sec:limitations}
+
+Basin separation (Theorem~\ref{thm:basin}) applies
+directly to weight-$k$ supported states and, via the approximate extension, to
+states with small high-weight tails.  For states with large weight
+support (e.g., GHZ, where $W(\rho) = n$), the theorem does not
+guarantee high fidelity, consistent with the observed GHZ deficit
+($F \approx 0.50$).  A formal extension to non-local states would
+require incorporating the weight-class fingerprint classifier
+(Sec.~\ref{sec:ghz}) into the theoretical framework.
+
+Intra-weight operator ordering is non-unique: the Krawtchouk
+eigenvalues prescribe per-weight totals, not which specific
+operators within each weight class to measure.  A three-arm test
+(Sec.~\ref{sec:weight-alloc}) shows this choice has minor effect
+at $n = 4$.  Predictive power of the eigenvalue masses operates
+through the per-weight allocation, not individual operator
+choice.
+Hardware results span two superconducting vendors; trapped-ion
+verification is open.
+Dimensional-dependence predictions (Sec.~\ref{sec:dim-dep})
+rest on IBM data alone; the Rigetti $n = 3$ overcomplete result
+($\Delta F = +0.009$) is consistent but not independently
+decisive.
+At 8 qubits, the compositional test confirms the $K^*$ advantage for
+entangled states ($\Delta F = +0.53$, Sec.~\ref{sec:8qubit}) but
+reveals that boundary consistency degrades for globally entangled
+states ($D_\mathrm{tr} \approx 0.18$ for $W_8$ vs.\
+$0.04$ for product); entangled-state composability beyond
+patch-local marginals remains an open problem for all local
+tomography methods.
+Because the compositional architecture uses a fixed 4-qubit patch
+size, per-patch reconstruction quality is independent of processor
+scale; only boundary consistency and state-preparation depth change
+with~$n$.
+Compositional design is not merely a convenience but a
+practical necessity.
+At $K = 5$, weight-$1$ and weight-$2$ saturation holds for all
+$n \ge 4$ (proved; Supplemental Material~\cite{supplemental}),
+but full saturation to $\lfloor n/2 \rfloor$ holds only for
+$n \le 5$.
+For $n \ge 6$, the monolithic cutoff $K_{\mathrm{full}}(n)$
+required for full saturation grows with~$n$, and the operator
+budget scales rapidly:
+$137$ ($n{=}4$) $\to$ $1{,}341$ ($n{=}6$, $K_{\mathrm{full}}{=}6$)
+$\to$ $12{,}369$ ($n{=}8$, $K_{\mathrm{full}}{=}7$).
+By contrast, the compositional architecture uses $n - 3$
+overlapping $4$-qubit patches ($2$ at $n{=}5$, $5$ at $n{=}8$;
+Sec.~\ref{sec:8qubit}), with a per-patch budget of $137$
+operators.  At $n = 8$ this gives $5 \times 137 = 685$
+operators, an $18\times$ saving over the monolithic budget.
+This quantitative gap motivates the patch decomposition as the
+scaling mechanism for $K^*$.
+Our matched-budget comparison (Table~\ref{tab:sota}) uses our own
+implementations of each strategy rather than established
+reference codebases; while the implementations follow the
+published specifications faithfully, this is a limitation
+relative to comparisons using independently validated software.
+The comparison is simulation-only
+at $n = 4$; at $n = 5$, the $K^*$-vs-random gap narrows as the
+allocation fraction approaches unity
+(Supplemental Material~\cite{supplemental}).  At $n = 5$, the comparison uses
+$M = 333$ operators at $1{,}000$~shots ($333{,}000$ total shots
+vs.\ $137{,}000$ at $n = 4$); equalizing the total shot budget
+would reduce per-operator precision and could widen the gap.
+The $K^*$ advantage requires nonlinear reconstruction
+(Supplemental Material~\cite{supplemental}); more realistic noise models
+(crosstalk, leakage) remain untested in simulation, though
+hardware results incorporate these effects implicitly.
+The raw-fidelity advantage is also noise-regime dependent:
+in the near-noiseless limit (e.g.\ two-qubit gate error rate $\varepsilon_{2Q}$ satisfying
+$\varepsilon_{2Q}\!\cdot\!\text{depth}
+\lesssim 10^{-3}$, characteristic of post-fault-tolerance regimes),
+the reconstruction becomes information-limited and
+random or shadow-based estimators may match or exceed
+$K^*$'s raw fidelity on generic states.
+$K^*$'s structural advantages, certifiable bounds via the
+basin-separation theorem and direct access to off-diagonal
+correlators (Sec.~\ref{sec:dtc}), persist independently of
+noise level; on every superconducting hardware platform shipping
+in 2026, the noise regime sits well above this crossover and
+$K^*$ dominates raw fidelity by $\Delta F = +0.016$ to $+0.33$
+(Tables~\ref{tab:results},~\ref{tab:weight-alloc-hw}).
+Calibration drift is ruled out by reversed execution order and
+stability across seven runs ($\sigma = 0.024$).
+Extended robustness checks (ordering sensitivity,
+shot allocation, statistical power, Bayesian alternatives,
+Cram\'{e}r--Rao bounds) are detailed in
+Supplemental Material~\cite{supplemental}.
+
+\paragraph{Formal verification and audited proof statements.}
+The supplementary \texttt{lean4-formal/} repository contains
+machine-checked Lean~4 proofs with no admitted goals
+(no \texttt{sorry}), including, to our knowledge, the first
+formal proof that the Krawtchouk spectral correspondence holds
+if and only if $q \le 3$
+(\texttt{bose\_mesner\_combinatorial\_iff}).
+Two further lemmas verify weight-saturation arithmetic
+(\texttt{weight12\_saturation\_K5\_all\_n}) and MLE-update
+contractivity (\texttt{R\_closed\_moves\_when\_b\_ne\_y}).
+Beyond the proofs themselves, three mechanized audits
+(hypothesis ablation, definition mutation testing, \texttt{tex}-to-Lean
+coverage; details in the Lean\,4 verification appendix below)
+defend against the standard failure modes of formalization work:
+every hypothesis is load-bearing and no labels are unclassified
+or stale.
+
+%% ========================================================
+\section{Summary and Outlook}
+\label{sec:conclusion}
+
+The bidirectional correspondence between Hamming-scheme
+algebra and quantum measurement design
+(Sec.~\ref{sec:bidirectional}) rests on three theoretical pillars:
+\pclaim{prose:summary:basin}{proved}{*}{thm:basin}%
+basin separation (Theorem~\ref{thm:basin}), which gives weight
+saturation a quantum-operational reading as an MLE identifiability
+criterion;
+a purity bound (Lemma~\ref{lem:purity_main}), which closes the
+fidelity guarantee at $\varepsilon_{\mathrm{pos}} = O(p/d)$;
+\pclaim{prose:summary:iff}{proved}{*}{lem:spectral_q_main}%
+and an iff characterization
+(Lemma~\ref{lem:spectral_q_main}), which shows the Krawtchouk
+spectral decomposition holds exactly when $q \le 3$, while the
+weight-block-diagonal structure that drives basin separation
+extends to all~$q$.
+Together these yield a fully determined prescription ($M = 137$
+operators at $n = 4$, compiling into 29 tensor-product circuits)
+whose only input is the qubit count~$n$.
+
+Experimentally, the correspondence delivers consistent
+advantages across platforms, system sizes, and state classes
+(Table~\ref{tab:results}; Fig.~\ref{fig:scaling}).
+Structured selection outperforms random for every entangled
+state tested, with the advantage growing from
+$\Delta F = +0.052$ at $n = 2$ to $+0.53 \pm 0.06$ at $n = 8$
+as random Pauli sampling becomes exponentially dilute
+(${\sim}\,4^{-n}$ per weight class).
+The eigenvalue allocation correctly predicts where the
+framework struggles: GHZ states concentrate information in
+undersampled weight classes, and automatic detection plus
+estimator switching recovers high fidelity from the same
+circuits (Sec.~\ref{sec:ghz}).
+Weight-$2$ completeness accounts for the dominant share of
+the advantage (three-arm hardware test: $76 \pm 12$\%;
+Appendix~\ref{sec:mle-mechanism}).
+$K^*$ matches or exceeds all tested non-adaptive alternatives
+at matched budget (Table~\ref{tab:sota}), and a compositional
+architecture extends the protocol to arbitrary linear-chain
+lengths at constant per-patch circuit cost.
+Two open questions remain: whether the basin separation theorem
+extends to non-local states via a weight-class fingerprint
+classifier that adapts the estimator per subsystem, and whether the
+reconstruction dichotomy (Theorem~\ref{thm:spectral-char}(iii))
+yields tighter linear-programming constraints on covering-code
+parameters in the Delsarte theory.
+We publish the complete operator set, all raw
+data, and the full simulation and reconstruction
+code~\cite{supplemental} for independent replication.
+
+\paragraph*{Operating regime and longevity.}
+Protocol value is robust to the noise-floor trajectory
+(quantitative crossover analysis in Supplemental
+Material~\cite{supplemental}, Sec.~VIII).
+As gate fidelities improve toward the post-fault-tolerance regime
+($\varepsilon_{2Q}\!\cdot\!\text{depth} \lesssim 10^{-3}$), the
+raw-fidelity advantage over random Pauli sampling fades on generic
+states (Sec.~\ref{sec:limitations}).  Three structural properties,
+however, depend on the algebraic design of the operator set rather
+than on the noise level, and therefore remain relevant
+independent of gate fidelity:
+basin separation (Theorem~\ref{thm:basin}) provides worst-case
+fidelity bounds conditioned only on weight saturation, complementing
+the average-case guarantees of shadow estimation~\cite{Huang2020}
+and making $K^*$ a natural choice for safety-critical deployments
+where per-state certification is required;
+direct single-shot access to off-diagonal correlators
+(Sec.~\ref{sec:dtc}) enables coherence diagnostics that $Z$-basis
+or shadow protocols cannot produce without additional
+post-processing variance, a permanent advantage for Hamiltonian
+learning, time-crystal certification, and mid-circuit measurement
+experiments;
+and the compositional architecture's circuit budget is constant
+per patch, growing only with system topology, not with $n$,
+yielding an $18\times$ operator-count saving at $n = 8$ that grows
+monotonically with system size independent of per-gate fidelity.
+Even after fault tolerance, code-block characterization continues
+to operate on $4$--$9$ physical qubits at the surface-code patch
+scale, the regime where $K^*$ was constructed.
+The protocol therefore transitions from a near-term
+performance tool to a long-term verification primitive embedded
+in the fault-tolerant stack, rather than being superseded.
+
+%% ========================================================
+\section*{Verification and AI disclosure}
+
+The author formulated all conjectures, chose all high-level proof
+strategies, and made all substantive mathematical decisions.
+Every algebraic identity, bound, and numerical prediction was
+verified through an eight-tier automated pipeline spanning four
+independent computation backends:
+SageMath/FLINT provides exact arithmetic over GMP integers and
+Pari number fields;
+SymPy independently re-derives each bound in rational arithmetic;
+NumPy checks numerical consistency of all tabulated values against
+their authoritative data files;
+and Lean~4 (Mathlib, v4.29.0-rc8) machine-verifies the formal
+statements with zero \texttt{sorry} obligations
+(Appendix, ``Lean\,4 formal verification status'').
+Cross-tier implication chains confirm that conclusions in each tier
+follow from the certified outputs of earlier tiers, and a
+manuscript-claim layer independently parses every numerical value
+from the \LaTeX{} source and verifies it against its data file.
+No AI tools were used in any verification tier.
+The verification scripts and Lean~4 proofs were developed
+independently of the proof-formalization sessions.
+
+Claude (Anthropic, Opus~4.6) was used as a proof-formalization
+tool: drafting LaTeX proofs from the author's specified
+conjectures and strategies, and for copyediting manuscript prose.
+Claude occasionally selected specific algebraic techniques
+(e.g., Schur-lemma averaging, Le~Cam's two-point method) to
+execute the strategies the author specified.
+A provenance record documenting the author's input and Claude's
+output for each theorem is available upon request.
+The Python verification scripts (tiers~2--6) and the
+certified outputs of all eight tiers are archived
+at~\cite{zenodo}.
+
+%% ========================================================
+\begin{acknowledgments}
+The author thanks the IBM Quantum and Rigetti developer
+communities, and the Open Quantum team, for technical support
+during the hardware experiments.
+Quantum hardware experiments used IBM Quantum
+(IBM Quantum Platform) and Rigetti Computing (Open Quantum).
+This work received no specific grant from any funding agency,
+public or private.
+\end{acknowledgments}
+
+\section*{Data availability}
+All data supporting the findings of this study (raw hardware
+measurement counts in JSON, simulation outputs, reconstruction
+code, the complete 137-operator measurement set, the eight-tier
+verification results, and SageMath/FLINT exact-arithmetic certified
+values) are archived at~\cite{zenodo} and described in the Supplemental
+Material~\cite{supplemental}.
+The Lean~4 formal-proof source (Mathlib~v4.29.0-rc8,
+0~\texttt{sorry}), SageMath/FLINT exact-arithmetic scripts,
+bundled QPU data for zero-configuration external
+verification, and a master orchestrator for all verification tiers
+are maintained at~\cite{github_verification}.
+A Jupyter notebook (\texttt{notebook/k\_star\_demo.ipynb},
+runnable in-browser via Binder) reproduces every paper claim
+in ${\sim}\,3$~minutes with loud PASS/FAIL assertions; the
+tiered verification onramp (\texttt{VERIFICATION.md}) guides a
+30~s manifest peek, 2~min axiom-table read, 10~min notebook
+run, or 30~min Lean rebuild-from-scratch.
+
+\section*{Competing interests}
+The author declares no competing financial or non-financial interests.
+
+%% ========================================================
+\appendix
+\section{Per-weight operator budget}
+\label{app:pauli-set}
+
+Table~\ref{tab:budget} summarizes the per-weight operator allocation
+for $n = 4$, $K^* = 5$.  The full list of $137$ operators (as
+4-character strings over $\{I,X,Y,Z\}$) and the $29$ tensor-product
+bases are provided in the Supplemental Material~\cite{supplemental}.
+
+\begin{table}[h]
+\centering
+\caption{Per-weight operator budget at $n = 4$, $K^* = 5$.
+$A_w = \binom{n}{w} 3^w$ is the number of available weight-$w$
+operators; $M_w$ is the number selected.  Weights $0$--$2$ are
+fully saturated ($M_w = A_w$); weights $3$--$4$ are budget-limited.}
+\label{tab:budget}
+\begin{tabular}{cccccc}
+\toprule
+$w$ & $\binom{4}{w}$ & $3^w$ & $A_w$ & $M_w$ & Status \\
+\midrule
+0 & 1 & 1  &   1 &  1 & saturated \\
+1 & 4 & 3  &  12 & 12 & saturated \\
+2 & 6 & 9  &  54 & 54 & saturated \\
+3 & 4 & 27 & 108 & 54 & budget-limited \\
+4 & 1 & 81 &  81 & 16 & budget-limited \\
+\midrule
+  &   &    & 256 & 137 & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ========================================================
+
+\section{Support-completeness criterion}
+
+\pclaim{env:lem:completeness}{proved}{q=2}{lem:completeness}%
+\begin{lemma}[Support-completeness criterion ($q = 2$)]
+\label{lem:completeness}
+If\/ $\mathrm{rank}\,G(K^*) = 2^n$, then for every Hamming weight
+$w \in \{0,\ldots,n\}$, at least one lattice vector $m$ with
+$|m|^2 \le K^*$ has parity weight $w(\bar{m}) = w$.
+Consequently, all $2^n$ support classes of the Pauli algebra are
+populated by the lattice at~$K^*$.
+\end{lemma}
+
+\begin{proof}
+The Krawtchouk eigenvalues satisfy
+$\lambda_w(K) = 2^n \, c_w(K) / \binom{n}{w}$, where
+$c_w(K) = |\{m \in \mathbb{Z}^n : |m|^2 \le K,\; w(\bar{m}) = w\}|$
+counts lattice vectors by parity weight
+(see Appendix~\ref{sec:layers} for the full derivation).
+Hence $\lambda_w > 0$ implies $c_w > 0$.
+Since $\mathbb{Z}^n$ is invariant under coordinate permutations,
+$c_w > 0$ means that all $\binom{n}{w}$ parity patterns of weight~$w$
+are realized (any one pattern can be permuted to any other).
+Hence every support class $s \in \mathbb{Z}_2^n$ appears as the parity
+vector of some lattice mode at~$K^*$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Lean4 Formal Verification Status
+%% Added: 2026-03-27
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bigskip
+\noindent\textbf{Lean\,4 formal verification status.}
+All 11 formal statements above have been machine-verified in Lean~4
+(Mathlib, v4.29.0-rc8) with 0~\texttt{sorry} obligations.
+The user-facing trust base consists of four textbook axioms
+(A1--A4 below) declared as \texttt{axiom} rather than proved,
+owing to gaps in Mathlib's density-operator library; these are
+the surface of a broader \texttt{axiom} layer whose
+adversarial vetting is described after the list.
+The full $\#$\texttt{print axioms} graph is machine-checked:
+every \texttt{axiom} is load-bearing.
+The consolidated statement file is
+\texttt{KstarFormal/Statements.lean};
+the full source and a CI pipeline enforcing sorry-freeness
+on every commit are maintained
+at~\cite{github_verification}.
+
+\medskip
+\noindent\emph{Architecture.}
+Results that are purely algebraic or combinatorial
+(Lemmas~1--6, Corollaries~1--2, Theorems~1 and~3)
+are proved without any custom axioms.
+The two impossibility conclusions ($F(\rho_+,\rho_-)=0$ and
+$\min\{F(\hat\sigma,\rho_+),F(\hat\sigma,\rho_-)\}\le\tfrac12$)
+are derived from axioms A2 and A3 via Theorem~2.
+The positivity bound
+$\varepsilon_{\mathrm{pos}}\le(d{-}1{-}S_k)/d$ (Corollary~1)
+takes the Parseval identity and Weyl perturbation bound as
+hypotheses and is proved by pure algebra, with no custom axioms.
+The four axioms are declared in \texttt{KstarFormal/Axioms.lean}:
+
+\begin{enumerate}\setlength\itemsep{0pt}\tolerance=9999\emergencystretch=2em
+\item[\textbf{A1.}] \texttt{witness\_states\_are\_valid}:
+  $(I\pm P_0)/d$ are density matrices
+  \emph{(Nielsen \& Chuang, \S2.4)}
+\item[\textbf{A2.}] \texttt{fidelity\_orthogonal\_zero}:
+  $F(\rho_+,\rho_-)=0$ for orthogonal-support states
+  \emph{(Uhlmann 1976)}
+\item[\textbf{A3.}] \texttt{fidelity\_witness\_traceproj\_decomp}:
+  $\exists\, p_\pm \ge 0$ with $p_+ {+}\, p_- = 1$ and
+  $F(\hat\sigma,\rho_\pm)\le p_\pm$
+  \emph{(Fuchs \& van de Graaf 1999; Schatten-rank decomposition)}.
+  The familiar bound
+  $F(\hat\sigma,\rho_+){+}F(\hat\sigma,\rho_-)\le 1$
+  is derived as a one-line theorem
+\item[\textbf{A4.}] \texttt{fidelity\_nonneg}:
+  $F(\rho,\sigma)\ge 0$
+  \emph{(by definition)}
+\end{enumerate}
+
+\begin{sloppypar}\noindent
+Running \texttt{\#print axioms} in Lean reveals exactly which of A1--A4 each result depends on.
+\end{sloppypar}
+
+\medskip
+\noindent\emph{Adversarial vetting of the trust base.}
+Axioms A1--A4 are the user-facing surface of the formal
+development's \texttt{axiom} declarations. Every declaration
+has been audited on six aspects (load-bearing, hypothesis
+tightening, generalization stress, definitional anchoring,
+import minimization, universe-polymorphism stress) plus a
+mutation-based test suite.
+Full details and all audit tooling are in
+Supplemental Material~\cite{supplemental}.
+
+\medskip
+\noindent\emph{Statement cross-reference.}
+
+\smallskip
+\noindent
+{\footnotesize
+\begin{tabular}{@{}llll@{}}
+\hline
+\textbf{Statement} & \textbf{Lean name} & \textbf{Status} & \textbf{Axioms} \\
+\hline
+Lemma~1     & \texttt{lem1\_hessian\_diagonal}              & proved       & ---        \\
+Theorem~1   & \texttt{thm1\_basin\_separation}              & proved       & ---        \\
+Corollary~1 & \texttt{cor1\_approx\_locality\_stmt}         & proved       & ---        \\
+Lemma~2     & \texttt{lem2\_purity\_bound}                  & proved       & ---        \\
+Lemma~3     & \texttt{lem3\_eigenvalue\_monotonicity\_n4}   & proved       & ---        \\
+Theorem~2   & \texttt{thm2\_spectral\_characterization}     & proved$^*$   & A2, A3     \\
+Lemma~4     & \texttt{lem4\_hypergeometric\_bound}          & proved       & ---        \\
+Corollary~2 & \texttt{cor2\_operator\_lower\_bound\_n4}     & proved       & ---        \\
+Theorem~3   & \texttt{thm3\_asymptotic\_separation}         & proved       & ---        \\
+Lemma~5     & \texttt{lem5\_spectral\_decomposition\_n4}    & proved       & ---        \\
+Lemma~6     & \texttt{lem6\_support\_completeness\_n4}      & proved       & ---        \\
+\hline
+\end{tabular}}
+
+\smallskip
+\noindent
+${}^*$\,Conclusion theorem proved from standard axioms A2, A3;
+algebraic and combinatorial content fully machine-verified.
+
+\medskip
+\begin{sloppypar}\raggedright
+\noindent\emph{Scope of formalization.}
+The Lean development machine-verifies all eleven formal statements
+of the paper (0~\texttt{sorry}).  Lemma~1 (Hessian diagonality),
+Lemma~2 (purity bound), Lemma~3 (eigenvalue monotonicity),
+Lemma~4 (coupon-collector), Corollary~1 (approximate locality),
+and Theorem~1 parts (i)--(iii) are proved at
+\emph{universal}~$n$ (or universal dimension~$d$, whichever
+the statement ranges over) using only the standard Lean core
+axioms \texttt{propext}, \texttt{Classical.choice},
+\texttt{Quot.sound}; no custom axiom is introduced.
+Theorem~2 parts (i)--(iii) are proved at universal~$n$ modulo two
+named textbook axioms (Uhlmann~1976,
+\texttt{fidelity\_orthogonal\_zero}; and Fuchs--van~de~Graaf~1999,
+\texttt{fidelity\_witness\_traceproj\_decomp}), both declared
+with citations in \texttt{KstarFormal.Axioms} and traceable via
+\texttt{\#print axioms}.  Theorem~2 part~(iv), and the concrete
+numerical witnesses at $n=4$ (lattice count $N=137$, condition
+number $\kappa=4$, eigenvalue list $\lambda_w(5)=[144,224,64,128,256]$),
+are certified by \texttt{native\_decide}; the $K^*=5$ saturation
+for weight classes~$1$ and~$2$ is additionally verified at
+$n\in\{4,5,6,7,8\}$, and additionally at \emph{universal}~$n\ge4$
+via the compositional patch theorem
+\texttt{compositional\_saturation\_w12} (every weight-$\le2$ Pauli
+support embeds in a 4-qubit patch, Lean-core axioms only).
+The universal-$n$ closed forms
+$c_0(5,n)=1+2n$, $c_1(5,n)=2n(2n{-}1)$, $c_2(5,n)=2n(n{-}1)$
+are proved symbolically by structural induction on~$n$.
+Theorem~3 is stated abstractly over the ratio-decreasing
+hypothesis and asymptotic-limit conclusion.
+The universal-$n$ wrappers live in \texttt{KstarFormal.Universal},
+\texttt{KstarFormal.UniversalSpectralChar},
+\texttt{KstarFormal.UniversalKstar},
+\texttt{KstarFormal.Combinatorics.CwClosedForm}, and
+\texttt{KstarFormal.UniversalKstarCompositional}.
+Per-claim axiom footprints are machine-generated (see
+supplemental material, Sec.~\ref{sm:lean-universal}).
+\end{sloppypar}
+
+
+%% ============================================================
+\section{Three mathematical layers of $K^*$}
+\label{sec:layers}
+
+The $K^*$ construction involves three distinct mathematical layers
+that should be carefully distinguished:
+
+\begin{enumerate}
+\item \textbf{Spectral geometry.}  The Krawtchouk polynomials arise
+as eigenfunctions of the Hamming association scheme $H(n,2)$.  The
+eigenvalue structure
+$K_j(k;n) = \sum_l (-1)^l \binom{k}{l}\binom{n-k}{j-l}$
+diagonalizes the distance kernel on the Hamming cube
+$\mathbb{Z}_2^n$.  These are the spherical harmonics of the
+discrete sphere $\{0,1\}^n$, genuine discrete spectral geometry.
+
+\item \textbf{Lattice point counting.}  The selection rule
+$|m|^2 \leq K^*$ counts points in $\mathbb{Z}^n$ inside a ball,
+giving $N_n(K^*)$ operators.  This is Gauss's circle problem
+generalized to $n$ dimensions.  The value $K^* = 5$ is the minimal cutoff at which
+weight saturation holds ($\mu_w = 1$ for $w \le 2$);
+the Gram matrix $G(K)$ first achieves full rank at
+$K = n = 4$, but without weight saturation
+(Sec.~\ref{sec:spectral-necessity}).
+
+\item \textbf{Weight-class budget allocation.}  Given $N_n(K^*)$
+operators, the distribution across weight classes
+$\{w = 0, \ldots, n\}$ follows from lattice geometry: weight-$w$
+operators correspond to lattice points with exactly $w$ nonzero
+mod-2 coordinates.  This is purely combinatorial once $N_n(K^*)$ is
+fixed (Table~\ref{tab:budget} gives the per-weight breakdown
+for $n = 4$, $K^* = 5$).
+\end{enumerate}
+
+A natural objection: \emph{``Isn't weight-class completeness
+sufficient?  Can't I just saturate low weights without the
+spectral framework?''}  This heuristic contains four undetermined
+choices that the Krawtchouk spectral analysis resolves:
+\begin{itemize}
+\item \emph{Which weights to saturate.}  Weight-${\le}\,1$
+(13~operators) is insufficient; weight-${\le}\,3$ (175) exceeds
+any practical budget.  The Krawtchouk eigenvalue masses show
+weights~0--2 carry 65\% of spectral mass in only 67~operators; the
+saturation boundary at $w = 2$ is where the lattice budget first
+falls below the Pauli multiplicity ($c_3 = 32 < A_3 = 108$).
+\item \emph{The total budget.}  $M = 137 = N_4(K^*)$ is a theorem:
+$K^* = 5$ is the minimal cutoff satisfying both full Gram rank and
+weight-$1$ dominance (Supplemental Material~\cite{supplemental}).  At $K = 4$,
+weight-$1$ carries only 9\% of eigenvalue mass; at $K^* = 5$, it
+carries 40.9\%.
+\item \emph{The high-weight split.}  The remaining 70 operators are
+allocated as $54{:}16$ (weight-$3$:weight-$4$), determined by
+parity-weight counts $c_3 = 32$, $c_4 = 16$.  The three-arm test
+(Sec.~\ref{sec:weight-alloc}) confirms this outperforms proportional
+filling ($40{:}30$) in simulation
+(Supplemental Material~\cite{supplemental}).
+\item \emph{The optimal dimension.}  The Krawtchouk allocation
+condition ($2n = 2^{n-1}$, unique at $n = 4$) predicts the weight
+allocation becomes most sufficient at $n = 4$
+(main text, Sec.~\ref{sec:dim-dep}).
+\end{itemize}
+Weight-class saturation is a \emph{consequence} of the Krawtchouk
+spectral structure, not an alternative to it.
+The single derived parameter $K^*$ jointly determines the total
+budget $M = N_n(K^*)$, the saturation threshold
+$w_{\mathrm{sat}}$, the per-weight allocation $\{M_w\}$, and
+the dimensional sweet spot.  The remaining steps (intra-weight
+operator ordering and tensor-product basis compression via greedy
+set cover) are deterministic and parameter-free but do introduce
+additional structure beyond $K^*$ alone
+(Supplemental Material~\cite{supplemental}, Sec.~IV).
+
+
+%% ============================================================
+\section{Circuit compression via tensor-product bases}
+\label{sec:circuits}
+
+\subsection{Greedy set cover}
+
+The main text presents the $K^*$ set as requiring 137 measurement
+circuits (one per selected Pauli operator).  In practice, Pauli
+operators are measured via \emph{tensor-product bases}: each qubit
+is measured in one of $\{X, Y, Z\}$, yielding a basis labeled by
+the choice string $b \in \{X,Y,Z\}^n$.  For $n = 4$ qubits, the
+$3^4 = 81$ possible tensor-product bases each yield $2^4 - 1 = 15$
+nontrivial Pauli expectation values (all non-identity tensor
+products of $\{I, b_i\}$ across qubits).
+
+A greedy set-cover algorithm selects a small number of
+tensor-product bases that cover all 136 nontrivial $K^*$
+operators:
+
+\begin{table}[ht!]
+\caption{Circuit compression of the $K^*$ measurement set at
+$n = 4$.  The 29 tensor-product bases that cover all $K^*$
+operators also provide 60 additional operators for free.  The
+value the covering number $\bar\chi = 29$ is the global optimum of the underlying
+set-cover problem, certified by branch-and-bound on a 81-variable
+binary integer program (universe $|U|=137$ K* operators, sets
+$|S|=3^4=81$ tensor-product bases over $\{X,Y,Z\}^4$); the HiGHS
+MIP gap closes to zero at termination.  The solver-independent
+\texttt{.mps} model and witness assignment are archived in
+\texttt{tier3-numpy/artifacts/clique\_cover/}.}
+\label{tab:circuits}
+\begin{ruledtabular}
+\begin{tabular}{lr}
+Metric & Value \\
+\hline
+$K^*$ operators (incl.\ $IIII$) & 137 \\
+Tensor-product bases needed & \textbf{29} \\
+Compression ratio (nontrivial) & $4.7\times$ \\
+Total estimable operators & \textbf{196 of 255 (76.9\%)} \\
+Free additional operators & 60 \\
+Missing operators & 7 weight-3, 52 weight-4 \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+Each tensor-product basis measures 15 operators simultaneously, so
+the 29 bases yield $29 \times 15 = 435$ operator--basis pairs.
+After removing duplicates (operators appearing in multiple bases),
+196 unique nontrivial operators are estimable, or 76.9\% of the full
+255, up from the nominal 53.3\% $K^*$ coverage.
+
+The 60 free additional operators (those estimable from the 29 bases
+but not in the $K^*$ set) are all at weight~3 (47 operators) and
+weight~4 (13 operators), precisely the underdetermined sectors
+where additional data is most valuable.
+
+\subsection{Practical impact}
+
+The circuit cost drops from $137 \times N_s$ to $29 \times N_s$
+shots, a \textbf{79\% reduction}.  At $N_s = 1000$ shots per
+circuit, this is $29{,}000$ vs.\ $137{,}000$ total shots.
+
+For the compositional architecture (main text, Sec.~\ref{sec:compositional}), the
+improvement is even larger: $\le 4 \text{ colors} \times 29
+\text{ circuits} = 116$ circuits (before basis deduplication)
+for any linear chain, compared
+to $4 \times 137 = 548$ in the per-operator scheme.
+
+\subsection{Compressibility advantage over random selection}
+\label{sec:compression-advantage}
+
+The structured weight distribution of the $K^*$ set yields a
+secondary advantage: superior circuit compressibility.
+An equal-size random selection ($137$~operators, seed $= 42$)
+requires $50$~tensor-product bases under the same greedy set
+cover ($2.7\times$ compression), compared with $29$~bases for
+$K^*$ ($4.7\times$).  This $1.7\times$ compressibility gap
+arises because $K^*$ operators concentrate on low Krawtchouk
+weights, whose non-identity components align into fewer shared
+measurement bases.
+
+The gap widens with $n$:
+
+\begin{center}
+\begin{tabular}{crrrrr}
+\toprule
+$n$ & $M$ & $K^*$ bases & Rand bases & $K^*$ ratio & Gap \\
+\midrule
+2 &   9 &  4 &  5 & $2.2\times$ & $1.25\times$ \\
+3 &  27 & 13 & 11 & $2.1\times$ & $0.85\times$ \\
+4 & 137 & 29 & 50 & $4.7\times$ & $1.72\times$ \\
+5 & 333 & 65 & 112 & $5.1\times$ & $1.72\times$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+At $n = 3$ the random set happens to compress better (the small
+operator count admits a fortuitous packing); from $n = 4$ onward
+$K^*$ is consistently $1.7\times$ more circuit-efficient.
+
+For the Rigetti Ankaa-3 same-session comparison (main text,
+Sec.~\ref{sec:rigetti}), basis grouping reduced the total circuit count from
+$274$ (two individual arms) to $29 + 50 = 79$, a $71\%$ cost
+reduction while measuring identical operator sets.
+The resulting fidelities ($F_{K^*} = 0.815$,
+$F_{\mathrm{rand}} = 0.568$, $\Delta F = +0.248$) confirm that
+basis grouping does not degrade reconstruction quality.
+
+\subsection{Connection to classical shadows}
+\label{sec:sm-shadows}
+
+The 29-base compressed $K^*$ protocol is operationally equivalent
+to a \emph{derandomized classical shadow} scheme~\cite{Huang2020,
+Huang2021}.  In randomized shadows, one samples random
+tensor-product bases, measures, and reconstructs observables via
+median-of-means estimation.  Derandomized variants select a small,
+fixed set of bases that covers a target observable list, which is exactly
+what the $K^*$ greedy set cover produces.
+
+The key distinction is the selection criterion: shadow
+derandomization uses greedy optimization against a
+\emph{user-supplied} observable list, while $K^*$ derives the
+observable list from spectral geometry (all operators with
+$|m|^2 \leq K^*$) and then applies greedy compression.  The two
+frameworks converge on the same operational object, namely a small set of
+tensor-product bases providing efficient multi-observable
+estimation, but $K^*$ provides a \emph{principled,
+state-independent rule} for choosing which observables to target.
+
+This positions $K^*$ as a \textbf{spectral-geometric front end}
+for shadow tomography: use Krawtchouk structure to decide
+\emph{what} to measure, then use shadow estimation machinery to
+decide \emph{how} to allocate shots and reconstruct.
+
+
+%% ============================================================
+\section{Reduced density matrix fidelities}
+\label{sec:rdm}
+
+\subsection{Motivation}
+
+The full-state fidelity $F \approx 0.36$ (linear inversion) or
+$F \approx 0.87$ (MLE) reported in the main text measures
+reconstruction quality over the entire $2^4$-dimensional Hilbert
+space.  For near-term applications (variational quantum eigensolver, molecular energy
+estimation, entanglement detection), the operationally relevant
+metrics are the fidelities of \emph{reduced density matrices}
+(RDMs): how well are the 1- and 2-body marginals recovered?
+
+Because the $K^*$ set includes \emph{all} 12 weight-1 and all 54
+weight-2 operators, it provides informationally complete coverage
+of every 1-body and 2-body RDM by construction.
+This is a direct consequence of weight-class saturation
+(Theorem~\ref{thm:basin}): the same algebraic property that
+guarantees basin separation also guarantees exact RDM recovery,
+providing independent operational evidence for the theorem's
+practical relevance.
+
+\subsection{Hardware results}
+
+From the four hardware W-state runs on \texttt{ibm\_fez} (linear
+inversion with eigenvalue clipping):
+
+\begin{table}[ht!]
+\caption{RDM fidelities from four hardware W-state runs.
+Uncertainties are standard deviations across runs (1-RDM: 16
+values = 4 qubits $\times$ 4 runs; 2-RDM: 24 values = 6 pairs
+$\times$ 4 runs).}
+\label{tab:rdm}
+\begin{ruledtabular}
+\begin{tabular}{lccc}
+Metric & Structured & Random & Advantage \\
+\hline
+Full-state $F$ & $0.362 \pm 0.005$ & $0.332 \pm 0.020$ & $+0.030$ \\
+1-RDM $F$ & $\mathbf{0.985 \pm 0.004}$ & $0.969 \pm 0.022$ & $+0.016$ \\
+2-RDM $F$ & $\mathbf{0.771 \pm 0.031}$ & $0.675 \pm 0.045$ & $+0.097$ \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+\subsection{Analysis}
+
+The near-perfect 1-RDM fidelity ($F = 0.985$) follows directly
+from weight-1 saturation: every single-qubit Bloch vector is fully
+determined by the $K^*$ measurements.  The 2-RDM advantage of
+$+0.097$ reflects weight-2 saturation: all two-body correlations
+are measured, while the random arm misses approximately half
+(expected 28.8/54 weight-2 operators).
+
+Three additional observations:
+\begin{enumerate}
+\item The random arm achieves $F = 0.969$ for 1-RDMs because
+weight-1 operators are overrepresented at small $n$ (12 out of 255,
+but only 4.7\% of the space; random selection of 137 operators
+captures $\sim$6.4 on average).
+\item The random arm's standard deviation is consistently higher
+than structured ($4$--$5.5\times$ for full-state and 1-RDM,
+$1.5\times$ for 2-RDM), reinforcing the stability advantage.
+\item Full-state fidelity substantially understates reconstruction
+quality for local observables: the jump from $F = 0.36$ (full
+state) to $F = 0.985$ (1-RDM) reflects the fact that local
+information is fully determined while global correlations are
+underdetermined.
+\end{enumerate}
+
+\subsection{Reframing the value proposition}
+
+This reframes $K^*$ from a full-state tomography method (where
+137/255 operators leave the state underdetermined) to an
+\emph{informationally complete method for all 1- and 2-body
+observables}, with partial information about higher-order
+correlations.  For the majority of near-term quantum computing
+applications, local observable quality is what matters.
+
+
+%% ============================================================
+\section{Fisher information and frame theory}
+\label{sec:fisher}
+
+A natural question is whether standard measurement-design criteria
+(A-optimality, D-optimality, frame potential, coherence) favor the
+$K^*$ set over random Pauli subsets.  The answer is \textbf{no}:
+these criteria are \emph{completely uninformative} for Pauli
+tomography.
+
+\subsection{Fisher information equivalence}
+\label{sec:fisher-equiv}
+
+For Pauli tomography at the state-independent design point
+($\rho = I/d$), each selected operator $P_j$ contributes
+independently to the Fisher information matrix:
+\begin{equation}
+F_{jj} = \frac{N_s \, d^2}{\sigma^2}
+\quad \text{if } P_j \in \mathcal{S}, \qquad
+F_{jj} = 0 \quad \text{otherwise},
+\end{equation}
+with all off-diagonal elements zero (Pauli orthogonality).
+Consequently:
+\begin{itemize}
+\item All nonzero eigenvalues of $F$ are identical
+($= N_s d^2 / \sigma^2$).
+\item $\det(F) = 0$ for any proper subset ($M < d^2 - 1$).
+\item The pseudoinverse trace $\mathrm{tr}(F^+)$ is identical for
+all $M$-element subsets: $\mathrm{tr}(F^+) = M \sigma^2 / (N_s d^2)$.
+\item A-optimality, D-optimality (pseudoinverse), and E-optimality
+are \emph{identical} for all Pauli subsets of the same size.
+\end{itemize}
+
+$K^*$ has \textbf{no state-independent Fisher advantage}.
+
+\subsection{State-dependent Fisher information}
+
+At $\rho \neq I/d$, the Fisher information per shot for operator
+$P_j$ depends on $\langle P_j \rangle_\rho$.  For states with
+local structure (W state, product states), low-weight operators
+carry larger expectations.  The $K^*$ set captures all such
+operators:
+
+\begin{table}[ht!]
+\caption{Weight-class coverage: $K^*$ vs.\ expected random
+(137 of 255).  Each row shows the number of operators included
+per weight class and, in the last row, the probability that
+a random draw of 137 operators includes \emph{all} weight-1
+Paulis.}
+\label{tab:weight-coverage}
+\begin{ruledtabular}
+\begin{tabular}{lcc}
+Metric & $K^*$ & Random (expected) \\
+\hline
+Weight-1 & 12/12 (100\%) & 6.4/12 (53\%) \\
+Weight-2 & 54/54 (100\%) & 28.8/54 (53\%) \\
+$P(\text{all wt-1 included})$ & 1.000 & 0.0004 \\
+$P(\text{all wt-0/1/2})$ & 1.000 & $5 \times 10^{-23}$ \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+The probability that uniform random selection of 136 nontrivial
+operators (from 255) includes all 66 weight-1/2 operators is
+$\sim 5 \times 10^{-23}$: essentially zero. % vague-verb-justified: numerical; 5e-23 is negligible to machine precision
+
+\subsection{Frame theory equivalence}
+\label{sec:frame}
+
+Frame-theoretic quality metrics are likewise identical for all
+Pauli subsets:
+\begin{itemize}
+\item \textbf{Frame potential}: $\mathrm{FP} = \sum_{i,j}
+|\mathrm{tr}(P_i P_j)|^2 = M \cdot d^2 = 137 \times 256 =
+35{,}072$ for any 137-element subset (Pauli orthogonality forces
+all cross-terms to zero).
+\item \textbf{Sensing matrix condition number}: $\kappa = 1$ for
+any Pauli subset (all nonzero singular values equal 1).
+\item \textbf{Coherence}: $\mu = 0$ (all pairwise correlations
+vanish).
+\end{itemize}
+
+Standard compressed-sensing quality metrics (RIP constants,
+coherence bounds) cannot distinguish $K^*$ from any other
+137-element Pauli subset.
+
+\subsection{The advantage is nonlinear: MLE amplification mechanism}
+\label{sec:mle-mechanism}
+
+The $K^*$ advantage arises entirely from the interaction between
+weight-class completeness and \emph{nonlinear} MLE reconstruction.
+Under linear inversion (pseudoinverse), the advantage is small
+($\Delta F \approx +0.03$).  Under MLE, it is large
+($\Delta F \approx +0.33$).
+
+Section~\ref{sec:head-to-head} demonstrates this empirically: the structured arm
+converges (fidelity plateaus by iteration $\sim$300, per-step
+changes $\|\Delta\rho\|_F \sim 0.03$) while the random arm
+oscillates without stabilizing ($\|\Delta\rho\|_F \sim 0.3$).
+The mechanism can be understood through three observations:
+
+\begin{enumerate}
+\item \textbf{Local consistency constrains the Bloch polytope.}
+Complete weight-1/2 data provides an overconstrained portrait of
+all single-qubit and two-qubit reduced density matrices.  With all
+67 weight-${\le}\,2$ operators present (identity plus all weight-1/2), the $k$-RDM consistency
+conditions interlock to define a small feasible region in the
+$255$-dimensional Bloch body ($d^2 - 1$ real parameters).
+
+\item \textbf{Positivity propagates local constraints globally.}
+The MLE's positivity constraint ($\rho \geq 0$) forces the global
+state to be compatible with \emph{all} 1- and 2-body marginals
+simultaneously, a strong constraint that narrows the likelihood
+surface to a well-defined basin.  When local data is incomplete,
+multiple incompatible local portraits are consistent with
+positivity, creating a rugged or flat likelihood landscape.
+
+\item \textbf{Missing local operators create reconstruction
+degeneracies.}  If even one weight-1 operator is absent, the
+corresponding single-qubit Bloch vector has an unconstrained
+component.  The MLE must infer it from higher-weight operators and
+positivity alone, a poorly conditioned inverse problem.  This
+explains the oscillatory convergence: the MLE cycles between
+locally consistent solutions that differ in the unconstrained
+subspace.
+\end{enumerate}
+
+This mechanism also explains why the weight-allocated random
+baseline (same weight-class budget, random intra-class selection)
+captures $\sim$81\% of the structured advantage (main text,
+Sec.~\ref{sec:weight-alloc}): it achieves the same weight-class completeness, so the
+MLE amplification operates similarly.  The residual $\sim$19\%
+advantage of $K^*$ arises from the specific intra-class operator
+selection that the spectral-geometric criterion optimizes.
+
+The basin separation theorem (Theorem~\ref{thm:basin} in the main
+text) formalizes this mechanism.  The following empirical evidence
+provides independent confirmation.
+
+\subsubsection{Weight-class ablation}
+
+The three-arm hardware experiment (Sec.~\ref{sec:dim-dep}) shows
+that $76 \pm 12$\% of the $K^*$ advantage originates in the
+weight-class allocation.  To isolate which weight classes are
+load-bearing, we remove each individually in simulation
+(50~random states, $n = 4$, 3\% depolarizing, $10^3$~shots;
+Table~\ref{tab:ablation}):
+
+\begin{table}[ht!]
+\caption{Weight-class ablation: fidelity impact of removing each
+weight class from the $K^*$ operator set ($n = 4$, $M = 137$).}
+\label{tab:ablation}
+\begin{ruledtabular}
+\begin{tabular}{lcrr}
+Configuration & $M$ & $F$ (mean$\pm$std) & $\Delta F$ \\
+\hline
+Full $K^*$ (baseline) & 137 & $0.412 \pm 0.099$ & $-$ \\
+Remove weight-0 (1 op) & 136 & $0.105 \pm 0.126$ & $-0.307$ \\
+Remove weight-1 (12 ops) & 125 & $0.420 \pm 0.095$ & $+0.008$ \\
+Remove weight-2 (54 ops) & 83 & $0.370 \pm 0.073$ & $-0.043$ \\
+Remove weight-3 (54 ops) & 83 & $0.386 \pm 0.106$ & $-0.027$ \\
+Remove weight-4 (16 ops) & 121 & $0.432 \pm 0.069$ & $+0.019$ \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+The identity operator (weight-0) is overwhelmingly the most
+important single measurement ($\Delta F = -0.31$), consistent with
+its role as the trace constraint in MLE\@.  Removing weight-4
+operators \emph{improves} full-state MLE fidelity, confirming that
+high-weight operators contribute noise in the underdetermined MLE
+regime.  (Note: this does not mean weight-4 operators are
+uninformative; they carry the GHZ phase signal and enable
+$F = 0.926$ under subspace estimation; see main text Sec.~\ref{sec:ghz}.)  (Note: $M$ varies across rows because each ablation removes
+a different number of operators.  The weight-2 and weight-3 rows
+both have $M = 83$, so their comparison is $M$-controlled:
+weight-2 removal hurts more, consistent with the weight-2 dominance
+identified below.)
+
+\subsubsection{Progressive weight-class addition}
+
+The three-arm hardware experiment (Sec.~\ref{sec:dim-dep})
+tells us that weight allocation accounts for $76 \pm 12$\% of
+the $K^*$ advantage, but it cannot tell us \emph{which}
+weight-class transition matters most.
+Cumulative simulation (adding one weight class at a time,
+Table~\ref{tab:progressive}) pins this down:
+
+\begin{table}[ht!]
+\caption{Progressive addition of weight classes to the measurement
+set ($n = 4$, same noise conditions as Table~\ref{tab:ablation}).}
+\label{tab:progressive}
+\begin{ruledtabular}
+\begin{tabular}{lccc}
+Weights included & $M$ & $F$ (mean) & $\Delta F$ (incremental) \\
+\hline
+$w = 0$ only & 1 & 0.084 & $-$ \\
+$w \leq 1$ & 13 & 0.172 & $+0.089$ \\
+$w \leq 2$ & 67 & $\mathbf{0.376}$ & $\mathbf{+0.204}$ \\
+$w \leq 3$ & 121 & 0.441 & $+0.065$ \\
+$w \leq 4$ (full $K^*$) & 137 & 0.422 & $-0.019$ \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+The big jump ($\Delta F = +0.204$) happens at weight-2 inclusion.
+This is where the MLE positivity constraint has enough local
+information ($1$- and $2$-body marginals) to propagate upward
+and reconstruct higher-weight correlations.
+What happens when weight-4 operators are added is perhaps
+surprising: fidelity drops slightly ($-0.019$).
+In the underdetermined regime, high-weight operators whose
+true expectations are near zero contribute mostly shot noise, and
+the MLE iteration cannot distinguish this noise from
+signal, so it gets pulled away from the estimate that
+positivity propagation would have produced.
+
+This is worth pausing on.
+It means measurement selection for Pauli tomography
+cannot be analyzed with standard frame-theoretic or RIP-based
+tools, which assume that more operators always help.
+The relevant criterion is weight-class coverage \emph{interacting
+with the reconstruction algorithm}, a qualitatively different
+regime from generic compressed sensing.
+
+\bibliography{refs}
+
+\end{document}

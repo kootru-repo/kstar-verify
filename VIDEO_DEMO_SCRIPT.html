@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Video demo script - K* Verification</title>
+<style>
+  :root { --fg:#222; --muted:#666; --border:#ddd; --code-bg:#f6f8fa; --accent:#2a5d9f; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+         line-height: 1.6; color: var(--fg); max-width: 900px; margin: 2em auto;
+         padding: 0 1.5em; }
+  h1 { border-bottom: 2px solid var(--accent); padding-bottom: 0.3em; }
+  h2 { color: var(--accent); margin-top: 2em; border-bottom: 1px solid var(--border);
+       padding-bottom: 0.2em; }
+  h3 { color: #555; }
+  code { background: var(--code-bg); padding: 0.1em 0.3em; border-radius: 3px;
+         font-size: 0.92em; }
+  pre { background: var(--code-bg); padding: 1em; border-radius: 5px; overflow-x: auto;
+        border: 1px solid var(--border); }
+  pre code { background: none; padding: 0; }
+  blockquote { border-left: 4px solid var(--accent); padding-left: 1em; color: var(--muted);
+               margin: 1em 0; font-style: italic; }
+  .shot { background: #fafbfc; border: 1px solid var(--border); border-radius: 6px;
+          padding: 1em 1.5em; margin: 1em 0; }
+  .shot-time { display: inline-block; background: var(--accent); color: white;
+               padding: 0.2em 0.6em; border-radius: 3px; font-size: 0.85em; font-weight: bold; }
+  .caption { background: #fffbe8; border-left: 3px solid #d4a72c; padding: 0.8em 1em;
+             margin: 0.8em 0; font-style: italic; }
+  .human-gated { background: #fee; border: 1px solid #f99; border-radius: 6px;
+                 padding: 1em 1.5em; margin: 1.5em 0; }
+  .human-gated h3 { color: #a22; margin-top: 0; }
+  ul li { margin-bottom: 0.4em; }
+  table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+  th, td { border: 1px solid var(--border); padding: 0.5em 0.8em; text-align: left; }
+  th { background: var(--code-bg); }
+</style>
+</head>
+<body>
+
+<h1>2-minute verification demo</h1>
+
+<p>Shot-by-shot storyboard for a screencast that walks a reviewer (or anyone)
+through the machine-verification story in ~120 seconds.  Recommended recorder:
+<a href="https://obsproject.com/">OBS Studio</a> at 1280&times;800.  Font size 16pt+
+so subtitles are legible at 480p.</p>
+
+<p>No voice-over necessary; on-screen captions suffice.  Pacing below assumes
+~130 WPM reading speed.</p>
+
+<hr>
+
+<div class="shot">
+  <h2><span class="shot-time">0:00 - 0:12</span> Shot 1: Title card</h2>
+  <p><strong>Screen:</strong> static slide with manuscript title, author, DOI placeholder.</p>
+  <div class="caption">
+    <em>Provable measurement design for quantum state tomography from Hamming-scheme spectral theory.</em><br>
+    companion manuscript submission. This clip: how to verify every claim from a fresh clone
+    in under 15 minutes.
+  </div>
+</div>
+
+<div class="shot">
+  <h2><span class="shot-time">0:12 - 0:22</span> Shot 2: Land on the repo</h2>
+  <p><strong>Screen:</strong> browser at <code>https://github.com/kootru-repo/kstar-verify</code>.
+  Scroll once to show the badge row + "Reviewer? See VERIFICATION.md".</p>
+  <div class="caption">
+    Seven CI badges. All green. One click to the tiered reviewer guide.
+  </div>
+</div>
+
+<div class="shot">
+  <h2><span class="shot-time">0:22 - 0:42</span> Shot 3: VERIFICATION.md tiered guide</h2>
+  <p><strong>Screen:</strong> open <code>VERIFICATION.md</code>. Scroll through the tier table.
+  Hover on the 30-second and 30-minute rows.</p>
+  <div class="caption">
+    Four budgets, four guarantees: 30s to inspect the manifest, 2min to read the
+    auto-axiom table, 10min to run the notebook, 30min to rebuild Lean from scratch.
+    Any of them falsifies the other three.
+  </div>
+</div>
+
+<div class="shot">
+  <h2><span class="shot-time">0:42 - 0:58</span> Shot 4: 30-second tier - the manifest</h2>
+  <p><strong>Screen:</strong> open <code>lean4/generated/verification_manifest.json</code>.
+  Highlight <code>git_sha</code>, <code>lean_toolchain</code>, <code>lake_build.exit_code: 0</code>,
+  <code>sorry_audit.total_sorry: 0</code>, <code>summary</code> block.</p>
+  <div class="caption">
+    The manifest is the single fact-sheet. Git SHA pinned. Toolchain pinned. Zero sorry.
+    Twenty-eight claims. Thirteen prove from Lean core alone.
+  </div>
+</div>
+
+<div class="shot">
+  <h2><span class="shot-time">0:58 - 1:13</span> Shot 5: 2-minute tier - the auto table</h2>
+  <p><strong>Screen:</strong> open <code>lean4/generated/sm_axiom_table.tex</code> alongside
+  the rendered SM PDF at the same section.</p>
+  <div class="caption">
+    This LaTeX table is machine-generated from the Lean elaborator.
+    22 rows: every registry claim with a Lean theorem (6 paper claims without
+    a Lean theorem are accounted for separately in the manifest summary).
+    Each row is one claim, one theorem, one axiom footprint.
+    No human wrote these entries.
+  </div>
+</div>
+
+<div class="shot">
+  <h2><span class="shot-time">1:13 - 1:33</span> Shot 6: 10-minute tier - the notebook</h2>
+  <p><strong>Screen:</strong> Jupyter notebook <code>notebook/k_star_demo.ipynb</code> with
+  "Run All" executing. Fast-forward through cells, pausing on the
+  Section 7 byte-for-byte Table I cell ($F(K^*) = 0.872$) and the
+  Section 8.9 HS-error bound cell.</p>
+  <div class="caption">
+    63 cells, 3 minutes with data. Every combinatorial identity reproduced
+    in SymPy (Sec 1-6). Every paper hardware number reproduced byte-for-byte
+    from raw QPU JSON (Sec 7: Table I, DTC, SOTA, dim-dep). Fourteen
+    theorem-level witnesses (Sec 8: every Lemma, Theorem, Corollary).
+    Each assertion fires loudly on drift.
+  </div>
+</div>
+
+<div class="shot">
+  <h2><span class="shot-time">1:33 - 1:50</span> Shot 7: 30-minute tier - rebuild Lean</h2>
+  <p><strong>Screen:</strong> terminal running:</p>
+<pre><code>lake exe cache get &amp;&amp; lake build &amp;&amp; python scripts/generate_all.py</code></pre>
+  <p>Fast-forward to the completion line <code>1272/1272 jobs</code>.</p>
+  <div class="caption">
+    Clone, cache, build. 1272 jobs, zero sorry. generate_all.py re-emits the same
+    artifacts with your git SHA. Diff against the submitted manifest is the final
+    falsifiability bar.
+  </div>
+</div>
+
+<div class="shot">
+  <h2><span class="shot-time">1:50 - 2:00</span> Shot 8: Close</h2>
+  <p><strong>Screen:</strong> title card again with three URLs:</p>
+  <ul>
+    <li><code>https://github.com/kootru-repo/kstar-verify</code></li>
+    <li><code>https://doi.org/10.5281/zenodo.PLACEHOLDER</code></li>
+    <li><code>https://mybinder.org/v2/gh/kootru-repo/kstar-verify/v1.0.0-submission-submission</code></li>
+  </ul>
+  <div class="caption">
+    Everything is reproducible, pinned, and falsifiable. Thank you for reviewing.
+  </div>
+</div>
+
+<h2>Recording notes</h2>
+<ul>
+  <li>Use a light color scheme (VS Code "Light Modern" or equivalent) so captions remain
+  legible after compression.</li>
+  <li>Record at 60 fps; export at 30 fps to halve file size without losing perceptible
+  smoothness.</li>
+  <li>Keep each shot &lt; 22 s so a reviewer can index to any segment.</li>
+  <li>Avoid voice-over unless you're a native speaker of the target reviewer's language;
+  captions are more accessible.</li>
+</ul>
+
+<div class="human-gated">
+  <h3>Human-gated: actually recording the video</h3>
+  <p>The storyboard above is ready to record.  Below is the end-to-end recording
+  procedure that must be performed manually (tools cannot record your screen).</p>
+
+  <h4>Prerequisites</h4>
+  <ul>
+    <li>OBS Studio (free, cross-platform) installed.</li>
+    <li>A clean browser profile so no bookmarks or extensions distract on camera.</li>
+    <li>A fresh clone of <code>kstar-verify</code> at the submission tag,
+    already built (<code>lake build</code> done).</li>
+    <li>Jupyter server already running with the notebook loaded.</li>
+    <li>A terminal window sized to exactly match the screencast resolution.</li>
+  </ul>
+
+  <h4>Recording workflow</h4>
+  <ol>
+    <li>Open OBS Studio. Set canvas + output resolution to 1280&times;800.  Add
+    a Display Capture source for the primary monitor.</li>
+    <li>In OBS settings &rarr; Video: 60 fps capture, 30 fps output.</li>
+    <li>In OBS settings &rarr; Output: MP4 container, CRF 18-22 (higher quality end), x264 encoder.</li>
+    <li>Arrange scenes for each of the 8 shots (easier to cut between than re-drag sources).</li>
+    <li>Hit Start Recording, run each shot in the order above, matching the timings.
+    Aim for the 2:00 total.  Add a caption overlay track in post.</li>
+    <li>Export to MP4, target file size &lt; 50 MB so GitHub can host it as a release asset.</li>
+  </ol>
+
+  <h4>Captioning</h4>
+  <p>Use OBS's text source for live captions, OR add them in post with a tool like
+  <a href="https://www.openshot.org/">OpenShot</a> or <a href="https://kdenlive.org/">Kdenlive</a>.
+  Export a <code>.srt</code> sidecar file alongside the MP4; GitHub and Zenodo both
+  render SRT captions inline.</p>
+
+  <h4>Post-recording</h4>
+  <ol>
+    <li>Upload MP4 + SRT as assets on the GitHub Release for tag <code>v1.0.0-submission-submission</code>.</li>
+    <li>Link the video from the README Quick Start section.</li>
+    <li>Mirror to Zenodo record when the DOI is minted.</li>
+    <li>If submission asks for "supplementary video", attach the MP4 directly.</li>
+  </ol>
+
+  <h4>When to re-record</h4>
+  <p>Re-record if:</p>
+  <ul>
+    <li>The manifest schema changes (Shot 4 view becomes stale).</li>
+    <li>The SM axiom table layout changes (Shot 5 view becomes stale).</li>
+    <li>The notebook cell count or output changes materially (Shot 6 drifts).</li>
+    <li>Anyone reports a reviewer couldn't reproduce a step.</li>
+  </ul>
+</div>
+
+</body>
+</html>

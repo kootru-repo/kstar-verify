@@ -1,0 +1,154 @@
+[
+  {
+    "state": "W(n=4)",
+    "n_shots": null,
+    "old_iters": 33,
+    "new_iters": 1000,
+    "speedup": 0.03,
+    "old_fidelity": 0.997046,
+    "new_fidelity": 0.984587,
+    "old_time_s": 0.031,
+    "new_time_s": 0.978
+  },
+  {
+    "state": "W(n=4)",
+    "n_shots": 10000,
+    "old_iters": 1000,
+    "new_iters": 1000,
+    "speedup": 1.0,
+    "old_fidelity": 0.9854,
+    "new_fidelity": 0.984793
+  },
+  {
+    "state": "W(n=4)",
+    "n_shots": 4000,
+    "old_iters": 1000,
+    "new_iters": 1000,
+    "speedup": 1.0,
+    "old_fidelity": 0.978721,
+    "new_fidelity": 0.980982
+  },
+  {
+    "state": "W(n=4)",
+    "n_shots": 1000,
+    "old_iters": 1000,
+    "new_iters": 1000,
+    "speedup": 1.0,
+    "old_fidelity": 0.949892,
+    "new_fidelity": 0.967589
+  },
+  {
+    "state": "|++++>",
+    "n_shots": null,
+    "old_iters": 24,
+    "new_iters": 161,
+    "speedup": 0.15,
+    "old_fidelity": 1.0,
+    "new_fidelity": 0.999999,
+    "old_time_s": 0.023,
+    "new_time_s": 0.157
+  },
+  {
+    "state": "|++++>",
+    "n_shots": 10000,
+    "old_iters": 1000,
+    "new_iters": 32,
+    "speedup": 31.25,
+    "old_fidelity": 0.999982,
+    "new_fidelity": 1.0
+  },
+  {
+    "state": "|++++>",
+    "n_shots": 4000,
+    "old_iters": 1000,
+    "new_iters": 32,
+    "speedup": 31.25,
+    "old_fidelity": 0.999974,
+    "new_fidelity": 1.0
+  },
+  {
+    "state": "|++++>",
+    "n_shots": 1000,
+    "old_iters": 1000,
+    "new_iters": 42,
+    "speedup": 23.93,
+    "old_fidelity": 0.999968,
+    "new_fidelity": 1.0
+  },
+  {
+    "state": "random_pure",
+    "n_shots": null,
+    "old_iters": 1000,
+    "new_iters": 1000,
+    "speedup": 1.0,
+    "old_fidelity": 0.045877,
+    "new_fidelity": 0.986838,
+    "old_time_s": 0.95,
+    "new_time_s": 0.985
+  },
+  {
+    "state": "random_pure",
+    "n_shots": 10000,
+    "old_iters": 1000,
+    "new_iters": 1000,
+    "speedup": 1.0,
+    "old_fidelity": 0.372177,
+    "new_fidelity": 0.983734
+  },
+  {
+    "state": "random_pure",
+    "n_shots": 4000,
+    "old_iters": 1000,
+    "new_iters": 1000,
+    "speedup": 1.0,
+    "old_fidelity": 0.381118,
+    "new_fidelity": 0.978437
+  },
+  {
+    "state": "random_pure",
+    "n_shots": 1000,
+    "old_iters": 1000,
+    "new_iters": 1000,
+    "speedup": 1.0,
+    "old_fidelity": 0.37097,
+    "new_fidelity": 0.96111
+  },
+  {
+    "state": "GHZ(n=4)",
+    "n_shots": null,
+    "old_iters": 44,
+    "new_iters": 266,
+    "speedup": 0.17,
+    "old_fidelity": 0.96438,
+    "new_fidelity": 0.999999,
+    "old_time_s": 0.046,
+    "new_time_s": 0.264
+  },
+  {
+    "state": "GHZ(n=4)",
+    "n_shots": 10000,
+    "old_iters": 1000,
+    "new_iters": 44,
+    "speedup": 22.86,
+    "old_fidelity": 0.965416,
+    "new_fidelity": 1.0
+  },
+  {
+    "state": "GHZ(n=4)",
+    "n_shots": 4000,
+    "old_iters": 1000,
+    "new_iters": 43,
+    "speedup": 23.24,
+    "old_fidelity": 0.96538,
+    "new_fidelity": 1.0
+  },
+  {
+    "state": "GHZ(n=4)",
+    "n_shots": 1000,
+    "old_iters": 1000,
+    "new_iters": 44,
+    "speedup": 22.73,
+    "old_fidelity": 0.963674,
+    "new_fidelity": 1.0
+  }
+]

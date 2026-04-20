@@ -1,0 +1,164 @@
+{
+  "title": "Data Provenance Manifest - Companion Manuscript Submission",
+  "generated": "2026-03-28T15:30:00",
+  "version": 2,
+  "description": "Complete chain of custody for all quantum hardware data. Every hardware result is linked to retrievable job IDs with raw bitstring counts stored locally.",
+
+  "platforms": {
+    "ibm_quantum": {
+      "backend": "ibm_fez (156 superconducting qubits, Eagle r3)",
+      "accounts": [
+        {
+          "label": "acraton@kootru.com",
+          "experiments": ["W-state repeat (March 10)", "Dimensional sweep (March 9)"],
+          "n_jobs": 15,
+          "n_circuits": 1388
+        },
+        {
+          "label": "andrew.craton@gmail.com",
+          "experiments": ["Initial hardware tests (March 7)"],
+          "n_jobs": 18,
+          "n_circuits": 1534
+        },
+        {
+          "label": "quantum_ibm_02@kootru.com",
+          "experiments": ["Three-arm allocation (March 11)"],
+          "n_jobs": 15,
+          "n_circuits": 1233
+        }
+      ],
+      "calibration": "156 gate errors from ibm_fez Target API (snapshot date in enriched files)",
+      "physical_qubits": {
+        "4q_experiments": "Auto-mapped by Qiskit transpiler (optimization_level=1); layouts in ibm_qubit_layout.json",
+        "8q_compositional": "[140,141,142,143,144,145,146,147]"
+      },
+      "transpilation": "optimization_level=1, native gate set: ECR + RZ + SX + X",
+      "n_shots_per_circuit": "1000 (W-repeat, sweep, three-arm), 4096 (March 7 subset)"
+    },
+    "rigetti_oq": {
+      "backend": "Ankaa-3 (84 transmon qubits, iSWAP native) via Open Quantum",
+      "experiments": ["4q W-state grouped (March 16)", "8q compositional W-state (March 21-22)"],
+      "job_ids": {
+        "4q_grouped": "79 unique UUIDs (29 K* bases + 50 random bases) embedded in oq_grouped_results_20260316.json",
+        "8q_compositional": "177 UUIDs in 8qubit-w-rigetti/provenance_8q.json",
+        "total": 256,
+        "retrieval_method": "OQ scheduler API: GET /v1/organizations/{org_id}/jobs",
+        "retrieval_date": "2026-03-28",
+        "full_dump": "oq_all_jobs.json (471 total jobs across all experiments)"
+      },
+      "calibration": "Not available via OQ API; qubit selection based on published Ankaa-3 calibration report",
+      "physical_qubits": {
+        "4q": "[0,1,2,3]",
+        "8q": "[0,1,2,3,4,5,6,7]"
+      },
+      "transpilation": "Server-side compilation to iSWAP + RZ native gate set",
+      "n_shots_per_circuit": 1000
+    }
+  },
+
+  "anti_spoofing_evidence": {
+    "raw_bitstring_counts": "Stored in all enriched IBM files (per-job raw_counts), Rigetti 4q (n4_kstar_raw_counts + n4_rand_raw_counts), and Rigetti 8q (individual circuit JSON files in 8qubit-w-rigetti/raw/).",
+    "job_ids": "IBM: 48 job IDs (12 W-repeat + 3 sweep + 15 three-arm + 18 March 7). Rigetti: 256 OQ UUIDs (79 grouped-4q + 177 8q). Total: 304 unique job IDs.",
+    "calibration_snapshots": "IBM: full 156-qubit gate error map from backend Target API. Rigetti: not exposed by OQ API (documented platform limitation).",
+    "physical_qubit_layout": "IBM 4q: [0,1,2,3] via re-transpilation. IBM 8q: [140-147] from original run. Rigetti 4q: [0-3]. Rigetti 8q: [0-7].",
+    "cross_platform_consistency": "W-state K* advantage confirmed on IBM ibm_fez (dF=+0.33+/-0.07, 4 runs) and Rigetti Ankaa-3 (dF=+0.25) with different native gate sets (ECR vs iSWAP).",
+    "independent_verification": "Any party with IBM Quantum / Open Quantum credentials can retrieve job results using stored job IDs. Raw counts enable independent density matrix reconstruction."
+  },
+
+  "files": {
+    "ibm_enriched": {
+      "description": "IBM hardware results with embedded provenance (job IDs, calibration, qubit layout, transpilation)",
+      "files": [
+        {"file": "w_repeat_results_enriched.json", "size_kb": 452, "experiment": "W-state 4q, 4 independent runs (seeds 100/200/300/400)", "account": "acraton@kootru.com", "date": "2026-03-10", "n_jobs": 12},
+        {"file": "sweep_ibm_fez_20260309_194458_enriched.json", "size_kb": 129, "experiment": "Dimensional sweep d=2,4", "account": "acraton@kootru.com", "date": "2026-03-09", "n_jobs": 3},
+        {"file": "three_arm_hardware_ibm_fez_20260311_142656_enriched.json", "size_kb": 509, "experiment": "Three-arm weight allocation (K*/AR/UR)", "account": "quantum_ibm_02@kootru.com", "date": "2026-03-11", "n_jobs": 15}
+      ]
+    },
+    "ibm_march7": {
+      "description": "Initial hardware tests with provenance blocks added via timestamp-correlated job linkage",
+      "account": "andrew.craton@gmail.com",
+      "date": "2026-03-07",
+      "files": [
+        {"file": "hardware_results_ibm_fez_20260307_214441.json", "experiment": "Product state |++++>", "n_jobs": 1},
+        {"file": "hardware_results_ibm_fez_20260307_214922.json", "experiment": "GHZ state", "n_jobs": 2},
+        {"file": "hardware_results_ibm_fez_20260307_220545.json", "experiment": "Bell state 2q", "n_jobs": 4},
+        {"file": "hardware_results_ibm_fez_20260307_220810.json", "experiment": "W state 4q", "n_jobs": 6},
+        {"file": "hardware_results_ibm_fez_20260307_223638_compositional.json", "experiment": "8q compositional", "n_jobs": 5}
+      ]
+    },
+    "rigetti_4q": {
+      "description": "Rigetti Ankaa-3 4-qubit W-state grouped experiment with raw bitstring counts",
+      "files": [
+        {"file": "oq_grouped_results_20260316.json", "size_kb": 44, "experiment": "4q W-state grouped (29 K* + 50 random bases)", "date": "2026-03-16", "n_jobs": 79, "raw_counts": "n4_kstar_raw_counts (29 bases x 1000 shots) + n4_rand_raw_counts (50 bases x 1000 shots)"}
+      ]
+    },
+    "rigetti_8q": {
+      "description": "Rigetti Ankaa-3 8-qubit compositional W-state with per-circuit raw counts",
+      "files": [
+        {"file": "8qubit-w-rigetti/provenance_8q.json", "size_kb": 1014, "experiment": "8q compositional W-state", "date": "2026-03-21", "n_jobs": 177},
+        {"file": "8qubit-w-rigetti/raw/oq_tasks_20260321_210306.json", "description": "Task manifest mapping job IDs to circuits"},
+        {"file": "8qubit-w-rigetti/raw/product_circuit_*.json", "description": "116 product-state circuit raw counts (1000 shots each)"},
+        {"file": "8qubit-w-rigetti/raw/w8_circuit_*.json", "description": "K*-arm W8 circuit raw counts"},
+        {"file": "8qubit-w-rigetti/raw/w8_random_circuit_*.json", "description": "Random-arm W8 circuit raw counts"},
+        {"file": "8qubit-w-rigetti/raw/raw_20260321_211656.json", "description": "Raw session data"}
+      ]
+    },
+    "rigetti_8q_analysis": {
+      "description": "Analysis outputs from 8q experiment (reconstructed density matrices, null model, qubit selection)",
+      "files": [
+        {"file": "8qubit-w-rigetti/results/", "description": "13 analysis result files (fidelities, bootstrap, comparisons)"},
+        {"file": "8qubit-w-rigetti/reconstructed/", "description": "10 .npy files (reconstructed density matrices per patch)"},
+        {"file": "8qubit-w-rigetti/null-model/", "description": "Null-model reference distributions"}
+      ]
+    },
+    "provenance_support": {
+      "description": "Support files for provenance chain",
+      "files": [
+        {"file": "ibm_qubit_layout.json", "description": "Physical qubit maps for all IBM circuit types (re-transpiled)"},
+        {"file": "provenance_ibm_andrew_craton.json", "size_kb": 2111, "description": "Full IBM job dump for andrew.craton account (18 DONE + 3 QUEUED)"},
+        {"file": "provenance_ibm_quantum_ibm_01.json", "size_kb": 423, "description": "Full IBM job dump for quantum_ibm_02@kootru.com account (15 jobs)", "note": "Filename says quantum_ibm_01 but contains quantum_ibm_02 data (account was renamed after file creation)"},
+        {"file": "oq_all_jobs.json", "size_kb": 407, "description": "Full OQ scheduler API dump (471 jobs across all experiments)"},
+        {"file": "provenance_manifest.json", "description": "This file"}
+      ]
+    },
+    "measurement_set": {
+      "description": "Machine-readable K* measurement set and tensor-product bases (promised in SM Data Availability section)",
+      "files": [
+        {"file": "kstar_operators_n4.json", "description": "All 137 K*-selected Pauli operators for n=4, with weight distribution and generation method"},
+        {"file": "kstar_bases_29.json", "description": "The 29 tensor-product bases covering all 137 operators, with per-basis operator coverage map"}
+      ]
+    },
+    "analysis": {
+      "description": "Analysis results referenced by manuscript (kept in root for script compatibility)",
+      "files": [
+        {"file": "hyperparameter_sweep_results.json", "size_kb": 57, "description": "MLE hyperparameter optimization results"},
+        {"file": "rigetti_bootstrap_results.json", "size_kb": 50, "description": "Bootstrap confidence intervals for Rigetti fidelity differences"}
+      ]
+    },
+    "auxiliary": {
+      "description": "Intermediate/exploratory results not part of final submission. Retained for reproducibility.",
+      "location": "auxiliary/",
+      "files": [
+        "8qubit_sim_*.json (4 files) - Pre-hardware 8q simulations",
+        "bootstrap_1000_results_*.json - Early bootstrap analysis",
+        "ghz_dfe_results.json - GHZ direct fidelity estimation test",
+        "k4_vs_k5_simulation_*.json - K*=4 vs K*=5 comparison",
+        "percentile_results.json, rdm_fidelity_results.json, saturate_fill_results.json - Minor metric outputs",
+        "qutrit_verification_results.json - Qutrit bridge verification",
+        "sota_adaptive_n4.json - SOTA comparison data",
+        "external_simulations_output.txt, shadow_comparison_output.txt, sota_comparison_output_*.txt - Debug logs",
+        "sweep/three_arm/w_repeat raw (pre-enrichment) JSON files",
+        "oq_checkpoint.json, oq_retrieve_checkpoint.json - OQ retrieval checkpoints"
+      ]
+    }
+  },
+
+  "known_limitations": [
+    "IBM job results are not publicly queryable; verification requires IBM Quantum account credentials.",
+    "Rigetti/OQ does not expose backend calibration (T1, T2, gate errors) via API.",
+    "March 7 job-to-file linkage uses timestamp correlation (gap >3 min between clusters), not embedded job IDs.",
+    "IBM 4q physical qubit layouts are re-transpiled (same optimization_level=1); actual qubits may differ if backend calibration shifted.",
+    "3 of 21 March 7 IBM jobs remain in QUEUED status (stale; likely cancelled/expired). All 18 DONE jobs are accounted for.",
+    "Zenodo DOI placeholder (10.5281/zenodo.XXXXXXX) must be replaced after upload."
+  ]
+}

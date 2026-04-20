@@ -1,0 +1,27 @@
+{
+  "n2_exhaustive": {
+    "n_qubits": 2,
+    "n_subsets": 1890,
+    "n_trials": 5,
+    "kstar_fidelity": 0.5957,
+    "kstar_rank": 199,
+    "kstar_percentile": 89.5,
+    "best_fidelity": 0.9782,
+    "median_fidelity": 0.4915,
+    "mean_fidelity": 0.5216,
+    "gap_vs_best": 0.3824,
+    "elapsed_s": 0.6
+  },
+  "n4_statistical": {
+    "n_qubits": 4,
+    "n_draws": 500,
+    "n_trials": 10,
+    "kstar_fidelity": 0.3825,
+    "kstar_percentile": 68.8,
+    "random_mean": 0.3702,
+    "random_std": 0.0261,
+    "random_best": 0.468,
+    "n_better_than_kstar": 156,
+    "elapsed_s": 113.2
+  }
+}

@@ -1,0 +1,69 @@
+======================================================================
+  DERANDOMIZED SHADOWS vs K*-STRUCTURED COMPARISON
+  n=4 qubits, M=137 settings, 1000 shots/setting
+  Huang et al., Nat. Phys. 17, 1050 (2021)
+======================================================================
+
+  Basis coverage analysis (n=4, M=137):
+    Total non-identity Paulis: 255
+    Possible bases |{X,Y,Z}^4|: 81
+    Coverage by weight (# of bases that can measure each Pauli):
+      weight 1: 27 bases/Pauli (= 3^3), 12 Paulis
+      weight 2: 9 bases/Pauli (= 3^2), 54 Paulis
+      weight 3: 3 bases/Pauli (= 3^1), 108 Paulis
+      weight 4: 1 bases/Pauli (= 3^0), 81 Paulis
+    Derand. uses 81/81 distinct bases
+    Most frequent basis: 2 times
+    Least frequent basis: 1 times
+
+  |+...+> (n=4), M=137 settings, depol=0.03, rdout=0.02, shots=1000
+    K* structured:    F = 0.9748 +/- 0.0130  (N=10)
+    Derand. shadows:  F = 0.9935 +/- 0.0010  (N=10)
+    Random shadows:   F = 0.9940 +/- 0.0009  (N=40)
+    D(K* - Derand):   -0.0187 +/- 0.0041
+    D(K* - RandSh):   -0.0192 +/- 0.0041
+    D(Derand - Rand): -0.0005 +/- 0.0003
+
+  Bell (n=4), M=137 settings, depol=0.03, rdout=0.02, shots=1000
+    K* structured:    F = 0.6703 +/- 0.1671  (N=10)
+    Derand. shadows:  F = 0.5498 +/- 0.0520  (N=10)
+    Random shadows:   F = 0.5358 +/- 0.0627  (N=40)
+    D(K* - Derand):   +0.1204 +/- 0.0553
+    D(K* - RandSh):   +0.1345 +/- 0.0538
+    D(Derand - Rand): +0.0140 +/- 0.0192
+
+  W (n=4), M=137 settings, depol=0.03, rdout=0.02, shots=1000
+    K* structured:    F = 0.8288 +/- 0.0305  (N=10)
+    Derand. shadows:  F = 0.4972 +/- 0.0070  (N=10)
+    Random shadows:   F = 0.6263 +/- 0.2036  (N=40)
+    D(K* - Derand):   +0.3316 +/- 0.0099
+    D(K* - RandSh):   +0.2024 +/- 0.0336
+    D(Derand - Rand): -0.1292 +/- 0.0323
+
+  GHZ (n=4), M=137 settings, depol=0.03, rdout=0.02, shots=1000
+    K* structured:    F = 0.7565 +/- 0.2112  (N=10)
+    Derand. shadows:  F = 0.5064 +/- 0.0655  (N=10)
+    Random shadows:   F = 0.5067 +/- 0.0757  (N=40)
+    D(K* - Derand):   +0.2501 +/- 0.0699
+    D(K* - RandSh):   +0.2497 +/- 0.0679
+    D(Derand - Rand): -0.0004 +/- 0.0239
+
+======================================================================
+  SUMMARY (depol=0.03, rdout=0.02, shots=1000)
+======================================================================
+     State     F(K*)     F(DR)     F(RS)       K*-DR       K*-RS
+  --------  --------  --------  --------  ----------  ----------
+   |+...+>     0.975     0.994     0.994  -0.019±0.004  -0.019±0.004
+      Bell     0.670     0.550     0.536  +0.120±0.055  +0.134±0.054
+         W     0.829     0.497     0.626  +0.332±0.010  +0.202±0.034
+       GHZ     0.756     0.506     0.507  +0.250±0.070  +0.250±0.068
+
+  Key:
+    K*  = Krawtchouk-structured direct Pauli measurement (137 ops)
+    DR  = Derandomized shadows (137 basis settings)
+    RS  = Random shadows (137 basis settings)
+    Positive D(K*-X) means K* outperforms X
+
+======================================================================
+  DONE
+======================================================================

@@ -1,0 +1,20 @@
+# Lean4 build artifacts
+lean4/.lake/
+lean4/build/
+lean4/lake-packages/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Verification output (generated per run) -- repo-root only; the
+# bundled `data/8qubit-w-rigetti/results/` must NOT be ignored.
+/results/
+
+# Integrity backups (local disaster recovery)
+/backups/
+
+# OS
+.DS_Store
+Thumbs.db

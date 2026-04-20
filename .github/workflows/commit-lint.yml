@@ -1,0 +1,30 @@
+name: Commit message lint
+
+# Rejects commit messages that contain process-narrative vocabulary,
+# external-model attributions, private-framework names, or journal-
+# specific references.  Runs on every pull request; failures must be
+# resolved by amending the commit messages before merge.
+
+on:
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  lint:
+    name: Scan PR commit messages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Scan messages
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.sha }}
+          HEAD_REF: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python3 scripts/lint_commit_messages.py "$BASE_REF" "$HEAD_REF"

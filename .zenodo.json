@@ -1,0 +1,27 @@
+{
+    "title": "K* Verification: Machine-verified companion for 'Provable measurement design for quantum state tomography from Hamming-scheme spectral theory'",
+    "description": "Complete machine-verification suite for the companion manuscript submission. Includes: (1) Lean 4 formal proofs of all 11 theorems (0 sorry, max 2 propositional axioms), (2) the universal-n airtightness extension (Phases A-G), (3) machine-generated axiom report and verification manifest, (4) Jupyter demo notebook reproducing every combinatorial identity, (5) 8-tier Python verification suite, and (6) pre-built Docker container. See VERIFICATION.md for the tiered reviewer onramp.",
+    "creators": [
+        {
+            "name": "Craton, Andrew",
+            "affiliation": "Kootru Labs"
+        }
+    ],
+    "keywords": [
+        "quantum state tomography",
+        "measurement design",
+        "Krawtchouk polynomials",
+        "Hamming association scheme",
+        "Lean 4",
+        "formal verification",
+        "machine-checked proofs",
+        "spectral geometry"
+    ],
+    "license": "MIT",
+    "upload_type": "software",
+    "access_right": "open",
+    "language": "eng",
+    "related_identifiers": [],
+    "communities": [],
+    "notes": "Release tagged at the companion manuscript submission. Contains the exact Lean toolchain pin (see lean4/lean-toolchain), the generated verification_manifest.json snapshotting git SHA + axiom report, and the Dockerfile.lean4 recipe for fully reproducible verification. Regenerate all artifacts via `python lean4/scripts/generate_all.py`. The related K* Verification article DOI will be added to related_identifiers in the post-acceptance v1.0.1 release."
+}

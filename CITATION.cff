@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this verification suite, please cite the associated manuscript (see preferred-citation) and the software DOI."
+title: "K* Verification: machine-verified companion for the manuscript on Hamming-scheme measurement design"
+abstract: "Complete machine-verification suite for the companion manuscript submission 'Provable measurement design for quantum state tomography from Hamming-scheme spectral theory.' Includes Lean 4 formal proofs of all 11 theorems (0 sorry, max 2 propositional axioms), an 8-tier verification pipeline (tier 0 Lean4, tier 1 SageMath, Python tiers 2-7), a Jupyter demo notebook with side-by-side colorblind-safe scorecards, and a pre-built Docker container. Universal-n airtightness extension (Phases A--G) makes every combinatorial theorem provable at arbitrary n."
+type: software
+license: MIT
+repository-code: "https://github.com/kootru-repo/kstar-verify"
+url: "https://github.com/kootru-repo/kstar-verify"
+authors:
+  - given-names: Andrew
+    family-names: Craton
+    affiliation: "Kootru Labs"
+keywords:
+  - "quantum state tomography"
+  - "measurement design"
+  - "Krawtchouk polynomials"
+  - "Hamming association scheme"
+  - "Lean 4"
+  - "formal verification"
+  - "machine-checked proofs"
+  - "spectral geometry"
+preferred-citation:
+  type: article
+  title: "Provable measurement design for quantum state tomography from Hamming-scheme spectral theory"
+  authors:
+    - given-names: Andrew
+      family-names: Craton
+      affiliation: "Kootru Labs"
+  # journal: fill in once the manuscript is accepted.
+  year: 2026
+  # doi: to be filled in post-acceptance.  See SUBMISSION_CHECKLIST.html
+  # section "Human-gated: Zenodo DOI minting" for the update procedure.

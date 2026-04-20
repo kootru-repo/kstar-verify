@@ -1,0 +1,92 @@
+{
+  "backend": "ibm_fez",
+  "backend_qubits": 156,
+  "retrieval_date": "2026-03-28T13:10:02.871687",
+  "layouts": {
+    "w_state_4q": {
+      "physical_qubits": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "transpiled_depth": 14,
+      "transpiled_gate_count": {
+        "rz": 10,
+        "sx": 8,
+        "measure": 4,
+        "cz": 3,
+        "x": 1,
+        "barrier": 1
+      },
+      "optimization_level": 1,
+      "note": "Re-transpiled W-state 4q on ibm_fez (2026-03-28). Actual run used same optimization_level=1; physical mapping may differ slightly due to backend calibration drift."
+    },
+    "ghz_4q": {
+      "physical_qubits": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "transpiled_depth": 16,
+      "transpiled_gate_count": {
+        "rz": 14,
+        "sx": 7,
+        "measure": 4,
+        "cz": 3,
+        "barrier": 1
+      },
+      "optimization_level": 1,
+      "note": "Re-transpiled GHZ 4q on ibm_fez (2026-03-28). Actual run used same optimization_level=1; physical mapping may differ slightly due to backend calibration drift."
+    },
+    "product_plus_4q": {
+      "physical_qubits": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "transpiled_depth": 4,
+      "transpiled_gate_count": {
+        "rz": 8,
+        "sx": 4,
+        "measure": 4,
+        "barrier": 1
+      },
+      "optimization_level": 1,
+      "note": "Re-transpiled |+>^4 on ibm_fez (2026-03-28). Actual run used same optimization_level=1; physical mapping may differ slightly due to backend calibration drift."
+    },
+    "bell_2q": {
+      "physical_qubits": [
+        0,
+        1
+      ],
+      "transpiled_depth": 8,
+      "transpiled_gate_count": {
+        "rz": 6,
+        "sx": 3,
+        "measure": 2,
+        "cz": 1,
+        "barrier": 1
+      },
+      "optimization_level": 1,
+      "note": "Re-transpiled Bell 2q on ibm_fez (2026-03-28). Actual run used same optimization_level=1; physical mapping may differ slightly due to backend calibration drift."
+    },
+    "compositional_8q": {
+      "physical_qubits": [
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147
+      ],
+      "note": "From original compositional_results JSON (backup)",
+      "source": "hardware_results_ibm_fez_20260307_223638_compositional.json"
+    }
+  },
+  "note": "4q layouts are re-transpiled with optimization_level=1 (same as original runs). Physical mapping is deterministic for a given backend calibration but may shift between calibration cycles. The 8q layout is from the original run."
+}

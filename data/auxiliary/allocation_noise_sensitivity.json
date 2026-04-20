@@ -1,0 +1,85 @@
+{
+  "description": "Allocation fraction noise sensitivity (W_4, n=4, 20 seeds)",
+  "results": [
+    {
+      "depol": 0.0,
+      "readout": 0.0,
+      "f_struct": 0.9518,
+      "f_alloc": 0.6555,
+      "f_unif": 0.3013,
+      "d_ar_ur": 0.3542,
+      "d_s_ur": 0.6505,
+      "alloc_frac_pct": 54.4
+    },
+    {
+      "depol": 0.01,
+      "readout": 0.01,
+      "f_struct": 0.8716,
+      "f_alloc": 0.7307,
+      "f_unif": 0.3331,
+      "d_ar_ur": 0.3977,
+      "d_s_ur": 0.5385,
+      "alloc_frac_pct": 73.8
+    },
+    {
+      "depol": 0.02,
+      "readout": 0.01,
+      "f_struct": 0.8568,
+      "f_alloc": 0.7394,
+      "f_unif": 0.362,
+      "d_ar_ur": 0.3774,
+      "d_s_ur": 0.4948,
+      "alloc_frac_pct": 76.3
+    },
+    {
+      "depol": 0.03,
+      "readout": 0.02,
+      "f_struct": 0.8044,
+      "f_alloc": 0.7056,
+      "f_unif": 0.3065,
+      "d_ar_ur": 0.3991,
+      "d_s_ur": 0.4979,
+      "alloc_frac_pct": 80.2
+    },
+    {
+      "depol": 0.05,
+      "readout": 0.02,
+      "f_struct": 0.7911,
+      "f_alloc": 0.7276,
+      "f_unif": 0.321,
+      "d_ar_ur": 0.4066,
+      "d_s_ur": 0.4701,
+      "alloc_frac_pct": 86.5
+    },
+    {
+      "depol": 0.05,
+      "readout": 0.05,
+      "f_struct": 0.7541,
+      "f_alloc": 0.6868,
+      "f_unif": 0.347,
+      "d_ar_ur": 0.3398,
+      "d_s_ur": 0.407,
+      "alloc_frac_pct": 83.5
+    },
+    {
+      "depol": 0.08,
+      "readout": 0.03,
+      "f_struct": 0.7671,
+      "f_alloc": 0.7163,
+      "f_unif": 0.3376,
+      "d_ar_ur": 0.3787,
+      "d_s_ur": 0.4295,
+      "alloc_frac_pct": 88.2
+    },
+    {
+      "depol": 0.1,
+      "readout": 0.05,
+      "f_struct": 0.7351,
+      "f_alloc": 0.6867,
+      "f_unif": 0.3795,
+      "d_ar_ur": 0.3073,
+      "d_s_ur": 0.3557,
+      "alloc_frac_pct": 86.4
+    }
+  ]
+}

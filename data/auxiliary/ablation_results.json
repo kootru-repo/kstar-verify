@@ -1,0 +1,42 @@
+{
+  "description": "Weight ablation study: effect of removing each Hamming-weight class",
+  "source": "ablation simulation (n=4, M=137, 20 seeds)",
+  "results": {
+    "full_kstar": {
+      "n_ops": 137,
+      "mean": 0.412,
+      "std": 0.099,
+      "delta": 0.0
+    },
+    "remove_w0": {
+      "n_ops": 136,
+      "mean": 0.105,
+      "std": 0.126,
+      "delta": -0.307
+    },
+    "remove_w1": {
+      "n_ops": 125,
+      "mean": 0.42,
+      "std": 0.095,
+      "delta": 0.008
+    },
+    "remove_w2": {
+      "n_ops": 83,
+      "mean": 0.37,
+      "std": 0.073,
+      "delta": -0.043
+    },
+    "remove_w3": {
+      "n_ops": 83,
+      "mean": 0.386,
+      "std": 0.106,
+      "delta": -0.027
+    },
+    "remove_w4": {
+      "n_ops": 121,
+      "mean": 0.432,
+      "std": 0.069,
+      "delta": 0.019
+    }
+  }
+}

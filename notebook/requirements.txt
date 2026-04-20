@@ -1,0 +1,8 @@
+pyyaml>=6.0
+sympy>=1.12
+numpy>=1.26
+pandas>=2.0
+jupyter>=1.0
+# Hardware simulation in Section 7 imports from tier4-independent/
+# (core.py + robust_mle.py).  Those files use only numpy.linalg;
+# no scipy is required.

@@ -1,0 +1,76 @@
+# SageMath Exact Cross-Verification Suite
+#
+# Independent CAS verification of all exact-arithmetic claims in the
+# companion manuscript.  Complements the existing SymPy+NumPy suite
+# in cross-verification/ by providing a second CAS backend (SageMath
+# uses FLINT/GMP/Pari, SymPy uses pure Python).
+#
+# Every computation uses QQ (exact rationals) or ZZ (exact integers).
+# No floating point anywhere.
+#
+# Usage:
+#   sage run_all.sage                        # full suite
+#   sage run_all.sage --domain quantum_info  # single domain
+#   sage run_all.sage --export               # write certified_values.json
+
+version: "1.0.0"
+sage_version: ">=10.0"
+
+registry: ../external-proofs/proofs_registry.yaml
+
+domains:
+  - id: combinatorics
+    file: domains/combinatorics.sage
+    verifies:
+      - Krawtchouk polynomial identities (orthogonality, duality)
+      - Parity-weight counts c_w(K) by lattice enumeration
+      - Gram eigenvalues via Krawtchouk transform
+      - Greedy redistribution algorithm and monotonicity
+      - K* values and minimality
+      - Operator lower bounds
+      - Gram condition number kappa_G at K*=5 n=4
+      - M_n/N ratio verification (< 1 for n=2..6)
+      - Spectral mass threshold K_mass = q^2
+      - Krawtchouk eigenvalue table full K=0..5 at n=4, q=2 (registry fact:eigenvalue_table_n4_q2)
+      - Weight-3 K=5 closed-form deficit 19*C(n,3) over n=3..7 (registry fact:weight3_undersaturation_K5)
+
+  - id: linear_algebra
+    file: domains/linear_algebra.sage
+    verifies:
+      - Gram matrix construction from lattice modes
+      - Hamming-distance constancy (association scheme property, registered test)
+      - Spectral decomposition cross-check (Krawtchouk vs matrix eigenvalues)
+      - Full-rank verification at K* with minimality (K*-1 not full rank)
+      - Delsarte certificate existence
+      - Parity-weight cross-check against combinatorics domain
+
+  - id: probability
+    file: domains/probability.sage
+    verifies:
+      - Hypergeometric exact probabilities
+      - Product bound verification (all weight classes)
+      - Hypergeometric bound exact value (137/255)^12
+      - Random-set vanishing rates
+
+  - id: quantum_info
+    file: domains/quantum_info.sage
+    verifies:
+      - Density matrix validity (trace, Hermiticity, purity, PSD)
+      - Pauli trace orthogonality (full group construction)
+      - W/GHZ/product state density matrices and expectations
+      - Purity bounds eps_pos for 3 states from density matrix
+      - Condition number kappa_info from actual expectations
+      - eps_tail from density matrix
+      - High-weight operator counts
+      - GHZ 5-stabilizer non-coverage by K*(4) via parsed Lean constant (registry fact:ghz_kstar_gap)
+      - Canonical SHA-256 of Lean kstar_labels_n4 matches registry pin (registry fact:kstar_python_lean_bridge)
+      - Hradil R-operator closed-form fixed point R(y,y) = (1/2, 0) (registry prop:hradil_R_operator)
+
+  - id: number_theory
+    file: domains/number_theory.sage
+    verifies:
+      - Jacobi four-square theorem vs brute force
+      - N_4(K) via two independent methods
+      - Shell multiplicities r_4(k)
+      - Dimensional rigidity (2d = 2^{d-1})
+      - Cross-domain lattice count consistency (N_d vs sum(c_w))

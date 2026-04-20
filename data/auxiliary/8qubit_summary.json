@@ -1,0 +1,19 @@
+{
+  "description": "8-qubit compositional experiment summary statistics",
+  "source": "8qubit-w-rigetti/results/patch_fidelities.json and kstar_vs_random.json",
+  "product_state": {
+    "mean": 0.992,
+    "std": 0.002,
+    "note": "Mean product-state fidelity across 5 patches"
+  },
+  "patch_fidelity": {
+    "mean": 0.668,
+    "std": 0.07,
+    "note": "Mean per-patch W8 fidelity across 5 patches"
+  },
+  "random_fidelity": {
+    "mean": 0.134,
+    "std": 0.07,
+    "note": "Mean random-set fidelity across 5 patches"
+  }
+}

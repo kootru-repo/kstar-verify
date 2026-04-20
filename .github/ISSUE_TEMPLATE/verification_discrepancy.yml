@@ -1,0 +1,70 @@
+name: Verification discrepancy
+description: A machine-verified artifact does not match the submitted manifest
+title: "[discrepancy] "
+labels: [verification]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for auditing. Please fill in what you ran, what you
+        expected, and what you saw.  Small discrepancies are usually
+        toolchain drift; the goal of this repo is that there are none.
+
+  - type: input
+    id: git_sha_local
+    attributes:
+      label: Your local git SHA
+      description: Output of `git rev-parse HEAD`.
+      placeholder: e.g. 4867f33fe4ea9181f732b64b9d8552fabea9597b
+    validations:
+      required: true
+
+  - type: input
+    id: git_sha_submission
+    attributes:
+      label: Submission git SHA
+      description: Value of `git_sha` in the submitted verification_manifest.json.
+      placeholder: e.g. 4867f33fe4ea9181f732b64b9d8552fabea9597b
+    validations:
+      required: true
+
+  - type: input
+    id: lean_toolchain
+    attributes:
+      label: Lean toolchain
+      description: Contents of lean4/lean-toolchain (should match `lean_toolchain` in manifest).
+      placeholder: leanprover/lean4:v4.29.0-rc8
+    validations:
+      required: true
+
+  - type: dropdown
+    id: artifact
+    attributes:
+      label: Which artifact diverges?
+      options:
+        - verification_manifest.json
+        - axiom_report.json
+        - axiom_report.txt
+        - sm_axiom_table.tex
+        - lake build (exit code or job count)
+        - Scope-of-formalization paragraph (manuscript)
+        - other (describe below)
+    validations:
+      required: true
+
+  - type: textarea
+    id: diff
+    attributes:
+      label: Diff
+      description: Paste the output of `diff your_local submitted`, or describe the mismatch.
+      render: diff
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, Docker/native, anything non-default.
+    validations:
+      required: false

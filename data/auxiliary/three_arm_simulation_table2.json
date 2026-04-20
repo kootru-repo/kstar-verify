@@ -1,0 +1,79 @@
+{
+  "description": "Three-arm simulation: structured vs allocated-random vs uniform-random (Table II)",
+  "source": "external_simulations_output.txt, SIMULATION 4 + run_comparison outputs",
+  "params": {
+    "noise": "moderate_1k",
+    "depol": 0.03,
+    "readout": 0.02,
+    "n_shots": 1000,
+    "n_seeds": 20,
+    "n_noise_draws": 10,
+    "seed": 42,
+    "reconstructor": "MLE"
+  },
+  "results": {
+    "W_n2": {
+      "n_qubits": 2,
+      "M": 9,
+      "state": "W",
+      "structured": 0.987,
+      "alloc_random": 0.414,
+      "uniform_random": 0.479,
+      "delta_S_AR": 0.573
+    },
+    "W_n3": {
+      "n_qubits": 3,
+      "M": 27,
+      "state": "W",
+      "structured": 0.868,
+      "alloc_random": 0.538,
+      "uniform_random": 0.284,
+      "delta_S_AR": 0.331
+    },
+    "W_n4": {
+      "n_qubits": 4,
+      "M": 137,
+      "state": "W",
+      "structured": 0.833,
+      "alloc_random": 0.733,
+      "uniform_random": 0.302,
+      "delta_S_AR": 0.1
+    },
+    "GHZ_n4": {
+      "n_qubits": 4,
+      "M": 137,
+      "state": "GHZ",
+      "structured": 0.856,
+      "alloc_random": 0.574,
+      "uniform_random": 0.227,
+      "delta_S_AR": 0.282
+    },
+    "W_n5": {
+      "n_qubits": 5,
+      "M": 333,
+      "state": "W",
+      "structured": 0.7296,
+      "alloc_random": 0.688,
+      "uniform_random": 0.4276,
+      "delta_S_AR": 0.0416,
+      "structured_std": 0.055,
+      "alloc_random_std": 0.127,
+      "uniform_random_std": 0.237
+    }
+  },
+  "dimensional_progression": {
+    "delta_S_AR": [
+      0.5727,
+      0.3307,
+      0.0998,
+      0.0416
+    ],
+    "n_qubits": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "note": "Monotonic decrease confirmed through d=5"
+  }
+}

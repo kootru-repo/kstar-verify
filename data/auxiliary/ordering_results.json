@@ -1,0 +1,48 @@
+{
+  "description": "Intra-weight ordering comparison (7 orderings, W-state n=4)",
+  "source": "ordering simulation",
+  "orderings": {
+    "random_7777": {
+      "mean": 0.817,
+      "std": 0.03,
+      "coverage_pct": 78.8,
+      "cluster": "typical"
+    },
+    "lexicographic": {
+      "mean": 0.809,
+      "std": 0.072,
+      "coverage_pct": 100.0,
+      "cluster": "typical"
+    },
+    "support_first": {
+      "mean": 0.805,
+      "std": 0.081,
+      "coverage_pct": 98.5,
+      "cluster": "typical"
+    },
+    "random_8888": {
+      "mean": 0.804,
+      "std": 0.032,
+      "coverage_pct": 78.1,
+      "cluster": "typical"
+    },
+    "random_9999": {
+      "mean": 0.426,
+      "std": 0.101,
+      "coverage_pct": 78.8,
+      "cluster": "adversarial"
+    },
+    "reverse": {
+      "mean": 0.408,
+      "std": 0.17,
+      "coverage_pct": 81.0,
+      "cluster": "adversarial"
+    },
+    "antistride": {
+      "mean": 0.31,
+      "std": 0.172,
+      "coverage_pct": 81.0,
+      "cluster": "adversarial"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+name: Hardware simulator smoke
+
+# Runs hardware/tests/test_smoke_simulator.py on every push/PR that
+# touches the live-QPU module or its inputs.  Catches qiskit API
+# drift and import-path regressions that the eight data-replay tiers
+# in verify.yml would not notice (those never import qiskit).
+#
+# Kept as a separate workflow (not a job inside verify.yml) so a
+# hardware-only change doesn't trigger the Lean4 rebuild or the
+# 13-min python-verify job.
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'hardware/**'
+      - 'tier4-independent/core.py'
+      - 'tier4-independent/robust_mle.py'
+      - '.github/workflows/hardware-smoke.yml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'hardware/**'
+      - 'tier4-independent/core.py'
+      - 'tier4-independent/robust_mle.py'
+      - '.github/workflows/hardware-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hardware-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    name: Simulator smoke test (FakeBrisbane)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install base + hardware dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r hardware/requirements.txt
+
+      - name: Run output-schema regression test
+        # Drives a synthetic payload through _finalize and asserts the
+        # emitted JSON's top-level layout still matches the shipped
+        # reference in data/w_repeat_results.json.  No qiskit needed.
+        run: python hardware/tests/test_output_schema.py
+
+      - name: Run local-simulator smoke test
+        # Exercises the full pipeline end-to-end through FakeBrisbane's
+        # local noise model -- no IBM credentials, no QPU credits.
+        # Fails the job if dF is non-positive (pipeline broken).
+        run: python hardware/tests/test_smoke_simulator.py

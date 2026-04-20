@@ -1,0 +1,252 @@
+name: K* Verification
+
+# G7 of the CI/CD gap inventory: path-based triggers.
+# Only rerun the full 4-job gate when files that could affect the
+# certificate change.  Docs-only edits (CHANGELOG, README typos, top-
+# level *.html) do NOT rerun verification.  Use workflow_dispatch to
+# force-run regardless of paths.
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'lean4/**'
+      - 'tier*/**'
+      - 'scripts/**'
+      - 'notebook/**'
+      - 'data/**'
+      - 'proofs_registry.yaml'
+      - 'registry.py'
+      - 'requirements.txt'
+      - 'run_all.py'
+      - 'validate.sh'
+      - 'verify_integrity.py'
+      - 'verify_registry.py'
+      - '.github/workflows/verify.yml'
+      - 'Dockerfile'
+      - 'Dockerfile.lean4'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'lean4/**'
+      - 'tier*/**'
+      - 'scripts/**'
+      - 'notebook/**'
+      - 'data/**'
+      - 'proofs_registry.yaml'
+      - 'registry.py'
+      - 'requirements.txt'
+      - 'run_all.py'
+      - 'validate.sh'
+      - 'verify_integrity.py'
+      - 'verify_registry.py'
+      - '.github/workflows/verify.yml'
+      - 'Dockerfile'
+      - 'Dockerfile.lean4'
+  workflow_dispatch:
+
+# Only one verification workflow run at a time per ref.  When a new
+# push lands on master before the previous run has finished, cancel
+# the in-flight run and start fresh.  Avoids pile-ups (and wasted
+# runner minutes) after rapid-fire pushes.
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Job 1: Artifact integrity (fast gate) ──────────────────────────────
+  integrity:
+    name: Artifact integrity (SHA-256)
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Verify data and artifact checksums
+        run: python verify_integrity.py
+
+  # ── Job 2: Lean 4 formal proofs + machine-generated artifacts ────────
+  lean4-build:
+    name: Lean4 formal verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install elan
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+
+      - name: Cache Mathlib
+        uses: actions/cache@v5
+        with:
+          path: lean4/.lake
+          # Bust the cache when the toolchain OR the manifest changes.
+          key: lean4-lake-${{ hashFiles('lean4/lean-toolchain', 'lean4/lake-manifest.json') }}
+
+      - name: Install Python deps for generators
+        run: pip install pyyaml
+
+      - name: Build and verify sorry-free
+        working-directory: lean4
+        run: |
+          lake update doc-gen4
+          lake build
+          # Use the proper sorry audit script
+          if [ -f scripts/check_sorry.py ]; then
+            python scripts/check_sorry.py
+          elif [ -f scripts/check_sorry.sh ]; then
+            bash scripts/check_sorry.sh
+          else
+            echo "Checking for sorry in source files..."
+            if grep -r "sorry" KstarFormal/ --include="*.lean" | grep -v "^--" | grep -v "no_sorry" | grep -v "sorryAx"; then
+              echo "ERROR: sorry found in source"
+              exit 1
+            fi
+            echo "PASS: sorry-free"
+          fi
+
+      - name: Regenerate machine-verified artifacts (Phase H/I)
+        working-directory: lean4
+        run: python scripts/generate_all.py
+
+      - name: Manifest freshness vs committed copy
+        # The checked-in manifest's content (axiom footprints, claim
+        # counts, summary buckets) must match what `generate_all.py`
+        # just emitted at HEAD.  Meta fields that legitimately drift
+        # every run (git_sha, timestamp) are excluded from the
+        # comparison via jq; otherwise the gate would fail on every
+        # push regardless of whether real content changed.
+        working-directory: lean4
+        run: |
+          # Normalize: strip volatile fields, sort keys, compare content-only.
+          jq -S 'del(.git_sha, .timestamp, .timestamp_utc, .generated_at)' generated/verification_manifest.json > /tmp/manifest-head.json
+          git show HEAD:lean4/generated/verification_manifest.json | jq -S 'del(.git_sha, .timestamp, .timestamp_utc, .generated_at)' > /tmp/manifest-committed.json
+          if ! diff -q /tmp/manifest-head.json /tmp/manifest-committed.json > /dev/null; then
+            echo "::error::Committed manifest content differs from freshly generated one."
+            echo "Diff (excluding git_sha/timestamp fields):"
+            diff /tmp/manifest-head.json /tmp/manifest-committed.json | head -60
+            echo ""
+            echo "To fix: run 'python lean4/scripts/generate_all.py' locally"
+            echo "and commit the updated files under lean4/generated/."
+            exit 1
+          fi
+          # Also gate on the non-volatile companion artifacts.
+          for f in axiom_report.json axiom_report.txt sm_axiom_table.tex; do
+            if ! git diff --quiet -- "generated/$f"; then
+              echo "::error::generated/$f differs from committed copy."
+              git --no-pager diff -- "generated/$f" | head -40
+              exit 1
+            fi
+          done
+          echo "Manifest freshness: content-level match confirmed."
+
+      - name: Manifest diff vs baseline (G10)
+        if: hashFiles('lean4/.baseline/verification_manifest.json') != ''
+        working-directory: lean4
+        run: |
+          python scripts/diff_manifest.py \
+            generated/verification_manifest.json \
+            .baseline/verification_manifest.json
+
+      - name: Upload verification artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lean4-verification-artifacts
+          path: |
+            lean4/generated/verification_manifest.json
+            lean4/generated/axiom_report.json
+            lean4/generated/axiom_report.txt
+            lean4/generated/sm_axiom_table.tex
+          # `warn` instead of `error`: if a prior step failed before
+          # generate_all.py could emit the manifest, we still want the
+          # job to surface the actual failure (lake build / sorry audit)
+          # rather than masking it with an "artifact not found" error
+          # on the upload step.
+          if-no-files-found: warn
+          retention-days: 90
+
+  # ── Job 3: Python verification (Tiers 2-7) ────────────────────────────
+  python-verify:
+    name: Python verification (Tiers 2-7)
+    needs: integrity
+    runs-on: ubuntu-latest
+    # Local full suite (tiers 2-7): ~11 min.  GitHub 2-core runners
+    # roughly 2x slower, so ~22-25 min typical.  45-min cap gives
+    # headroom for a worst-case tier 2 slowdown without masking hangs.
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Python tiers (2, 3, 4, 5, 6, 7) against bundled data
+        env:
+          KSTAR_DATA_DIR: ${{ github.workspace }}/data
+          # Pin BLAS to single-threaded so cvxpy/SCS converges to the
+          # same MLE local-optimum across runners.  With threaded BLAS,
+          # floating-point summation order varies between runs and the
+          # GHZ state's near-singular MLE lands at different (but both
+          # valid) local optima, producing drift > tolerance.
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+        run: |
+          # Data ships in-repo under data/, so CI exercises the full
+          # Python suite including the hardware-replay tiers (4, 6, 7).
+          python run_all.py --registry proofs_registry.yaml --skip-tier1 --skip-lean4 --tier 2 3 4 5 6 7
+
+      - name: Upload verification report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: verification-report
+          path: results/
+          if-no-files-found: ignore
+          retention-days: 30
+
+  # ── Job 4: Canary (mutation testing, non-vacuity) ──────────────────────
+  canary:
+    name: Mutation testing (non-vacuity)
+    # Only integrity is a real prerequisite (we need the checksum gate
+    # to have vouched for data/registry before injecting mutations).
+    # Mutation testing and python-verify are logically independent,
+    # so running them concurrently roughly halves total wall time on
+    # every push.
+    needs: integrity
+    runs-on: ubuntu-latest
+    # 12-min budget: 4 mutations run 2-at-a-time via ThreadPoolExecutor
+    # on the 2-core runner, so wall time is ~max(tier2-to-first-[FAIL])
+    # x 2 pairs ~= 4-6 min typical, plus the pre-flight registry check.
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run canary (verify system catches injected errors)
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: python -u run_all.py --canary --registry proofs_registry.yaml

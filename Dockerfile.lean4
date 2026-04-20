@@ -1,0 +1,73 @@
+# Pre-built verification container for the companion manuscript
+# "Provable measurement design for quantum state tomography from
+#  Hamming-scheme spectral theory."
+#
+# Ships with:
+#  - Lean 4 toolchain pinned to the version in lean-toolchain
+#  - Mathlib binary cache (lake exe cache get)
+#  - Pre-built .olean artifacts for the entire KstarFormal library
+#  - Python 3.11 with jupyter + notebook deps
+#  - All generated artifacts regenerated on build
+#
+# Usage:
+#   docker build -f Dockerfile.lean4 -t ghcr.io/kootru-repo/kstar-verify:submission .
+#   docker run --rm ghcr.io/kootru-repo/kstar-verify:submission
+#
+# For an interactive shell:
+#   docker run --rm -it ghcr.io/kootru-repo/kstar-verify:submission /bin/bash
+#
+# To regenerate artifacts inside the container:
+#   docker run --rm ghcr.io/kootru-repo/kstar-verify:submission \
+#       python lean4/scripts/generate_all.py
+
+FROM debian:bookworm-slim AS builder
+
+# System dependencies for elan/lake + Python.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        curl ca-certificates git build-essential \
+        python3 python3-pip python3-venv \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install elan (Lean version manager).
+ENV ELAN_HOME=/root/.elan
+ENV PATH=$ELAN_HOME/bin:$PATH
+RUN curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+        | sh -s -- -y --default-toolchain none
+
+WORKDIR /kstar
+COPY lean4/lean-toolchain /kstar/lean4/lean-toolchain
+RUN cd /kstar/lean4 && elan toolchain install $(cat lean-toolchain)
+
+# Copy the full verification tree.
+COPY . /kstar/
+
+# Pre-fetch Mathlib cache and build the project.
+RUN cd /kstar/lean4 && lake exe cache get && lake build
+
+# Python deps for the notebook and generator scripts.
+RUN python3 -m pip install --break-system-packages --no-cache-dir \
+        pyyaml sympy numpy pandas jupyter nbconvert
+
+# Regenerate all machine-verified artifacts so the baked-in manifest
+# reflects the exact toolchain + commit this image was built from.
+RUN cd /kstar/lean4 && python3 scripts/generate_all.py
+
+# ---- Runtime stage ---------------------------------------------------
+# Single-stage image to keep the .olean cache warm.  The verification
+# tree is already built above; default CMD prints the manifest summary.
+
+WORKDIR /kstar
+CMD ["python3", "-c", "\
+import json, pathlib; \
+m = json.loads((pathlib.Path('lean4/generated/verification_manifest.json')).read_text()); \
+print('git:        ' + m['git_sha']); \
+print('toolchain:  ' + m['lean_toolchain']); \
+print('lake build: exit %d, %d jobs' % (m['lake_build']['exit_code'], m['lake_build']['jobs'])); \
+print('sorry:      %d total' % m['sorry_audit']['total_sorry']); \
+print('claims:     %d  (core-only=%d, named-ax=%d, native-decide=%d)' % ( \
+    m['summary']['total_claims'], m['summary']['claims_lean_core_only'], \
+    m['summary']['claims_with_named_axioms'], m['summary']['claims_with_native_decide'])); \
+print(''); \
+print('To regenerate: python3 lean4/scripts/generate_all.py'); \
+print('To rebuild Lean: cd lean4 && lake build'); \
+print('To run notebook: jupyter notebook --ip=0.0.0.0 notebook/k_star_demo.ipynb')"]

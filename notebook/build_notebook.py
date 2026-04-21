@@ -5,7 +5,7 @@ We build the .ipynb from source strings so the notebook is
 git-diff-friendly (a JSON blob with inline strings is nearly
 impossible to review; this approach lets the reader diff plain Python).
 
-Structure (74 cells, ~3 min end-to-end with the bundled data/):
+Structure (75 cells, ~3 min end-to-end with the bundled data/):
   Sections 1-6 (Lean-verified combinatorics):
     1. Per-claim axiom footprint                         (md + code)
     2. Universal-n closed forms                          (md + code)

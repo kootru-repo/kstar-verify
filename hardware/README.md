@@ -92,6 +92,35 @@ For a byte-for-byte diff, run `analyze_results.py --reference` on the
 shipped JSON and `analyze_results.py results/w_repeat_results_*.json`
 on your own run — the fields printed are identical.
 
+## What your live run will look like (and why)
+
+Your run will not reproduce the published F(K\*) = 0.872 and
+ΔF = +0.33 to three decimals.  Those are the mean and std of a
+four-run dataset on one calibration epoch.  On your calibration
+day, with your seeds, you'll see a distribution.  **The paper
+predicts which statistic is stable and which varies:**
+
+- **F(K\*) stays tight (σ ≈ 0.02).**  The Krawtchouk-saturated
+  137-operator set covers every informative-weight direction
+  (Theorem 2 + Cor. 2), making reconstruction insensitive to
+  which noise directions the current calibration stresses.
+- **F(rand) is volatile by design.**  The manuscript quantifies
+  uniform-random volatility as *σ = 0.325, coefficient of
+  variation > 1* (Sec. sec:sota): whether 137 random Pauli labels
+  cover the informative weight classes depends on the seed, and
+  how badly they are hit by noise depends on the calibration.
+- **ΔF therefore tracks F(rand) volatility, not F(K\*).**  A
+  calibration that hits random sampling harder produces a larger
+  apparent advantage; a gentler one produces a smaller one.  The
+  claim is the *direction and robustness* of the gap, not its
+  exact magnitude on any given day.
+
+Any live rerun in roughly F(K\*) ∈ [0.85, 0.92] with ΔF > 0 is
+consistent with the paper.  The invariants the paper commits to
+— F(K\*) tight, ΔF > 0 on every run — are exactly what
+`analyze_results.py`'s bound check enforces.  See notebook
+Section 7.4.4 for the theorem-level rationale.
+
 ## Budget safety
 
 The runner enforces a **5-minute QPU-time ceiling** per invocation

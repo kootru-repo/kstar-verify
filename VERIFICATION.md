@@ -68,7 +68,7 @@ Regenerate the table on a fresh clone via `python lean4/scripts/generate_all.py`
 Open [`notebook/k_star_demo.ipynb`](notebook/k_star_demo.ipynb) locally
 or on [Binder](https://mybinder.org/v2/gh/kootru-repo/kstar-verify/v1.0.0-submission?filepath=notebook%2Fk_star_demo.ipynb)
 (Binder reads [`.binder/`](.binder/) for the environment).
-74 cells total (~38 markdown narrative + ~36 executable code), ~3 min
+75 cells total (~39 markdown narrative + ~36 executable code), ~3 min
 end-to-end on Binder.  All data ships in-repo under `data/`; nothing
 to configure.  Every paper claim has an in-notebook witness; every
 assertion fires loudly on drift.

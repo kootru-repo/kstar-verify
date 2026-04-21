@@ -41,8 +41,13 @@ RUN cd /kstar/lean4 && elan toolchain install $(cat lean-toolchain)
 # Copy the full verification tree.
 COPY . /kstar/
 
-# Pre-fetch Mathlib cache and build the project.
-RUN cd /kstar/lean4 && lake exe cache get && lake build
+# Pre-fetch Mathlib cache and build the project.  `lake update doc-gen4`
+# populates the doc-gen4 dependency entry in lake-manifest.json before
+# the first build; lakefile.lean declares `require «doc-gen4»` but the
+# manifest ships without it, so a cold build fails with
+# "dependency 'doc-gen4' not in manifest" otherwise.  Mirrors the
+# identical one-line insert in verify.yml, docgen.yml, heartbeat.yml.
+RUN cd /kstar/lean4 && lake update doc-gen4 && lake exe cache get && lake build
 
 # Python deps for the notebook and generator scripts.
 RUN python3 -m pip install --break-system-packages --no-cache-dir \

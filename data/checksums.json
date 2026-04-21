@@ -1,7 +1,7 @@
 {
   "description": "SHA-256 checksums for all tracked data and bundled artifacts",
   "generated_by": "verify_integrity.py --generate-manifest",
-  "generated_at": "2026-04-20T21:59:12",
+  "generated_at": "2026-04-20T22:22:22",
   "file_count": 435,
   "files": {
     "data/8qubit-w-rigetti/null-model/dtr_distribution_product.npy": "66fe1e07be9b6e81841b8d70cfec89b6a34754c438007a5f3c1594161aba9499",
@@ -412,7 +412,7 @@
     "data/w_repeat_results.json": "656afb7a8048f90666eda3c0588c3c6f46214f9f93ac411159e660cdfc14bdea",
     "data/w_repeat_results_enriched.json": "656afb7a8048f90666eda3c0588c3c6f46214f9f93ac411159e660cdfc14bdea",
     "tier7-claims/tex/cover_letter.tex": "d930a218a06e4bfab9a9af541c4e90f0cea695ffdcd6373ea5fb439539d0f204",
-    "tier7-claims/tex/manuscript.tex": "719e2eb216a83b2612b9a5c1315446528fa003d049e618057cd18d069b1cbe5b",
+    "tier7-claims/tex/manuscript.tex": "45ba100bd4c056372847e407d09e75b31d9bc85a72e5b3d6cd6766f4c7227428",
     "tier7-claims/tex/refs.bib": "e39c91539ffee65367cbf5b7883650003bae31191f3a26896229abda18a73528",
     "tier7-claims/tex/supplemental_material.tex": "7d301f89aef3914e1c774f2ff79c6b4f584d0fc5ff65ee8484b4191a74a1e4e7",
     "tier7-claims/figures/fig1_fidelity.pdf": "5c23d59ebf3db80f734e95898d9717309b78ff05e9f416c334fcd1c78c68a1e5",

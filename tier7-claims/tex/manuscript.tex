@@ -2382,6 +2382,38 @@ Seed~200 is anomalous in both random arms
 the structured set still wins ($F_{K^*} = 0.917$,
 $\Delta(S{-}AR) = +0.031$).
 
+\begin{remark}[Hardware-replication prediction across calibration epochs]
+Theorem~\ref{thm:spectral-char} characterizes the weight-class
+coverage of $K^*$.  Under the physical interpretation that
+$F(K^*)$ reconstruction is governed by that coverage rather than by
+which specific noise directions a given calibration stresses, it
+follows that $F(K^*)$ is expected to be approximately
+calibration-invariant across hardware epochs -- a consequence
+empirically consistent with the inter-session agreement reported in
+Sec.~\ref{sec:results}.  The random-Pauli volatility quantified in
+this section ($\sigma = 0.325$, coefficient of variation $> 1$)
+supplies the $F(\mathrm{rand})$ side of the comparison.
+
+Physically, calibration asymmetry -- coherent errors or readout
+crosstalk that degrade certain operators more than others, the
+typical regime for calibrated devices -- is expected to drive the
+run-to-run spread of $F(\mathrm{rand})$ and the decrement of its
+mean in the same direction: different random draws sample the
+asymmetric noise differently, widening
+$\mathrm{Var}[F(\mathrm{rand})]$, while the worst-affected operators
+lower the average reconstruction fidelity, bringing
+$\mathrm{Mean}[F(\mathrm{rand})]$ down.  Combining the approximate
+constancy of $F(K^*)$ with this coupled shift in $F(\mathrm{rand})$
+yields a testable prediction for future hardware replications:
+epochs with elevated random-arm volatility will exhibit
+correspondingly elevated mean $\Delta F$.  This suggests the
+reported $\Delta F$ value carries a calibration-dependent dynamic
+range, and the natural invariants to monitor in a replication are
+the stability of $F(K^*)$ and the sign of $\Delta F$ -- the exact
+magnitude of $\Delta F$ depends on the calibration's asymmetry
+profile.
+\end{remark}
+
 \subsection{Dimensional dependence}
 \label{sec:dim-dep}
 

@@ -1,7 +1,7 @@
 {
   "description": "SHA-256 checksums for all tracked data and bundled artifacts",
   "generated_by": "verify_integrity.py --generate-manifest",
-  "generated_at": "2026-04-20T19:20:08",
+  "generated_at": "2026-04-20T19:28:50",
   "file_count": 435,
   "files": {
     "data/8qubit-w-rigetti/null-model/dtr_distribution_product.npy": "66fe1e07be9b6e81841b8d70cfec89b6a34754c438007a5f3c1594161aba9499",

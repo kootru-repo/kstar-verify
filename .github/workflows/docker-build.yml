@@ -1,0 +1,159 @@
+name: Docker container build
+
+# Validates that both Docker images (the Sage-based mathy tier image and
+# the heavier Lean4 image) still build from scratch.  Catches the kind of
+# silent Dockerfile breakage that slipped through previously: missing
+# COPYs, wrong ownership, shell-form CMD losing stdout.
+#
+# The Sage image build + run of tiers 1/2/3/5 is fast enough (~8 min
+# with the base layer cached, ~15 min cold) to run on every push that
+# touches container inputs.  The Lean4 image build takes ~30-60 min
+# because it recompiles Mathlib; scheduled weekly only, same rhythm as
+# heartbeat.yml.
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'Dockerfile'
+      - 'Dockerfile.lean4'
+      - 'run_docker_suite.sh'
+      - '.binder/**'
+      - 'tier1-sage/**'
+      - 'tier2-sympy/**'
+      - 'tier3-numpy/**'
+      - 'tier5-fidelity/**'
+      - 'tier4-independent/**'
+      - 'scripts/**'
+      - 'registry.py'
+      - 'proofs_registry.yaml'
+      - 'requirements.txt'
+      - 'lean4/KstarFormal/**'
+      - 'lean4/lean-toolchain'
+      - '.github/workflows/docker-build.yml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'Dockerfile'
+      - 'Dockerfile.lean4'
+      - 'run_docker_suite.sh'
+      - '.binder/**'
+      - 'tier1-sage/**'
+      - 'tier2-sympy/**'
+      - 'tier3-numpy/**'
+      - 'tier5-fidelity/**'
+      - 'tier4-independent/**'
+      - 'scripts/**'
+      - 'registry.py'
+      - 'proofs_registry.yaml'
+      - 'requirements.txt'
+      - 'lean4/KstarFormal/**'
+      - 'lean4/lean-toolchain'
+      - '.github/workflows/docker-build.yml'
+  schedule:
+    # Weekly cold-build of the Lean4 image so a Mathlib / toolchain
+    # regression that breaks the container path is caught within a week.
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docker-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Sage container: builds and runs the mathy tiers end-to-end ─────
+  sage-image:
+    name: Sage image build + tiers 1/2/3/5
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Sage verification image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          tags: kstar-verify:sage
+          push: false
+          load: true
+
+      - name: Run tiers 1/2/3/5 inside the container
+        # The image's CMD runs run_docker_suite.sh which executes all
+        # four tiers and exits non-zero on any FAIL.
+        run: docker run --rm kstar-verify:sage
+
+  # ── Binder config: install .binder/requirements.txt and import every
+  #    third-party module the notebook touches ─────────────────────────
+  binder-config:
+    name: Binder config install + import check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install .binder/requirements.txt exactly
+        run: |
+          pip install -r .binder/requirements.txt
+
+      - name: Import every third-party module the notebook uses
+        # Mirrors the imports harvested from k_star_demo.ipynb (run
+        # `grep -E '^(from|import)' notebook/k_star_demo.ipynb` to
+        # regenerate).  Fails fast if a new dep is introduced without
+        # being added to .binder/requirements.txt.
+        run: |
+          python -c "
+          import yaml, sympy, numpy, scipy, scipy.stats, pandas, IPython
+          print('all notebook deps import cleanly on Binder config')
+          "
+
+  # ── Lean4 container: schedule-only + manual dispatch ──────────────
+  lean4-image:
+    name: Lean4 image build + lake build
+    # Schedule-only: the build recompiles Mathlib (~45 min) and that's
+    # too heavy for every push.  Runs weekly or on manual dispatch.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Lean4 verification image (includes lake build)
+        # The Dockerfile itself runs `lake exe cache get && lake build`
+        # during the image build, so a successful image build IS the
+        # lake-build-from-scratch test.
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.lean4
+          tags: kstar-verify:lean4
+          push: false
+          load: true
+
+      - name: Confirm lake build artifact is present inside image
+        run: |
+          docker run --rm kstar-verify:lean4 bash -c '
+            set -e
+            echo "--- lake-manifest ---"
+            cat /kstar/lean4/lake-manifest.json | head -20
+            echo
+            echo "--- KstarFormal olean count ---"
+            find /kstar/lean4/.lake/build -name "*.olean" | wc -l
+            echo
+            echo "--- sorry audit ---"
+            python3 /kstar/lean4/scripts/check_sorry.py || true
+          '

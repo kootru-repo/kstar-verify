@@ -3,6 +3,8 @@
 [![CI](https://github.com/kootru-repo/kstar-verify/actions/workflows/verify.yml/badge.svg)](https://github.com/kootru-repo/kstar-verify/actions/workflows/verify.yml)
 [![Heartbeat](https://github.com/kootru-repo/kstar-verify/actions/workflows/heartbeat.yml/badge.svg)](https://github.com/kootru-repo/kstar-verify/actions/workflows/heartbeat.yml)
 [![doc-gen4](https://github.com/kootru-repo/kstar-verify/actions/workflows/docgen.yml/badge.svg)](https://kootru-repo.github.io/kstar-verify/)
+[![Docker](https://github.com/kootru-repo/kstar-verify/actions/workflows/docker-build.yml/badge.svg)](https://github.com/kootru-repo/kstar-verify/actions/workflows/docker-build.yml)
+[![Hardware sim](https://github.com/kootru-repo/kstar-verify/actions/workflows/hardware-smoke.yml/badge.svg)](https://github.com/kootru-repo/kstar-verify/actions/workflows/hardware-smoke.yml)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kootru-repo/kstar-verify/v1.0.0-submission?filepath=notebook%2Fk_star_demo.ipynb)
 [![Lean](https://img.shields.io/badge/Lean4-v4.29.0--rc8-blueviolet)](lean4/lean-toolchain)
 [![sorry-free](https://img.shields.io/badge/sorry-0-brightgreen)](lean4/generated/verification_manifest.json)
@@ -288,6 +290,25 @@ python verify_integrity.py --cross-archive
 # Regenerate manifest after intentional data updates
 python verify_integrity.py --generate-manifest
 ```
+
+## Continuous-integration gates
+
+Six GitHub Actions workflows keep the repo verifiable end-to-end.
+Each badge at the top of this README links to the live status of one
+of these gates.
+
+| workflow | what it verifies | trigger |
+|---|---|---|
+| **K\* Verification** (`verify.yml`) | 4-job gate: artifact integrity, Lean 4 build + sorry audit, Python tiers 2–7, mutation testing | every push touching `lean4/**`, `tier*/**`, `scripts/**`, `data/**`, `run_all.py`, registry, or `Dockerfile*` |
+| **Docker container build** (`docker-build.yml`) | Sage image builds and runs tiers 1/2/3/5 end-to-end (287 checks); `.binder/requirements.txt` installs cleanly and imports every notebook dep; Lean 4 image rebuilds Mathlib + all proofs from the pinned toolchain, 0 sorry | every push touching `Dockerfile*` / `.binder/**` / tier sources (Sage + Binder); weekly + manual-dispatch for the Lean 4 image |
+| **Hardware simulator smoke** (`hardware-smoke.yml`) | Full K\* protocol end-to-end on FakeBrisbane (no QPU credits); output-schema regression vs the shipped reference JSON | every push touching `hardware/**` or `tier4-independent/core.py` / `robust_mle.py` |
+| **doc-gen4 HTML deploy** (`docgen.yml`) | Lean 4 API docs + referee landing page built and published to GitHub Pages | every push + tag |
+| **Weekly heartbeat** (`heartbeat.yml`) | Full verification on a fresh clone to catch upstream dependency drift | Monday 06:00 UTC |
+| **Commit message lint** (`commit-lint.yml`) | PR commit messages don't contain process-narrative tells | every PR |
+
+Every gate is deterministic — no AI, no LLM calls — so a red badge
+means a genuine regression in the verification artifact, not flaky
+heuristics.
 
 ## Architecture
 

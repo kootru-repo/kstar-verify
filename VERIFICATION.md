@@ -11,7 +11,7 @@ each tier is self-contained and answers a specific question.
 | [2 min](#2-min-read-the-auto-generated-axiom-table)  | browser / text editor | Per-claim axiom footprint auto-derived from `#print axioms` |
 | [10 min](#10-min-run-the-jupyter-demo)               | Python 3.10+ (or Binder) | Every paper claim demonstrated end-to-end: combinatorial identities, hardware Table I byte-for-byte, Floquet DTC, SOTA ranking, dim-dep progression, plus 14 theorem-level numerical witnesses |
 | [30 min](#30-min-rebuild-lean-from-scratch)          | [elan](https://github.com/leanprover/elan), ~4 GB disk | Independent Lean rebuild, regeneration of every machine-verified artifact |
-| 60 min | Docker, ~4 GB disk | Same as 30-min tier inside a pinned container image |
+| [60 min](#60-min-containerised-rebuild)              | Docker, ~4 GB disk | Two pinned container images: a Sage image that runs tiers 1/2/3/5 end-to-end (287 checks), and a Lean 4 image that rebuilds Mathlib + all K\* proofs from scratch (0 sorry) |
 
 ---
 
@@ -210,6 +210,59 @@ Expected output:
 Any divergence from the submitted manifest points to either
 (a) you are on a different commit, or (b) the submission was
 tampered with; both are falsifiable by `git log`.
+
+---
+
+## 60 min: containerised rebuild
+
+Two Docker images ship with the repo.  Each isolates a different
+trust axis: the Sage image re-verifies the mathy tiers with a
+toolchain independent of your host Python; the Lean 4 image
+rebuilds the entire formalisation from source, mathlib and all.
+
+### Sage image (fast, ~10 min)
+
+Runs tiers 1, 2, 3, 5 end-to-end in a `sagemath/sagemath:latest`-
+based container — 287 checks across SageMath exact arithmetic,
+SymPy identities, NumPy numerical bounds, and the HS → F fidelity
+recovery.
+
+```
+docker build -t kstar-verify .
+docker run --rm kstar-verify
+```
+
+Exits 0 on full pass, non-zero if any of the 287 checks fail.  The
+same container is also built and run on every push via
+[`.github/workflows/docker-build.yml`](.github/workflows/docker-build.yml),
+so a red badge at the top of the README is a real regression.
+
+### Lean 4 image (deep, ~45 min cold)
+
+Rebuilds Lean 4 + Mathlib + all K\* proofs + all machine-verified
+artifacts from scratch inside a `debian:bookworm-slim`-based image.
+The build itself *is* the verification: a successful image means
+`lake build` exits 0, all oleans compile, and `check_sorry.py`
+reports 0 sorry.
+
+```
+docker build -f Dockerfile.lean4 -t kstar-verify-lean4 .
+docker run --rm kstar-verify-lean4 bash -c '
+    cd /kstar/lean4
+    python3 scripts/check_sorry.py
+    cat generated/verification_manifest.json | python3 -m json.tool | head -40
+'
+```
+
+The same image is rebuilt weekly (and on manual dispatch) by the
+same `docker-build.yml` workflow, catching any upstream Mathlib
+or toolchain breakage within seven days.  Expect ~45 minutes for a
+cold build (Mathlib compile), ~5 minutes on cached layers.
+
+Both images pin exact versions via the repo's `lean4/lean-toolchain`
+and `data/checksums.json`, so a build that completes on your
+machine corresponds to the same commit the submission was tagged
+from.
 
 ---
 

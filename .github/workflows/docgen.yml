@@ -2,7 +2,7 @@ name: doc-gen4 HTML deploy
 
 # Generates doc-gen4 HTML docs for the KstarFormal Lean library
 # and publishes them to GitHub Pages so reviewers can browse proofs
-# without installing anything. Overlays a substantive referee-facing
+# without installing anything. Overlays a substantive
 # landing page via lean4/scripts/gen_docs_index.py.
 
 on:
@@ -61,7 +61,7 @@ jobs:
             exit 1
           fi
 
-      - name: Overlay referee-facing landing page
+      - name: Overlay landing page
         # Overwrites the doc-gen4 default root Index.html with a
         # substantive, registry-driven landing page.
         run: |

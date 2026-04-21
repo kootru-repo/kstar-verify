@@ -144,7 +144,7 @@ CELLS = [
         "# Scorecard utilities -- collect per-claim rows from Sections 7 and 8,",
         "# render a side-by-side DataFrame (paper-hw | paper-sim | recomputed |",
         "# delta | status) at the end of each section.  Assertions stay in each",
-        "# source cell; the scorecard is additive display that gives a referee",
+        "# source cell; the scorecard is additive display that provides",
         "# a one-scroll verdict without reading every cell.",
         "SCORECARD_HW = []   # populated by §7 cells, rendered by §7.9",
         "SCORECARD_TH = []   # populated by §8 cells, rendered by §8.14",

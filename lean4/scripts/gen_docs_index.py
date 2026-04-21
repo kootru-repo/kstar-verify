@@ -1,4 +1,4 @@
-"""Generate a referee-ready landing page for the GitHub Pages deployment.
+"""Generate a landing page for the GitHub Pages deployment.
 
 Reads `proofs_registry.yaml` at the repo root and produces
 `lean4/_site/index.html`. Assumes doc-gen4 has already populated
@@ -277,7 +277,7 @@ footer {{ margin: 48px 0 24px; padding-top: 16px; color: var(--muted);
   <p class="sub">Machine-verified certificate for the companion manuscript on
      Krawtchouk spectral correspondence and measurement design.  Every
      numerical claim and every theorem in the paper is discharged by
-     deterministic code; this page is the referee onramp.</p>
+     deterministic code; this page is the onramp.</p>
   <div class="badges">{badges}</div>
   <div class="kbar">
     <a href="./find/">Search all declarations</a>
@@ -289,7 +289,7 @@ footer {{ margin: 48px 0 24px; padding-top: 16px; color: var(--muted);
 </header>
 
 <section>
-<h2>Referee: five-minute tour</h2>
+<h2>Five-minute tour</h2>
 <div class="card">
 <ol class="onramp">
   <li><b>Pick a claim</b> in the table below.  Click the <code>Lean</code>

@@ -302,7 +302,7 @@ of these gates.
 | **K\* Verification** (`verify.yml`) | 4-job gate: artifact integrity, Lean 4 build + sorry audit, Python tiers 2–7, mutation testing | every push touching `lean4/**`, `tier*/**`, `scripts/**`, `data/**`, `run_all.py`, registry, or `Dockerfile*` |
 | **Docker container build** (`docker-build.yml`) | Sage image builds and runs tiers 1/2/3/5 end-to-end (287 checks); `.binder/requirements.txt` installs cleanly and imports every notebook dep; Lean 4 image rebuilds Mathlib + all proofs from the pinned toolchain, 0 sorry | every push touching `Dockerfile*` / `.binder/**` / tier sources (Sage + Binder); weekly + manual-dispatch for the Lean 4 image |
 | **Hardware simulator smoke** (`hardware-smoke.yml`) | Full K\* protocol end-to-end on FakeBrisbane (no QPU credits); output-schema regression vs the shipped reference JSON | every push touching `hardware/**` or `tier4-independent/core.py` / `robust_mle.py` |
-| **doc-gen4 HTML deploy** (`docgen.yml`) | Lean 4 API docs + referee landing page built and published to GitHub Pages | every push + tag |
+| **doc-gen4 HTML deploy** (`docgen.yml`) | Lean 4 API docs + landing page built and published to GitHub Pages | every push + tag |
 | **Weekly heartbeat** (`heartbeat.yml`) | Full verification on a fresh clone to catch upstream dependency drift | Monday 06:00 UTC |
 | **Commit message lint** (`commit-lint.yml`) | PR commit messages don't contain process-narrative tells | every PR |
 
